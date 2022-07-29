@@ -1,23 +1,25 @@
 ﻿using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
+using WotPersonalDataCollector.Api.Http.RequestObjects;
 
-namespace WotPersonalDataCollector
+namespace WotPersonalDataCollector.Api.Http
 {
     internal class HttpRequestMessageFactory: IHttpRequestMessageFactory
     {
-        public HttpRequestMessage Create(IRequestObject requestObject, string apiUri)
+        private readonly IRequestObjectFactory _requestObject;
+
+        public HttpRequestMessageFactory(IRequestObjectFactory requestObject)
+        {
+            _requestObject = requestObject;
+        }
+        public HttpRequestMessage Create(string apiUri)
         {
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUri);
             requestMessage.Headers.Add("Accept", "application/json");
-            var serializedObject = JsonConvert.SerializeObject(requestObject);
+            var serializedObject = JsonConvert.SerializeObject(_requestObject.Create());
             requestMessage.Content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
             return requestMessage;
         }
-    }
-
-    internal interface IHttpRequestMessageFactory
-    {
-        HttpRequestMessage Create(IRequestObject requestObject, string apiUri)
     }
 }
