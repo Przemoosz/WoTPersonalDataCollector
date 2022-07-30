@@ -19,4 +19,9 @@
   <ItemGroup>
     <Folder Include="User\" />
   </ItemGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>WotPersonalDataCollectorTests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 </Project>
