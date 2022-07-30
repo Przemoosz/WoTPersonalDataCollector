@@ -23,5 +23,16 @@ namespace WotPersonalDataCollector.Utilities
                 return Environment.GetEnvironmentVariable("UserName");
             }
         }
+
+        public bool TryGetUserName(out string userName)
+        {
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("UserName")))
+            {
+                userName = Environment.GetEnvironmentVariable("UserName");
+                return true;
+            }
+            userName = null;
+            return false;
+        }
     }
 }

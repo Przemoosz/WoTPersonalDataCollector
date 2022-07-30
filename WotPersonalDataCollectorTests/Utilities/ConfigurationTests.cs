@@ -1,5 +1,6 @@
 using System;
 using FluentAssertions;
+using NSubstitute.Core;
 using WotPersonalDataCollector.Utilities;
 using NUnit.Framework;
 using static TddXt.AnyRoot.Root;
@@ -79,6 +80,36 @@ namespace WotPersonalDataCollectorTests.Utilities
 
             // Assert
             act.Should().Throw<LocalVariableException>().WithMessage("UserName local variable is not set!");
+        }
+
+        [Test]
+        public void ShouldReturnFalseWhenUserNameIsNull()
+        {
+            // Arrange
+            Environment.SetEnvironmentVariable("UserName", null);
+
+            // Act
+            string actualUserName = "";
+            var actualBoolean = _uut.TryGetUserName(out actualUserName);
+
+            // Assert
+            actualBoolean.Should().BeFalse();
+            actualUserName.Should().BeNull();
+        }
+        [Test]
+        public void ShouldReturnTrueWhenUserNameIsGiven()
+        {
+            // Arrange
+            string userName = Any.String();
+            Environment.SetEnvironmentVariable("UserName", userName);
+
+            // Act
+            string actualUserName = "";
+            var actualBoolean = _uut.TryGetUserName(out actualUserName);
+
+            // Assert
+            actualBoolean.Should().BeTrue();
+            actualUserName.Should().Be(userName);
         }
     }
 }

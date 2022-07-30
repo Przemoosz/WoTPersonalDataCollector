@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Utilities;
 using static TddXt.AnyRoot.Root;
 using TddXt.AnyRoot.Strings;
 
@@ -42,7 +36,8 @@ namespace WotPersonalDataCollectorTests.Api.Http
 
             // Assert
             actual.RequestUri.Should().Be(apiUrl);
-            actual.Content.ReadAsStringAsync().GetAwaiter().GetResult().Should().Be(serializedRequestObject);
+            actual.Content.Should().NotBeNull();
+            actual.Content!.ReadAsStringAsync().GetAwaiter().GetResult().Should().Be(serializedRequestObject);
         }
     }
 }
