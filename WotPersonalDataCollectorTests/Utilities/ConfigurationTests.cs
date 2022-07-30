@@ -8,6 +8,7 @@ using WotPersonalDataCollector.Exceptions;
 
 namespace WotPersonalDataCollectorTests.Utilities
 {
+    [TestFixture]
     public class ConfigurationTests
     {
         private IConfiguration _uut;
@@ -31,6 +32,7 @@ namespace WotPersonalDataCollectorTests.Utilities
             // Assert
             actual.Should().Be(applicationId);
         }
+
         [Test]
         public void ShouldReturnUserName()
         {
@@ -61,6 +63,7 @@ namespace WotPersonalDataCollectorTests.Utilities
             // Assert
             act.Should().Throw<LocalVariableException>().WithMessage("ApplicationId local variable is not set!");
         }
+
         [TestCase(null)]
         [TestCase("")]
         public void ShouldThrowExceptionWhenUserNameNullOrEmpty(string userName)

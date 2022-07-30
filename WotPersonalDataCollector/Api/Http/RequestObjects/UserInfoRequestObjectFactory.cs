@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WotPersonalDataCollector.Utilities;
+﻿using WotPersonalDataCollector.Utilities;
 
 namespace WotPersonalDataCollector.Api.Http.RequestObjects
 {
