@@ -2,7 +2,7 @@
 {
     internal class HttpClientWrapperFactory: IHttpClientWrapperFactory
     {
-        public HttpClientWrapper Create()
+        public IHttpClientWrapper Create()
         {
             return new HttpClientWrapper();
         }

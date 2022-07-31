@@ -2,5 +2,5 @@
 
 internal interface IHttpClientWrapperFactory
 {
-    HttpClientWrapper Create();
+    IHttpClientWrapper Create();
 }

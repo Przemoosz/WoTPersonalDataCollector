@@ -28,7 +28,6 @@ namespace WotPersonalDataCollectorTests.Api.Http
 
             // Assert
             act.Should().ThrowAsync<ArgumentNullException>();
-
         }
 
         [TearDown]
