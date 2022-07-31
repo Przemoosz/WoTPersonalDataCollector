@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
 
-namespace WotPersonalDataCollector.User
+namespace WotPersonalDataCollector.Api.User
 {
-    internal class CrawlUserId
+    internal class CrawlUserId: ICrawlUserId
     {
         private readonly IHttpClientWrapperFactory _clientWrapperFactory;
         private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
@@ -21,7 +16,7 @@ namespace WotPersonalDataCollector.User
             _httpRequestMessageFactory = httpRequestMessageFactory;
         }
 
-        public async Task<HttpResponseMessage> GetUserId()
+        public async Task<HttpResponseMessage> GetUserApiResponseAsync()
         {
             using var client = _clientWrapperFactory.Create();
             var requestMessage = _httpRequestMessageFactory.Create("https://api.worldoftanks.eu/wot/account/list/");

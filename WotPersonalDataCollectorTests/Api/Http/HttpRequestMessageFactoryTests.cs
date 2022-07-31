@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Http;
 using static TddXt.AnyRoot.Root;
 using TddXt.AnyRoot.Strings;

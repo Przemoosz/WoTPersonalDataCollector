@@ -1,5 +1,4 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
 using WotPersonalDataCollector.Utilities;
 using NUnit.Framework;

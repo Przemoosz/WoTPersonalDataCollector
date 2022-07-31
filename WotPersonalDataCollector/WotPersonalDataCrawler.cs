@@ -6,8 +6,8 @@ using Microsoft.Extensions.Logging;
 using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
+using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Utilities;
-using WotPersonalDataCollector.User;
 
 
 namespace WotPersonalDataCollector
@@ -23,7 +23,7 @@ namespace WotPersonalDataCollector
             var apiUrlFactory = new ApiUrlFactory(objectMessageFactory);
             var requestMessageFactory = new HttpRequestMessageFactory(apiUrlFactory);
             var userIdCrawler = new CrawlUserId(clientWrapperFactory,requestMessageFactory);
-            var result = await userIdCrawler.GetUserId();
+            var result = await userIdCrawler.GetUserApiResponseAsync();
             log.LogWarning(await result.Content.ReadAsStringAsync());
         }
     }
