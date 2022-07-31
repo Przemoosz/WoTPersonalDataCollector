@@ -17,13 +17,13 @@ namespace WotPersonalDataCollector.Api.Http
             _httpClient.Timeout = TimeSpan.FromMinutes(4);
         }
 
-        public async Task PostAsync(HttpRequestMessage requestMessage)
+        public async Task<HttpResponseMessage> PostAsync(HttpRequestMessage requestMessage)
         {
             if (requestMessage is null)
             {
                 throw new ArgumentNullException(nameof(requestMessage));
             }
-            await _httpClient.SendAsync(requestMessage);
+            return await _httpClient.SendAsync(requestMessage);
         }
 
         public void Dispose()

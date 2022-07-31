@@ -6,5 +6,5 @@ namespace WotPersonalDataCollector.Api.Http;
 
 internal interface IHttpClientWrapper: IDisposable
 {
-    Task PostAsync(HttpRequestMessage requestMessage);
+    Task<HttpResponseMessage> PostAsync(HttpRequestMessage requestMessage);
 }

@@ -1,6 +1,5 @@
 using System;
 using FluentAssertions;
-using NSubstitute.Core;
 using WotPersonalDataCollector.Utilities;
 using NUnit.Framework;
 using static TddXt.AnyRoot.Root;
@@ -39,7 +38,7 @@ namespace WotPersonalDataCollectorTests.Utilities
         {
             // Arrange
             var userName = Any.String();
-            Environment.SetEnvironmentVariable("UserName", userName);
+            Environment.SetEnvironmentVariable("WotUserName", userName);
 
             // Act 
             var actual = _uut.UserName;
@@ -70,7 +69,7 @@ namespace WotPersonalDataCollectorTests.Utilities
         public void ShouldThrowExceptionWhenUserNameNullOrEmpty(string userName)
         {
             // Arrange 
-            Environment.SetEnvironmentVariable("UserName", userName);
+            Environment.SetEnvironmentVariable("WotUserName", userName);
 
             // Act
             Action act = new Action(() =>
@@ -79,18 +78,17 @@ namespace WotPersonalDataCollectorTests.Utilities
             });
 
             // Assert
-            act.Should().Throw<LocalVariableException>().WithMessage("UserName local variable is not set!");
+            act.Should().Throw<LocalVariableException>().WithMessage("WotUserName local variable is not set!");
         }
 
         [Test]
         public void ShouldReturnFalseWhenUserNameIsNull()
         {
             // Arrange
-            Environment.SetEnvironmentVariable("UserName", null);
+            Environment.SetEnvironmentVariable("WotUserName", null);
 
             // Act
-            string actualUserName = "";
-            var actualBoolean = _uut.TryGetUserName(out actualUserName);
+            var actualBoolean = _uut.TryGetUserName(out var actualUserName);
 
             // Assert
             actualBoolean.Should().BeFalse();
@@ -101,11 +99,10 @@ namespace WotPersonalDataCollectorTests.Utilities
         {
             // Arrange
             string userName = Any.String();
-            Environment.SetEnvironmentVariable("UserName", userName);
+            Environment.SetEnvironmentVariable("WotUserName", userName);
 
             // Act
-            string actualUserName = "";
-            var actualBoolean = _uut.TryGetUserName(out actualUserName);
+            var actualBoolean = _uut.TryGetUserName(out var actualUserName);
 
             // Assert
             actualBoolean.Should().BeTrue();

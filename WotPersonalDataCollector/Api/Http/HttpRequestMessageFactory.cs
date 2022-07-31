@@ -7,18 +7,18 @@ namespace WotPersonalDataCollector.Api.Http
 {
     internal class HttpRequestMessageFactory: IHttpRequestMessageFactory
     {
-        private readonly IRequestObjectFactory _requestObject;
+        private readonly IApiUrlFactory _apiUrlFactory;
 
-        public HttpRequestMessageFactory(IRequestObjectFactory requestObject)
+        public HttpRequestMessageFactory(IApiUrlFactory apiUrlFactory)
         {
-            _requestObject = requestObject;
+            _apiUrlFactory = apiUrlFactory;
         }
         public HttpRequestMessage Create(string apiUri)
         {
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, apiUri);
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, _apiUrlFactory.Create(apiUri));
             requestMessage.Headers.Add("Accept", "application/json");
-            var serializedObject = JsonConvert.SerializeObject(_requestObject.Create());
-            requestMessage.Content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+            // var serializedObject = JsonConvert.SerializeObject(_requestObject.Create());
+            // requestMessage.Content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
             return requestMessage;
         }
     }

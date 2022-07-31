@@ -6,6 +6,7 @@ using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Http;
 using static TddXt.AnyRoot.Root;
 using TddXt.AnyRoot.Strings;
+using WotPersonalDataCollector.Api;
 
 namespace WotPersonalDataCollectorTests.Api.Http
 {
@@ -13,31 +14,26 @@ namespace WotPersonalDataCollectorTests.Api.Http
     public class HttpRequestMessageFactoryTests
     {
         private IHttpRequestMessageFactory _uut;
-        private IRequestObjectFactory _requestObjectFactory;
+        private IApiUrlFactory _apiUrlFactory;
 
         [SetUp]
         public void SetUp()
         {
-            _requestObjectFactory = Substitute.For<IRequestObjectFactory>();
-            _uut = new HttpRequestMessageFactory(_requestObjectFactory);
+            _apiUrlFactory = Substitute.For<IApiUrlFactory>();
+            _uut = new HttpRequestMessageFactory(_apiUrlFactory);
         }
 
         [Test]
         public void ShouldReturnHttpRequestMessage()
         {
             // Arrange
-            var requestObject = Any.Instance<UserInfoRequestObject>();
-            _requestObjectFactory.Create().Returns(requestObject);
-            var serializedRequestObject = JsonConvert.SerializeObject(requestObject);
             var apiUrl = Any.String();
-
+            _apiUrlFactory.Create(apiUrl).Returns(apiUrl);
             // Actual
             var actual = _uut.Create(apiUrl);
 
             // Assert
             actual.RequestUri.Should().Be(apiUrl);
-            actual.Content.Should().NotBeNull();
-            actual.Content!.ReadAsStringAsync().GetAwaiter().GetResult().Should().Be(serializedRequestObject);
         }
     }
 }

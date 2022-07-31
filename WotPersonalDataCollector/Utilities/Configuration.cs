@@ -19,16 +19,16 @@ namespace WotPersonalDataCollector.Utilities
         {
             get
             {
-                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("UserName"), "UserName local variable is not set!");
-                return Environment.GetEnvironmentVariable("UserName");
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("WotUserName"), "WotUserName local variable is not set!");
+                return Environment.GetEnvironmentVariable("WotUserName");
             }
         }
 
         public bool TryGetUserName(out string userName)
         {
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("UserName")))
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WotUserName")))
             {
-                userName = Environment.GetEnvironmentVariable("UserName");
+                userName = Environment.GetEnvironmentVariable("WotUserName");
                 return true;
             }
             userName = null;

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NSubstitute;
 using WotPersonalDataCollector.Utilities;
 using NUnit.Framework;
@@ -29,7 +30,12 @@ namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
             var applicationId = Any.String();
             var userName = Any.String();
             _configuration.ApplicationId.Returns(applicationId);
-            _configuration.UserName.Returns(userName);
+            // Environment.SetEnvironmentVariable("WotUserName", userName);
+            _configuration.TryGetUserName(out Arg.Any<string>()).Returns(x =>
+            {
+                x[0] = userName;
+                return true;
+            });
 
             // Act
             var actual = _uut.Create();
