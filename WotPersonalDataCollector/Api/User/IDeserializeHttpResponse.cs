@@ -6,5 +6,5 @@ namespace WotPersonalDataCollector.Api.User;
 
 internal interface IDeserializeHttpResponse
 {
-    Task<UserData> Deserialize(ILogger logger);
+    Task<UserData> Deserialize();
 }

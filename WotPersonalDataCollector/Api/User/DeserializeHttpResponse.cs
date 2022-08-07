@@ -18,7 +18,7 @@ namespace WotPersonalDataCollector.Api.User
             _userIdServices = userIdServices;
         }
 
-        public async Task<UserData> Deserialize(ILogger logger)
+        public async Task<UserData> Deserialize()
         {
             var response = await _userIdServices.GetUserApiResponseAsync();
             if (!response.IsSuccessStatusCode)
