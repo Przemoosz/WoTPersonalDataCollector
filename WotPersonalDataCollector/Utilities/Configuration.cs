@@ -24,6 +24,20 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
+        public string UserId
+        {
+            get
+            {
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("UserId"), "UserId local variable is not set!");
+                return Environment.GetEnvironmentVariable("UserId");
+            }
+            set
+            {
+                Guard.NotNullOrEmpty(value, "Provided userId can not be null or empty value!");
+                Environment.SetEnvironmentVariable("UserId", value);
+            }
+        }
+
         public bool TryGetUserName(out string userName)
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WotUserName")))

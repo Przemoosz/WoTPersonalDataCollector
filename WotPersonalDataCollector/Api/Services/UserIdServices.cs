@@ -2,15 +2,15 @@
 using System.Threading.Tasks;
 using WotPersonalDataCollector.Api.Http;
 
-namespace WotPersonalDataCollector.Api.User
+namespace WotPersonalDataCollector.Api.Services
 {
-    internal class CrawlUserId: ICrawlUserId
+    internal class UserIdServices: IUserIdServices
     {
         private readonly IHttpClientWrapperFactory _clientWrapperFactory;
         private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
  
 
-        public CrawlUserId(IHttpClientWrapperFactory clientWrapperFactory, IHttpRequestMessageFactory httpRequestMessageFactory)
+        public UserIdServices(IHttpClientWrapperFactory clientWrapperFactory, IHttpRequestMessageFactory httpRequestMessageFactory)
         {
             _clientWrapperFactory = clientWrapperFactory;
             _httpRequestMessageFactory = httpRequestMessageFactory;

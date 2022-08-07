@@ -4,20 +4,18 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http;
+using WotPersonalDataCollector.Api.Services;
 using static TddXt.AnyRoot.Root;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.User;
-using WotPersonalDataCollector.Api.Http;
 
-namespace WotPersonalDataCollectorTests.Api.User
+namespace WotPersonalDataCollectorTests.Api.Services
 {
     [TestFixture]
     public class CrawlUserIdTest
     {
         private IHttpClientWrapperFactory _httpClientWrapperFactory;
         private IHttpRequestMessageFactory _httpRequestMessageFactory;
-        private ICrawlUserId _uut;
+        private IUserIdServices _uut;
         private IHttpClientWrapper _httpClientWrapper;
 
         [SetUp]
@@ -26,7 +24,7 @@ namespace WotPersonalDataCollectorTests.Api.User
             _httpClientWrapper = Substitute.For<IHttpClientWrapper>();
             _httpClientWrapperFactory = Substitute.For<IHttpClientWrapperFactory>();
             _httpRequestMessageFactory = Substitute.For<IHttpRequestMessageFactory>();
-            _uut = new CrawlUserId(_httpClientWrapperFactory, _httpRequestMessageFactory);
+            _uut = new UserIdServices(_httpClientWrapperFactory, _httpRequestMessageFactory);
         }
 
         [Test]
@@ -44,11 +42,6 @@ namespace WotPersonalDataCollectorTests.Api.User
 
             // Assert
             actual.Should().Be(responseMessage);
-
-            // Act
-
-            // Assert
-
         }
     }
 }

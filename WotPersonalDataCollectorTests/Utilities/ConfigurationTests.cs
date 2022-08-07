@@ -47,6 +47,20 @@ namespace WotPersonalDataCollectorTests.Utilities
             actual.Should().Be(userName);
         }
 
+        [Test]
+        public void ShouldReturnUserId()
+        {
+            // Arrange
+            var userId = Any.String();
+            Environment.SetEnvironmentVariable("UserId", userId);
+
+            // Act 
+            var actual = _uut.UserId;
+
+            // Assert
+            actual.Should().Be(userId);
+        }
+
         [TestCase(null)]
         [TestCase("")]
         public void ShouldThrowExceptionWhenApplicationIdNullOrEmpty(string applicationId)
@@ -55,13 +69,13 @@ namespace WotPersonalDataCollectorTests.Utilities
             Environment.SetEnvironmentVariable("ApplicationId", applicationId);
 
             // Act
-            Action act = new Action(() =>
+            Func<string> func = new Func<string>(() =>
             {
-                var a = _uut.ApplicationId;
+                return _uut.ApplicationId;
             });
-            
+
             // Assert
-            act.Should().Throw<LocalVariableException>().WithMessage("ApplicationId local variable is not set!");
+            func.Should().Throw<LocalVariableException>().WithMessage("ApplicationId local variable is not set!");
         }
 
         [TestCase(null)]
@@ -72,13 +86,30 @@ namespace WotPersonalDataCollectorTests.Utilities
             Environment.SetEnvironmentVariable("WotUserName", userName);
 
             // Act
-            Action act = new Action(() =>
+            Func<string> func = new Func<string>(() =>
             {
-                var a = _uut.UserName;
+                return _uut.UserName;
             });
 
             // Assert
-            act.Should().Throw<LocalVariableException>().WithMessage("WotUserName local variable is not set!");
+            func.Should().Throw<LocalVariableException>().WithMessage("WotUserName local variable is not set!");
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void ShouldThrowExceptionWhenUserIdNullOrEmpty(string userId)
+        {
+            // Arrange 
+            Environment.SetEnvironmentVariable("UserId", userId);
+
+            // Act
+            Func<string> func = new Func<string>(() =>
+            {
+                return _uut.UserId;
+            });
+
+            // Assert
+            func.Should().Throw<LocalVariableException>().WithMessage("UserId local variable is not set!");
         }
 
         [Test]
@@ -94,6 +125,7 @@ namespace WotPersonalDataCollectorTests.Utilities
             actualBoolean.Should().BeFalse();
             actualUserName.Should().BeNull();
         }
+
         [Test]
         public void ShouldReturnTrueWhenUserNameIsGiven()
         {
@@ -108,5 +140,29 @@ namespace WotPersonalDataCollectorTests.Utilities
             actualBoolean.Should().BeTrue();
             actualUserName.Should().Be(userName);
         }
+
+        [Test]
+        public void ShouldSetUserIdAsLocalVariable()
+        {
+            // Arrange 
+            string userId = Any.String();
+
+            // Act
+            Action act = () => _uut.UserId = userId;
+
+            // Assert
+            act.Should().NotThrow();
+            var actual = _uut.UserId;
+            actual.Should().Be(userId);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void ShouldThrowExceptionWhenSetNullOrEmptyUserId(string userId)
+        {
+            // Act
+
+        }
+
     }
 }

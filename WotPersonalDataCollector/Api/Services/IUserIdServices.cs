@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace WotPersonalDataCollector.Api.User;
+namespace WotPersonalDataCollector.Api.Services;
 
-internal interface ICrawlUserId
+internal interface IUserIdServices
 {
     Task<HttpResponseMessage> GetUserApiResponseAsync();
 }
