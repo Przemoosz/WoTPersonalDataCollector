@@ -2,7 +2,7 @@
 
 namespace WotPersonalDataCollector.Api.Http.RequestObjects
 {
-    internal class UserInfoRequestObjectFactory: IRequestObjectFactory
+    internal class UserInfoRequestObjectFactory: IUserInfoRequestObjectFactory
     {
         private readonly IConfiguration _configuration;
 

@@ -161,7 +161,10 @@ namespace WotPersonalDataCollectorTests.Utilities
         public void ShouldThrowExceptionWhenSetNullOrEmptyUserId(string userId)
         {
             // Act
+            Action act = () => _uut.UserId = userId;
 
+            // Assert
+            act.Should().Throw<LocalVariableException>().WithMessage("Provided userId can not be null or empty value!");
         }
 
     }

@@ -13,14 +13,14 @@ namespace WotPersonalDataCollectorTests.Api
     [TestFixture]
     public class ApiUrlFactoryTests
     {
-        private IRequestObjectFactory _requestObjectFactory;
+        private IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
         private ApiUrlFactory _uut;
 
         [SetUp]
         public void SetUp()
         {
-            _requestObjectFactory = Substitute.For<IRequestObjectFactory>();
-            _uut = new ApiUrlFactory(_requestObjectFactory);
+            _userInfoRequestObjectFactory = Substitute.For<IUserInfoRequestObjectFactory>();
+            _uut = new ApiUrlFactory(_userInfoRequestObjectFactory);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace WotPersonalDataCollectorTests.Api
             // Arrange
             string url = Any.String();
             var requestObject = Any.Instance<RequestObject>();
-            _requestObjectFactory.Create().Returns(requestObject);
+            _userInfoRequestObjectFactory.Create().Returns(requestObject);
 
             // Act
             var actual = _uut.Create(url);
@@ -44,7 +44,7 @@ namespace WotPersonalDataCollectorTests.Api
             // Arrange
             string url = Any.String();
             var requestObject = Any.Instance<UserInfoRequestObject>();
-            _requestObjectFactory.Create().Returns(requestObject);
+            _userInfoRequestObjectFactory.Create().Returns(requestObject);
             
             // Act
             var actual = _uut.Create(url);

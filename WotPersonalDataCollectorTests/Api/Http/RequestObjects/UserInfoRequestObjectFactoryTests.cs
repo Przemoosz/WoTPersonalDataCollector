@@ -13,7 +13,7 @@ namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
     public class UserInfoRequestObjectFactoryTests
     {
         private IConfiguration _configuration;
-        private IRequestObjectFactory _uut;
+        private IUserInfoRequestObjectFactory _uut;
 
         [SetUp]
         public void SetUp()

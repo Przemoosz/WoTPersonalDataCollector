@@ -1,6 +1,6 @@
 ﻿namespace WotPersonalDataCollector.Api.Http.RequestObjects;
 
-internal interface IRequestObjectFactory
+internal interface IUserInfoRequestObjectFactory
 {
     IRequestObject Create();
 }

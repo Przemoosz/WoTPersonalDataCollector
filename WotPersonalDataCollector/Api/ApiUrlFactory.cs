@@ -9,16 +9,16 @@ namespace WotPersonalDataCollector.Api
 {
     internal class ApiUrlFactory: IApiUrlFactory
     {
-        private readonly IRequestObjectFactory _requestObjectFactory;
+        private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
 
-        public ApiUrlFactory(IRequestObjectFactory requestObjectFactory)
+        public ApiUrlFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory)
         {
-            _requestObjectFactory = requestObjectFactory;
+            _userInfoRequestObjectFactory = userInfoRequestObjectFactory;
         }
 
         public string Create(string baseUrl)
         {
-            var requestObject = _requestObjectFactory.Create();
+            var requestObject = _userInfoRequestObjectFactory.Create();
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(baseUrl);
             stringBuilder.Append("?");

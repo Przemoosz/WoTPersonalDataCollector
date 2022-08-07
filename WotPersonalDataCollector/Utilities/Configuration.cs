@@ -33,7 +33,7 @@ namespace WotPersonalDataCollector.Utilities
             }
             set
             {
-                Guard.NotNullOrEmpty(value, "Provided userId can not be null or empty value!");
+                Guard.NotNullOrEmpty<LocalVariableException>(value, "Provided userId can not be null or empty value!");
                 Environment.SetEnvironmentVariable("UserId", value);
             }
         }
