@@ -6,7 +6,6 @@ using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Services;
 using static TddXt.AnyRoot.Root;
-using WotPersonalDataCollector.Api.User;
 
 namespace WotPersonalDataCollectorTests.Api.Services
 {

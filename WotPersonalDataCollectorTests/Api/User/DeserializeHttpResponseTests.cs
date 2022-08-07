@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WotPersonalDataCollectorTests.Api.User
 {
-    internal class DeserializeHttpRespondeTests
+    internal class DeserializeHttpResponseTests
     {
     }
 }

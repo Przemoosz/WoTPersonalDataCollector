@@ -6,7 +6,6 @@ using static TddXt.AnyRoot.Root;
 using TddXt.AnyRoot.Strings;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 
-
 namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
 {
     [TestFixture]
@@ -29,7 +28,6 @@ namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
             var applicationId = Any.String();
             var userName = Any.String();
             _configuration.ApplicationId.Returns(applicationId);
-            // Environment.SetEnvironmentVariable("WotUserName", userName);
             _configuration.TryGetUserName(out Arg.Any<string>()).Returns(x =>
             {
                 x[0] = userName;
@@ -38,7 +36,6 @@ namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
 
             // Act
             var actual = _uut.Create();
-
             actual.Should().BeAssignableTo<IRequestObject>();
             actual.Should().BeAssignableTo<UserInfoRequestObject>();
             var convertedActual = actual as UserInfoRequestObject;

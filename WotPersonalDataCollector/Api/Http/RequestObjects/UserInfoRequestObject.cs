@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WotPersonalDataCollector.Api.Http.RequestObjects
+﻿namespace WotPersonalDataCollector.Api.Http.RequestObjects
 {
     internal class UserInfoRequestObject: IRequestObject
     {

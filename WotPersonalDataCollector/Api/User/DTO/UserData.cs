@@ -1,7 +1,11 @@
-﻿namespace WotPersonalDataCollector.Api.User.DTO;
+﻿using Newtonsoft.Json;
+
+namespace WotPersonalDataCollector.Api.User.DTO;
 
 public class UserData
 {
-    public string nickname { get; set; }
-    public int account_id { get; set; }
+    [JsonProperty("Nickname")]
+    public string Nickname { get; set; }
+    [JsonProperty("accoutn_id")]
+    public int AccountId { get; set; }
 }

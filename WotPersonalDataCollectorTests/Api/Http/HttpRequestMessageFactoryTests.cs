@@ -27,6 +27,7 @@ namespace WotPersonalDataCollectorTests.Api.Http
             // Arrange
             var apiUrl = Any.String();
             _apiUrlFactory.Create(apiUrl).Returns(apiUrl);
+
             // Actual
             var actual = _uut.Create(apiUrl);
 

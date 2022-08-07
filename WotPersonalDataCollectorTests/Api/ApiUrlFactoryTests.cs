@@ -1,6 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using Newtonsoft.Json;
+﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http.RequestObjects;

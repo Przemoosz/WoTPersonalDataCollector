@@ -1,7 +1,4 @@
 ﻿using System.Net.Http;
-using System.Text;
-using Newtonsoft.Json;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
 
 namespace WotPersonalDataCollector.Api.Http
 {
@@ -17,8 +14,6 @@ namespace WotPersonalDataCollector.Api.Http
         {
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, _apiUrlFactory.Create(apiUri));
             requestMessage.Headers.Add("Accept", "application/json");
-            // var serializedObject = JsonConvert.SerializeObject(_requestObject.Create());
-            // requestMessage.Content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
             return requestMessage;
         }
     }

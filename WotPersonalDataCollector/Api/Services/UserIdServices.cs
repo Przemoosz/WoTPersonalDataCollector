@@ -8,7 +8,6 @@ namespace WotPersonalDataCollector.Api.Services
     {
         private readonly IHttpClientWrapperFactory _clientWrapperFactory;
         private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
- 
 
         public UserIdServices(IHttpClientWrapperFactory clientWrapperFactory, IHttpRequestMessageFactory httpRequestMessageFactory)
         {

@@ -1,12 +1,7 @@
 ﻿using System;
 using FluentAssertions;
-using Newtonsoft.Json;
-using NSubstitute;
 using NUnit.Framework;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Http;
-using static TddXt.AnyRoot.Root;
-using TddXt.AnyRoot.Strings;
 
 namespace WotPersonalDataCollectorTests.Api.Http
 {
@@ -31,7 +26,6 @@ namespace WotPersonalDataCollectorTests.Api.Http
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<IHttpClientWrapper>();
             actual.Should().BeAssignableTo<IDisposable>();
-
         }
     }
 }

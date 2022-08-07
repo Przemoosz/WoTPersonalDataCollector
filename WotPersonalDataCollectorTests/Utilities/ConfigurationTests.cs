@@ -166,6 +166,5 @@ namespace WotPersonalDataCollectorTests.Utilities
             // Assert
             act.Should().Throw<LocalVariableException>().WithMessage("Provided userId can not be null or empty value!");
         }
-
     }
 }

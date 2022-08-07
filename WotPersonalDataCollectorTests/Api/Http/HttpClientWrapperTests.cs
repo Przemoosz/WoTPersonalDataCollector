@@ -35,6 +35,5 @@ namespace WotPersonalDataCollectorTests.Api.Http
         {
             _uut.Dispose();
         }
-            
     }
 }

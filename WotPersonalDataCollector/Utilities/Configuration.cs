@@ -2,7 +2,6 @@
 using GuardNet;
 using WotPersonalDataCollector.Exceptions;
 
-
 namespace WotPersonalDataCollector.Utilities
 {
     internal class Configuration: IConfiguration 
