@@ -8,8 +8,8 @@ namespace WotPersonalDataCollector.Workflow.Steps
 
         public async Task Execute(WorkflowContext context)
         {
-            await this.ExecuteInner(context);
-            if (_next is not null && this.SuccessfulStatus())
+            await ExecuteInner(context);
+            if (_next is not null && SuccessfulStatus())
             {
                 await _next.Execute(context);
             }
