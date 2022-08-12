@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 
-namespace WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects
+namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
 {
     internal class CreateUserInfoRequestObjectStep: BaseStep
     {
         private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
+        private bool _createdUserInfoRequestObject = true;
 
         public CreateUserInfoRequestObjectStep(IUserInfoRequestObjectFactory userInfoRequestObjectFactory)
         {
@@ -21,8 +22,12 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects
             }
             catch (Exception exception)
             {
-                context.Logger.LogError($"Unexpected error occurred during creating userInfoObject. Message: {exception.Message}\n At: {exception.StackTrace} ")
+                context.Logger.LogError(
+                    $"Unexpected error occurred during creating userInfoObject. Message: {exception.Message}\n At: {exception.StackTrace} ");
+                _createdUserInfoRequestObject = false;
             }
         }
+        public override bool SuccessfulStatus() => _createdUserInfoRequestObject;
     }
+
 }

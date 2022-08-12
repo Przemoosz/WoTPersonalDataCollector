@@ -4,7 +4,7 @@ using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
+using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 
 namespace WotPersonalDataCollectorTests.Workflow.Factory
 {
@@ -29,7 +29,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
 
             // Assert
             actual.Should().NotBeNull();
-            actual.Should().BeOfType<BaseStep>();
+            actual.Should().BeAssignableTo<BaseStep>();
             actual.Should().BeOfType<CreateUserInfoRequestObjectStep>();
         }
     }

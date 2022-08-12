@@ -1,7 +1,7 @@
 ﻿using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Steps;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
+using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 
 namespace WotPersonalDataCollector.Workflow.Factory
 {
@@ -23,10 +23,5 @@ namespace WotPersonalDataCollector.Workflow.Factory
         {
             return new HttpRequestMessageCreate();
         }
-    }
-
-    internal interface IWorkflowStepsFactory
-    {
-        BaseStep CreateUserInfoRequestObject();
     }
 }

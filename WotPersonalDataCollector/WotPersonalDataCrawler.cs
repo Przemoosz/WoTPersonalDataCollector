@@ -25,13 +25,13 @@ namespace WotPersonalDataCollector
         [FunctionName("WotPersonalDataCrawler")]
         public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            var startingWorkflow = new WorkflowBuilder()
-                .AddStep(new CreateUserInfoRequestObject(_userInfoRequestObjectFactory))
-                .AddStep(new HttpRequestMessageCreate())
-                .Build();
-            await startingWorkflow.Execute(new WorkflowContext() { Logger = log });
-            // var result = await _userIdServices.GetUserApiResponseAsync();
-            // log.LogWarning(await result.Content.ReadAsStringAsync());
+            // var startingWorkflow = new WorkflowBuilder()
+            //     .AddStep(new CreateUserInfoRequestObject(_userInfoRequestObjectFactory))
+            //     .AddStep(new HttpRequestMessageCreate())
+            //     .Build();
+            // await startingWorkflow.Execute(new WorkflowContext() { Logger = log });
+            // // var result = await _userIdServices.GetUserApiResponseAsync();
+            // // log.LogWarning(await result.Content.ReadAsStringAsync());
         }
     }
 }
