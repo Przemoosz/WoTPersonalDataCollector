@@ -9,7 +9,7 @@ using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Workflow.Steps
+namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
 {
     [TestFixture]
     public class CreateUserInfoRequestObjectStepTests
@@ -29,6 +29,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps
         {
             // Act
             var context = Any.Instance<WorkflowContext>();
+            context.UserInfoRequestObject = null;
             var userInfoRequestObject = Any.Instance<UserInfoRequestObject>();
             _userInfoRequestObjectFactory.Create().Returns(userInfoRequestObject);
 
@@ -36,7 +37,9 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps
             await _uut.ExecuteInner(context);
 
             // Assert
+            context.UserInfoRequestObject.Should().NotBeNull();
             context.UserInfoRequestObject.Should().Be(userInfoRequestObject);
+            _uut.SuccessfulStatus().Should().BeTrue();
         }
 
         [Test]
@@ -51,6 +54,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps
 
             // Assert
             _uut.SuccessfulStatus().Should().BeFalse();
+            context.UserInfoRequestObject.Should().BeNull();
         }
     }
 }

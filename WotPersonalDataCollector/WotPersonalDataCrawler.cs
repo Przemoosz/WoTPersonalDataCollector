@@ -27,7 +27,7 @@ namespace WotPersonalDataCollector
         {
             // var startingWorkflow = new WorkflowBuilder()
             //     .AddStep(new CreateUserInfoRequestObject(_userInfoRequestObjectFactory))
-            //     .AddStep(new HttpRequestMessageCreate())
+            //     .AddStep(new HttpRequestMessageCreateStep())
             //     .Build();
             // await startingWorkflow.Execute(new WorkflowContext() { Logger = log });
             // // var result = await _userIdServices.GetUserApiResponseAsync();

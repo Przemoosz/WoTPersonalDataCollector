@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.WebApiCompatShim;
 using NSubstitute;
 using NUnit.Framework;
+using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
@@ -13,12 +15,14 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
     {
         private IWorkflowStepsFactory _uut;
         private IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
+        private IHttpRequestMessageFactory _httpRequestMessagefactory;
 
         [SetUp]
         public void SetUp()
         {
             _userInfoRequestObjectFactory = Substitute.For<IUserInfoRequestObjectFactory>();
-            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory);
+            _httpRequestMessagefactory = Substitute.For<IHttpRequestMessageFactory>();
+            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _httpRequestMessagefactory);
         }
 
         [Test]

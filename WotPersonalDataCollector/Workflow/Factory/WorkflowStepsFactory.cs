@@ -1,6 +1,6 @@
-﻿using WotPersonalDataCollector.Api.Http.RequestObjects;
+﻿using WotPersonalDataCollector.Api.Http;
+using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Steps;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 
 namespace WotPersonalDataCollector.Workflow.Factory
@@ -8,10 +8,12 @@ namespace WotPersonalDataCollector.Workflow.Factory
     internal sealed class WorkflowStepsFactory: IWorkflowStepsFactory
     {
         private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
+        private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
 
-        public WorkflowStepsFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory)
+        public WorkflowStepsFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory, IHttpRequestMessageFactory httpRequestMessageFactory)
         {
             _userInfoRequestObjectFactory = userInfoRequestObjectFactory;
+            _httpRequestMessageFactory = httpRequestMessageFactory;
         }
         
         public BaseStep CreateUserInfoRequestObject()
@@ -21,7 +23,7 @@ namespace WotPersonalDataCollector.Workflow.Factory
 
         public BaseStep CreateHttpRequestMessage()
         {
-            return new HttpRequestMessageCreate();
+            return new HttpRequestMessageCreateStep(_httpRequestMessageFactory);
         }
     }
 }
