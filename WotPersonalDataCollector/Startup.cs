@@ -5,6 +5,7 @@ using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Utilities;
+using WotPersonalDataCollector.Workflow.Factory;
 
 [assembly: FunctionsStartup(typeof(WotPersonalDataCollector.Startup))]
 namespace WotPersonalDataCollector
@@ -18,7 +19,8 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<IUserInfoRequestObjectFactory, UserInfoRequestObjectFactory>();
             builder.Services.AddSingleton<IApiUrlFactory, ApiUrlFactory>();
             builder.Services.AddSingleton<IHttpRequestMessageFactory, HttpRequestMessageFactory>();
-            builder.Services.AddSingleton<IUserIdServices, UserIdServices>();
+            builder.Services.AddSingleton<IWotService, WotService>();
+            builder.Services.AddSingleton<IWorkflowStepsFactory, WorkflowStepsFactory>();
         }
     }
 }

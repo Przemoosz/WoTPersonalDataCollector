@@ -11,16 +11,16 @@ namespace WotPersonalDataCollector.Api.User
 {
     internal class DeserializeHttpResponse: IDeserializeHttpResponse
     {
-        private readonly IUserIdServices _userIdServices;
+        private readonly IWotService _wotService;
 
-        public DeserializeHttpResponse(IUserIdServices userIdServices)
+        public DeserializeHttpResponse(IWotService wotService)
         {
-            _userIdServices = userIdServices;
+            _wotService = wotService;
         }
 
         public async Task<UserData> Deserialize()
         {
-            var response = await _userIdServices.GetUserApiResponseAsync();
+            var response = await _wotService.GetUserIdApiResponseAsync(null);
             if (!response.IsSuccessStatusCode)
             {
                 throw new HttpRequestException($"Do not received 200 Ok from server instead received {response.StatusCode.ToString()}");

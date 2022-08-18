@@ -5,7 +5,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
-using NSubstitute.ReturnsExtensions;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;

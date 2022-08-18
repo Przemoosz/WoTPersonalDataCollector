@@ -6,4 +6,5 @@ internal interface IWorkflowStepsFactory
 {
     BaseStep CreateUserInfoRequestObject();
     BaseStep CreateHttpRequestMessage();
+    BaseStep CreateSendRequestForUserId();
 }

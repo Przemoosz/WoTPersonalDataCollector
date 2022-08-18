@@ -10,5 +10,6 @@ namespace WotPersonalDataCollector.Workflow
         public ILogger Logger { get; init; }
         public IRequestObject UserInfoRequestObject { get; set; }
         public HttpRequestMessage UserInfoRequestMessage { get; set; }
+        public HttpResponseMessage UserIdResponseMessage { get; set; }
     }
 }

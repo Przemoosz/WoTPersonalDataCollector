@@ -20,14 +20,14 @@ namespace WotPersonalDataCollectorTests.Api.User
     [TestFixture]
     public class DeserializeHttpResponseTests
     {
-        private IUserIdServices _userIdServices;
+        private IWotService _wotService;
         private IDeserializeHttpResponse _uut;
 
         [SetUp]
         public void SetUp()
         {
-            _userIdServices = Substitute.For<IUserIdServices>();
-            _uut = new DeserializeHttpResponse(_userIdServices);
+            _wotService = Substitute.For<IWotService>();
+            _uut = new DeserializeHttpResponse(_wotService);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace WotPersonalDataCollectorTests.Api.User
             responseObject.meta.count = 1;
             responseObject.status = "ok";
             response.Content = new StringContent(JsonConvert.SerializeObject(responseObject), Encoding.UTF8, "application/json");
-            _userIdServices.GetUserApiResponseAsync().Returns(response);
+            _wotService.GetUserIdApiResponseAsync(null).Returns(response);
 
             // Act
             var actual = await _uut.Deserialize();
@@ -57,13 +57,13 @@ namespace WotPersonalDataCollectorTests.Api.User
         {
             // Arrange
             var response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            _userIdServices.GetUserApiResponseAsync().Returns(response);
+            _wotService.GetUserIdApiResponseAsync(null).Returns(response);
 
             // Act
             Func<Task> act = async () => await _uut.Deserialize();
 
             // Assert
-            act.Should().ThrowAsync<HttpRequestException>()
+            await act.Should().ThrowAsync<HttpRequestException>()
                 .WithMessage($"Do not received 200 Ok from server instead received {response.StatusCode.ToString()}");
         }
 
@@ -74,7 +74,7 @@ namespace WotPersonalDataCollectorTests.Api.User
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var responseObject = Any.Instance<object>();
             response.Content = new StringContent(JsonConvert.SerializeObject(responseObject), Encoding.UTF8, "application/json");
-            _userIdServices.GetUserApiResponseAsync().Returns(response);
+            _wotService.GetUserIdApiResponseAsync(null).Returns(response);
 
             // Act
             Func<Task> act = async () => await _uut.Deserialize();
@@ -92,7 +92,7 @@ namespace WotPersonalDataCollectorTests.Api.User
             var responseObject = Any.Instance<ResponseObject>();
             responseObject.status = "error";
             response.Content = new StringContent(JsonConvert.SerializeObject(responseObject), Encoding.UTF8, "application/json");
-            _userIdServices.GetUserApiResponseAsync().Returns(response);
+            _wotService.GetUserIdApiResponseAsync(null).Returns(response);
 
             // Act
             Func<Task> act = async () => await _uut.Deserialize();
@@ -112,7 +112,7 @@ namespace WotPersonalDataCollectorTests.Api.User
             responseObject.meta.count = count;
             responseObject.status = "ok";
             response.Content = new StringContent(JsonConvert.SerializeObject(responseObject), Encoding.UTF8, "application/json");
-            _userIdServices.GetUserApiResponseAsync().Returns(response);
+            _wotService.GetUserIdApiResponseAsync(null).Returns(response);
 
             // Act
             Func<Task> act = async () => await _uut.Deserialize();

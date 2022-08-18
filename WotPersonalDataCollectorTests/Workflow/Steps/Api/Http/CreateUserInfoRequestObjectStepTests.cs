@@ -47,6 +47,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
         {
             // Assert
             var context = Any.Instance<WorkflowContext>();
+            context.UserInfoRequestObject = null;
             _userInfoRequestObjectFactory.Create().Throws(new Exception());
 
             // Act
