@@ -24,11 +24,10 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateUserInfoRequestObject())
                 .AddStep(_workflowStepsFactory.CreateHttpRequestMessage())
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserId())
+                .AddStep(_workflowStepsFactory.CreateDeserializeUserIdResponseMessage())
                 .Build();
+            await startingWorkflow.Execute(new WorkflowContext() { Logger = log, UserInfoApiUrl = "https://api.worldoftanks.eu/wot/account/list/"});
 
-            await startingWorkflow.Execute(new WorkflowContext() { Logger = log, UserInfoApiUrl = "https://api.worldoftanks.eu/wot/account/list/" });
-            // // var result = await _wotService.GetUserIdApiResponseAsync();
-            // // log.LogWarning(await result.Content.ReadAsStringAsync());
         }
     }
 }

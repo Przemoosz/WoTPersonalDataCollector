@@ -4,6 +4,7 @@ using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Services;
+using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow.Factory;
 
@@ -21,6 +22,7 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<IHttpRequestMessageFactory, HttpRequestMessageFactory>();
             builder.Services.AddSingleton<IWotService, WotService>();
             builder.Services.AddSingleton<IWorkflowStepsFactory, WorkflowStepsFactory>();
+            builder.Services.AddSingleton<IDeserializeUserIdHttpResponse, DeserializeUserIdHttpResponse>();
         }
     }
 }

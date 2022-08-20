@@ -32,6 +32,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Services
                 context.Logger.LogError(
                     $"Unexpected error occurred during connecting with WOT API. Message: {exception.Message}\n At: {exception.StackTrace} ");
                 _getCurrentResponse = false;
+                context.UnexpectedException = true;
             }
         }
 

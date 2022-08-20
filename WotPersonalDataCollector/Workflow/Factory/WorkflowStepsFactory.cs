@@ -1,9 +1,11 @@
 ﻿using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Services;
+using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Workflow.Steps;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
+using WotPersonalDataCollector.Workflow.Steps.Api.User;
 
 namespace WotPersonalDataCollector.Workflow.Factory
 {
@@ -12,12 +14,16 @@ namespace WotPersonalDataCollector.Workflow.Factory
         private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
         private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
         private readonly IWotService _wotService;
+        private readonly IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
 
-        public WorkflowStepsFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory, IHttpRequestMessageFactory httpRequestMessageFactory, IWotService wotService)
+        public WorkflowStepsFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory,
+            IHttpRequestMessageFactory httpRequestMessageFactory, IWotService wotService,
+            IDeserializeUserIdHttpResponse deserializeUserIdHttpResponse)
         {
             _userInfoRequestObjectFactory = userInfoRequestObjectFactory;
             _httpRequestMessageFactory = httpRequestMessageFactory;
             _wotService = wotService;
+            _deserializeUserIdHttpResponse = deserializeUserIdHttpResponse;
         }
         
         public BaseStep CreateUserInfoRequestObject()
@@ -32,6 +38,11 @@ namespace WotPersonalDataCollector.Workflow.Factory
         public BaseStep CreateSendRequestForUserId()
         {
             return new SendRequestForUserIdStep(_wotService);
+        }
+
+        public BaseStep CreateDeserializeUserIdResponseMessage()
+        {
+            return new DeserializeUserIdHttpResponseStep(_deserializeUserIdHttpResponse);
         }
     }
 }

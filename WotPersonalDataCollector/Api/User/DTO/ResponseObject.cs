@@ -6,6 +6,6 @@ namespace WotPersonalDataCollector.Api.User.DTO
     {
         public string status { get; set; }
         public Meta meta { get; set; }
-        public List<UserData> data { get; set; }
+        public List<UserIdData> data { get; set; }
     }
 }

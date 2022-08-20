@@ -44,11 +44,12 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
         }
 
         [Test]
-        public async Task ShouldSetSuccessfulStatusToFalseWhenExceptionIsThrown()
+        public async Task ShouldSetSuccessfulStatusToFalseWhenAnyExceptionIsThrown()
         {
             // Arrange 
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestMessage = null;
+            context.UnexpectedException = false;
             _httpRequestMessageFactory.Create(context.UserInfoApiUrl).Throws(new Exception());
 
             // Act
@@ -57,6 +58,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
             // Assert
             context.UserInfoRequestMessage.Should().BeNull();
             _uut.SuccessfulStatus().Should().BeFalse();
+            context.UnexpectedException.Should().BeTrue();
         }
     }
 }

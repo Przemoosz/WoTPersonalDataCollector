@@ -25,6 +25,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
                 context.Logger.LogError(
                     $"Unexpected error occurred during creating userInfoObject. Message: {exception.Message}\n At: {exception.StackTrace} ");
                 _createdUserInfoRequestObject = false;
+                context.UnexpectedException = true;
             }
         }
         public override bool SuccessfulStatus() => _createdUserInfoRequestObject;

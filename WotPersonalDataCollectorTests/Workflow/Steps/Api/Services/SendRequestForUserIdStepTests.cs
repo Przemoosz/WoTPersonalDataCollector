@@ -49,6 +49,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
             // Assert
             var context = Any.Instance<WorkflowContext>();
             context.UserIdResponseMessage = null;
+            context.UnexpectedException = false;
             _wotService.GetUserIdApiResponseAsync(context.UserInfoRequestMessage).ThrowsAsync(new Exception());
 
             // Act
@@ -57,6 +58,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
             // Assert
             _uut.SuccessfulStatus().Should().BeFalse();
             context.UserIdResponseMessage.Should().BeNull();
+            context.UnexpectedException.Should().BeFalse();
         }
 
         [Test]
@@ -65,6 +67,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
             // Assert
             var context = Any.Instance<WorkflowContext>();
             context.UserIdResponseMessage = null;
+            context.UnexpectedException = false;
             _wotService.GetUserIdApiResponseAsync(context.UserInfoRequestMessage).ThrowsAsync(new Exception());
 
             // Act
@@ -73,6 +76,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
             // Assert
             _uut.SuccessfulStatus().Should().BeFalse();
             context.UserIdResponseMessage.Should().BeNull();
+            context.UnexpectedException.Should().BeTrue();
         }
     }
 }

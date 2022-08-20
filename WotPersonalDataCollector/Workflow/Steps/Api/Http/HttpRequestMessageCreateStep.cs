@@ -25,6 +25,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
                 context.Logger.LogError(
                     $"Unexpected error occurred when creating http requestMessage. Message: {exception.Message}\n At: {exception.StackTrace}");
                 _createdRequestMessage = false;
+                context.UnexpectedException = true;
             }
         }
 

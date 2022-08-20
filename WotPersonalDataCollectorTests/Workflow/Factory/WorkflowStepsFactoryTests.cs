@@ -4,10 +4,12 @@ using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Services;
+using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
+using WotPersonalDataCollector.Workflow.Steps.Api.User;
 
 namespace WotPersonalDataCollectorTests.Workflow.Factory
 {
@@ -18,6 +20,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         private IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
         private IHttpRequestMessageFactory _httpRequestMessagefactory;
         private IWotService _wotService;
+        private IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
 
         [SetUp]
         public void SetUp()
@@ -25,7 +28,9 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             _userInfoRequestObjectFactory = Substitute.For<IUserInfoRequestObjectFactory>();
             _httpRequestMessagefactory = Substitute.For<IHttpRequestMessageFactory>();
             _wotService = Substitute.For<IWotService>();
-            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _httpRequestMessagefactory, _wotService);
+            _deserializeUserIdHttpResponse = Substitute.For<IDeserializeUserIdHttpResponse>();
+            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _httpRequestMessagefactory, _wotService,
+                _deserializeUserIdHttpResponse);
         }
 
         [Test]
@@ -53,7 +58,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         }
 
         [Test]
-        public void ShouldSendRequestForUserIdStep()
+        public void ShouldCreateSendRequestForUserIdStep()
         {
             // Act
             var actual = _uut.CreateSendRequestForUserId();
@@ -62,6 +67,18 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<BaseStep>();
             actual.Should().BeOfType<SendRequestForUserIdStep>();
+        }
+
+        [Test]
+        public void ShouldCreateDeserializeUserIdHttpResponseStep()
+        {
+            // Act
+            var actual = _uut.CreateDeserializeUserIdResponseMessage();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<DeserializeUserIdHttpResponseStep>();
         }
     }
 }
