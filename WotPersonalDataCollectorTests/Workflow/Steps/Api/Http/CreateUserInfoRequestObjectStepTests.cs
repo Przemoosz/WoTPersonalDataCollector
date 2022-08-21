@@ -27,7 +27,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
         [Test]
         public async Task ShouldCreateUserInfoRequestObject()
         {
-            // Act
+            // Arrange
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestObject = null;
             var userInfoRequestObject = Any.Instance<UserInfoRequestObject>();
@@ -45,7 +45,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
         [Test]
         public async Task ShouldSetSuccessfulStatusToFalseWhenAnyExceptionIsThrown()
         {
-            // Assert
+            // Arrange
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestObject = null;
             context.UnexpectedException = false;

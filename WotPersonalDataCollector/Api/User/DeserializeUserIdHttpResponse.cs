@@ -9,7 +9,6 @@ namespace WotPersonalDataCollector.Api.User
 {
     internal class DeserializeUserIdHttpResponse: IDeserializeUserIdHttpResponse
     {
-
         public async Task<UserIdData> Deserialize(HttpResponseMessage responseMessage)
         {
             var deserializedData = JsonConvert.DeserializeObject<ResponseObject>(await responseMessage.Content.ReadAsStringAsync());

@@ -58,13 +58,12 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.User
             _uut.SuccessfulStatus().Should().BeFalse();
             context.UserIdData.Should().BeNull();
             context.UnexpectedException.Should().BeFalse();
-
         }
 
         [Test]
         public async Task ShouldSetSuccessfulStatusToFalseWhenWotApiResponseExceptionIsThrown()
         {
-            // Assert
+            // Arrange
             var context = Any.Instance<WorkflowContext>();
             context.UnexpectedException = false;
             context.UserIdData = null;
@@ -82,7 +81,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.User
         [Test]
         public async Task ShouldSetSuccessfulStatusToFalseWhenMoreThanOneUserExceptionIsThrown()
         {
-            // Assert
+            // Arrange
             var context = Any.Instance<WorkflowContext>();
             context.UnexpectedException = false;
             context.UserIdData = null;
@@ -100,7 +99,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.User
         [Test]
         public async Task ShouldSetSuccessfulStatusToFalseWhenAnyExceptionIsThrown()
         {
-            // Assert
+            // Arrange
             var context = Any.Instance<WorkflowContext>();
             context.UnexpectedException = false;
             context.UserIdData = null;

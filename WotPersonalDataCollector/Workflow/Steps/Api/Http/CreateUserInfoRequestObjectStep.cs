@@ -30,5 +30,4 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
         }
         public override bool SuccessfulStatus() => _createdUserInfoRequestObject;
     }
-
 }

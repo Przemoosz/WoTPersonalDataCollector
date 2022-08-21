@@ -35,6 +35,7 @@ namespace WotPersonalDataCollector.Workflow.Factory
         {
             return new HttpRequestMessageCreateStep(_httpRequestMessageFactory);
         }
+
         public BaseStep CreateSendRequestForUserId()
         {
             return new SendRequestForUserIdStep(_wotService);
