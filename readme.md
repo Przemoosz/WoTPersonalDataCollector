@@ -66,3 +66,11 @@ To build project type:
 ```bash
 dotnet build
 ```
+
+## Configuration 
+In WotPersonalDataCrawler.cs change argument value in TimeTrigger attribute to trigger 
+function on different period of time. Attribute use NCRONTAB expressions more in [documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-csharp)
+Example of this app triggered once every one hour
+```csharp
+        public async Task Run([TimerTrigger("0 0 */1 * * *")]TimerInfo myTimer, ILogger log)
+```
