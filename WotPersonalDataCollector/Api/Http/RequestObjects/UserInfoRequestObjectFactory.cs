@@ -14,7 +14,7 @@ namespace WotPersonalDataCollector.Api.Http.RequestObjects
         {
             var requestObject = new UserInfoRequestObject()
             {
-                application_id = _configuration.ApplicationId,
+                application_id = _configuration.ApplicationId
             };
             requestObject.search = _configuration.TryGetUserName(out string userName) ? userName : "";
             return requestObject;

@@ -26,7 +26,7 @@ namespace WotPersonalDataCollectorTests.Api
         {
             // Arrange
             string url = Any.String();
-            var requestObject = Any.Instance<RequestObject>();
+            var requestObject = Any.Instance<IRequestObject>();
             _userInfoRequestObjectFactory.Create().Returns(requestObject);
 
             // Act
