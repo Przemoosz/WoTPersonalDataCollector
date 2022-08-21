@@ -50,7 +50,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
             var context = Any.Instance<WorkflowContext>();
             context.UserIdResponseMessage = null;
             context.UnexpectedException = false;
-            _wotService.GetUserIdApiResponseAsync(context.UserInfoRequestMessage).ThrowsAsync(new Exception());
+            _wotService.GetUserIdApiResponseAsync(context.UserInfoRequestMessage).ThrowsAsync(new HttpRequestException());
 
             // Act
             await _uut.ExecuteInner(context);
