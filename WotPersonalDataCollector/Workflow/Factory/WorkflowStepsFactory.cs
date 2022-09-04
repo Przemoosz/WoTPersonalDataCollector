@@ -70,5 +70,10 @@ namespace WotPersonalDataCollector.Workflow.Factory
         {
             return new CreateUserInfoApiUriStep(_apiUriFactory);
         }
+
+        public BaseStep CreateUserPersonalDataApiUri()
+        {
+            return new CreateUserPersonalDataUriStep(_apiUriFactory);
+        }
     }
 }

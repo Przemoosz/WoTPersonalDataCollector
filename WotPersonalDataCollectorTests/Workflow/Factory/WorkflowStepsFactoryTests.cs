@@ -120,5 +120,17 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             actual.Should().BeAssignableTo<BaseStep>();
             actual.Should().BeOfType<CreateUserInfoApiUriStep>();
         }
+
+        [Test]
+        public void ShouldCreateUserPersonalDataUriStep()
+        {
+            // Act
+            var actual = _uut.CreateUserPersonalDataApiUri();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateUserPersonalDataUriStep>();
+        }
     }
 }

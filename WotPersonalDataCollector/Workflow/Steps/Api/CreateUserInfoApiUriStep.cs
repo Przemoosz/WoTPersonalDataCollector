@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 using WotPersonalDataCollector.Api;
 
 namespace WotPersonalDataCollector.Workflow.Steps.Api
@@ -6,6 +8,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api
     internal class CreateUserInfoApiUriStep: BaseStep
     {
         private readonly IApiUriFactory _apiUriFactory;
+        private bool _createdUserInfoApiUriWithParameters = true;
 
         public CreateUserInfoApiUriStep(IApiUriFactory apiUriFactory)
         {
@@ -13,8 +16,20 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api
         }
         public override async Task ExecuteInner(WorkflowContext context)
         {
-            context.UserInfoApiUriWithParameters =
-                _apiUriFactory.Create(context.UserInfoApiUrl, context.UserInfoRequestObject);
+            try
+            {
+                context.UserInfoApiUriWithParameters =
+                    _apiUriFactory.Create(context.UserInfoApiUrl, context.UserInfoRequestObject);
+            }
+            catch (Exception exception)
+            {
+                context.Logger.LogError(
+                    $"Unexpected error occurred when creating api uri for user id data collector. Message: {exception.Message}\n At: {exception.StackTrace}");
+                _createdUserInfoApiUriWithParameters = false;
+                context.UnexpectedException = true;
+            }
         }
+
+        public override bool SuccessfulStatus() => _createdUserInfoApiUriWithParameters;
     }
 }
