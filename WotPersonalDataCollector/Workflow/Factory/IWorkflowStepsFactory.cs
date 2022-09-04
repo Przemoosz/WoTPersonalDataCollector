@@ -5,7 +5,10 @@ namespace WotPersonalDataCollector.Workflow.Factory;
 internal interface IWorkflowStepsFactory
 {
     BaseStep CreateUserInfoRequestObject();
-    BaseStep CreateHttpRequestMessage();
+    BaseStep CreateUserInfoHttpRequestMessage();
     BaseStep CreateSendRequestForUserId();
     BaseStep CreateDeserializeUserIdResponseMessage();
+    BaseStep CreateUserPersonalDataRequestObject();
+    BaseStep CreateUserPersonalDataHttpRequestMessage();
+    BaseStep CreateUserInfoApiUrl();
 }

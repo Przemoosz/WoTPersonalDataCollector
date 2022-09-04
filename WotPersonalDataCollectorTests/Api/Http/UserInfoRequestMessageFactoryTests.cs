@@ -5,20 +5,21 @@ using WotPersonalDataCollector.Api.Http;
 using static TddXt.AnyRoot.Root;
 using TddXt.AnyRoot.Strings;
 using WotPersonalDataCollector.Api;
+using WotPersonalDataCollector.Api.Http.RequestObjects;
 
 namespace WotPersonalDataCollectorTests.Api.Http
 {
     [TestFixture]
-    public class HttpRequestMessageFactoryTests
+    public class UserInfoRequestMessageFactoryTests
     {
-        private IHttpRequestMessageFactory _uut;
-        private IApiUrlFactory _apiUrlFactory;
+        private IUserInfoRequestMessageFactory _uut;
+        private IApiUriFactory _apiUriFactory;
 
         [SetUp]
         public void SetUp()
         {
-            _apiUrlFactory = Substitute.For<IApiUrlFactory>();
-            _uut = new HttpRequestMessageFactory(_apiUrlFactory);
+            _apiUriFactory = Substitute.For<IApiUriFactory>();
+            _uut = new UserInfoRequestMessageFactory(_apiUriFactory);
         }
 
         [Test]
@@ -26,7 +27,8 @@ namespace WotPersonalDataCollectorTests.Api.Http
         {
             // Arrange
             var apiUrl = Any.String();
-            _apiUrlFactory.Create(apiUrl).Returns(apiUrl);
+            var requestObject = Any.Instance<IRequestObject>();
+            _apiUriFactory.Create(apiUrl, requestObject).Returns(apiUrl);
 
             // Actual
             var actual = _uut.Create(apiUrl);

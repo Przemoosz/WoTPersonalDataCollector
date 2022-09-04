@@ -18,8 +18,8 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<IConfiguration, Configuration>();
             builder.Services.AddSingleton<IHttpClientWrapperFactory, HttpClientWrapperFactory>();
             builder.Services.AddSingleton<IUserInfoRequestObjectFactory, UserInfoRequestObjectFactory>();
-            builder.Services.AddSingleton<IApiUrlFactory, ApiUrlFactory>();
-            builder.Services.AddSingleton<IHttpRequestMessageFactory, HttpRequestMessageFactory>();
+            builder.Services.AddSingleton<IApiUriFactory, ApiUriFactory>();
+            builder.Services.AddSingleton<IUserInfoRequestMessageFactory, UserInfoRequestMessageFactory>();
             builder.Services.AddSingleton<IWotService, WotService>();
             builder.Services.AddSingleton<IWorkflowStepsFactory, WorkflowStepsFactory>();
             builder.Services.AddSingleton<IDeserializeUserIdHttpResponse, DeserializeUserIdHttpResponse>();

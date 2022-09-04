@@ -20,6 +20,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.User
             try
             {
                 context.UserIdData = await _deserializeUserIdHttpResponse.Deserialize(context.UserIdResponseMessage);
+                context.Logger.LogInformation($"{context.UserIdData.Nickname} user id is: {context.UserIdData.AccountId}");
             }
             catch (DeserializeJsonException exception)
             {

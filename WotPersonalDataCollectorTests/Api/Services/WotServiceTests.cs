@@ -40,6 +40,7 @@ namespace WotPersonalDataCollectorTests.Api.Services
             // Assert
             actual.Should().Be(responseMessage);
         }
+
         [Test]
         public async Task ShouldThrowExceptionWhenResponseNotOk()
         {

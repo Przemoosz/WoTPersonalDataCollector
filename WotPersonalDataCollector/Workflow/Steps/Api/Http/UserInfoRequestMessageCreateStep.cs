@@ -5,20 +5,20 @@ using WotPersonalDataCollector.Api.Http;
 
 namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
 {
-    internal class HttpRequestMessageCreateStep: BaseStep
+    internal class UserInfoRequestMessageCreateStep: BaseStep
     {
-        private readonly IHttpRequestMessageFactory _httpRequestMessageFactory;
+        private readonly IUserInfoRequestMessageFactory _userInfoRequestMessageFactory;
         private bool _createdRequestMessage = true;
 
-        public HttpRequestMessageCreateStep(IHttpRequestMessageFactory httpRequestMessageFactory)
+        public UserInfoRequestMessageCreateStep(IUserInfoRequestMessageFactory userInfoRequestMessageFactory)
         {
-            _httpRequestMessageFactory = httpRequestMessageFactory;
+            _userInfoRequestMessageFactory = userInfoRequestMessageFactory;
         }
         public override async Task ExecuteInner(WorkflowContext context)
         {
             try
             {
-                context.UserInfoRequestMessage = _httpRequestMessageFactory.Create(context.UserInfoApiUrl);
+                context.UserInfoRequestMessage = _userInfoRequestMessageFactory.Create(context.UserInfoApiUrlWithParameters);
             }
             catch (Exception exception)
             {

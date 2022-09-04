@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Services;
@@ -8,6 +9,7 @@ using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
+using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
 using WotPersonalDataCollector.Workflow.Steps.Api.User;
 
@@ -18,19 +20,23 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
     {
         private IWorkflowStepsFactory _uut;
         private IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
-        private IHttpRequestMessageFactory _httpRequestMessagefactory;
+        private IUserInfoRequestMessageFactory _userInfoRequestMessagefactory;
         private IWotService _wotService;
         private IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
+        private IApiUriFactory _apiUriFactory;
+        private IUserPersonalDataRequestObjectFactory _userPersonalDataRequestObjectFactory;
 
         [SetUp]
         public void SetUp()
         {
             _userInfoRequestObjectFactory = Substitute.For<IUserInfoRequestObjectFactory>();
-            _httpRequestMessagefactory = Substitute.For<IHttpRequestMessageFactory>();
+            _userPersonalDataRequestObjectFactory = Substitute.For<IUserPersonalDataRequestObjectFactory>();
+            _userInfoRequestMessagefactory = Substitute.For<IUserInfoRequestMessageFactory>();
             _wotService = Substitute.For<IWotService>();
+            _apiUriFactory = Substitute.For<IApiUriFactory>();
             _deserializeUserIdHttpResponse = Substitute.For<IDeserializeUserIdHttpResponse>();
-            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _httpRequestMessagefactory, _wotService,
-                _deserializeUserIdHttpResponse);
+            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _userInfoRequestMessagefactory, _wotService,
+                _deserializeUserIdHttpResponse, _apiUriFactory, _userPersonalDataRequestObjectFactory);
         }
 
         [Test]
@@ -49,12 +55,12 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         public void ShouldCreateHttpRequestMessageStep()
         {
             // Act
-            var actual = _uut.CreateHttpRequestMessage();
+            var actual = _uut.CreateUserInfoHttpRequestMessage();
 
             // Assert
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<BaseStep>();
-            actual.Should().BeOfType<HttpRequestMessageCreateStep>();
+            actual.Should().BeOfType<UserInfoRequestMessageCreateStep>();
         }
 
         [Test]
