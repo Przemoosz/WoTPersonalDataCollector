@@ -75,4 +75,4 @@ function on different period of time. Attribute use NCRONTAB expressions more ab
 Example of this app triggered once every one hour:
 ```csharp
 public async Task Run([TimerTrigger("0 0 */1 * * *")]TimerInfo myTimer, ILogger log)
-```~~~~
+```
