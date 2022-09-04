@@ -39,7 +39,7 @@ Version name - Description - Status
 - WPD-5-DisplayCollectedDataInAspNetApp - Displaying saved data in CosmosDb in ASP.NET app - Planned
 ## Installation
 
-To use this app locally you have to install Visual Studio 2022. After this clone solution and add "local.settings.json" 
+To use this app locally you have to install Visual Studio 2022. After this clone solution and add **local.settings.json** 
 inside WotPersonalDataCollector folder (the same folder which contains azure function)
 In this file add and fill missing data. File should look like this:
 
@@ -75,4 +75,4 @@ function on different period of time. Attribute use NCRONTAB expressions more ab
 Example of this app triggered once every one hour:
 ```csharp
 public async Task Run([TimerTrigger("0 0 */1 * * *")]TimerInfo myTimer, ILogger log)
-```
+```~~~~
