@@ -13,7 +13,7 @@ namespace WotPersonalDataCollector.Api.Services
             _clientWrapperFactory = clientWrapperFactory;
         }
 
-        public async Task<HttpResponseMessage> GetUserIdApiResponseAsync(HttpRequestMessage requestMessage)
+        public async Task<HttpResponseMessage> GetUserApiResponseAsync(HttpRequestMessage requestMessage)
         {
             using var client = _clientWrapperFactory.Create();
             var result = await client.PostAsync(requestMessage);

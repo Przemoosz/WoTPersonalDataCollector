@@ -9,7 +9,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.User
     internal class DeserializeUserIdHttpResponseStep: BaseStep
     {
         private readonly IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
-        private bool _deserializedSuccessful;
+        private bool _deserializedSuccessful = true;
 
         public DeserializeUserIdHttpResponseStep(IDeserializeUserIdHttpResponse deserializeUserIdHttpResponse)
         {

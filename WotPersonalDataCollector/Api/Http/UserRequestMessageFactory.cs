@@ -2,11 +2,11 @@
 
 namespace WotPersonalDataCollector.Api.Http
 {
-    internal class UserInfoRequestMessageFactory: IUserInfoRequestMessageFactory
+    internal class UserRequestMessageFactory: IUserRequestMessageFactory
     {
         private readonly IApiUriFactory _apiUriFactory;
 
-        public UserInfoRequestMessageFactory(IApiUriFactory apiUriFactory)
+        public UserRequestMessageFactory(IApiUriFactory apiUriFactory)
         {
             _apiUriFactory = apiUriFactory;
         }

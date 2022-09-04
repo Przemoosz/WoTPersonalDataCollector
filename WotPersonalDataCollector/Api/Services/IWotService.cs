@@ -5,5 +5,5 @@ namespace WotPersonalDataCollector.Api.Services;
 
 internal interface IWotService
 {
-    Task<HttpResponseMessage> GetUserIdApiResponseAsync(HttpRequestMessage requestMessage);
+    Task<HttpResponseMessage> GetUserApiResponseAsync(HttpRequestMessage requestMessage);
 }

@@ -18,5 +18,7 @@ namespace WotPersonalDataCollector.Workflow
         public string UserInfoApiUriWithParameters { get; set; }
         public string UserPersonalDataApiUrlWithParameters { get; set; }
         public string UserPersonalDataApiUrl { get; set; }
+        public HttpRequestMessage UserPersonalDataRequestMessage { get; set; }
+        public HttpResponseMessage UserPersonalDataResponseMessage { get; set; }
     }
 }

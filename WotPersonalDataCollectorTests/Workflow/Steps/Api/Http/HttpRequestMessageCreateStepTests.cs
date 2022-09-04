@@ -15,14 +15,14 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
     [TestFixture]
     public class HttpRequestMessageCreateStepTests
     {
-        private IUserInfoRequestMessageFactory _userInfoRequestMessageFactory;
-        private UserInfoRequestMessageCreateStep _uut;
+        private IUserRequestMessageFactory _userRequestMessageFactory;
+        private UserInfoRequestMessageStep _uut;
 
         [SetUp]
         public void SetUp()
         {
-            _userInfoRequestMessageFactory = Substitute.For<IUserInfoRequestMessageFactory>();
-            _uut = new UserInfoRequestMessageCreateStep(_userInfoRequestMessageFactory);
+            _userRequestMessageFactory = Substitute.For<IUserRequestMessageFactory>();
+            _uut = new UserInfoRequestMessageStep(_userRequestMessageFactory);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
             var requestMessage = Any.Instance<HttpRequestMessage>();
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestMessage = null;
-            _userInfoRequestMessageFactory.Create(context.UserInfoApiUriWithParameters).Returns(requestMessage);
+            _userRequestMessageFactory.Create(context.UserInfoApiUriWithParameters).Returns(requestMessage);
 
             // Act
             await _uut.ExecuteInner(context);
@@ -50,7 +50,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestMessage = null;
             context.UnexpectedException = false;
-            _userInfoRequestMessageFactory.Create(context.UserInfoApiUriWithParameters).Throws(new Exception());
+            _userRequestMessageFactory.Create(context.UserInfoApiUriWithParameters).Throws(new Exception());
 
             // Act
             await _uut.ExecuteInner(context);

@@ -16,20 +16,20 @@ namespace WotPersonalDataCollector.Workflow.Factory
     internal sealed class WorkflowStepsFactory: IWorkflowStepsFactory
     {
         private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
-        private readonly IUserInfoRequestMessageFactory _userInfoRequestMessageFactory;
+        private readonly IUserRequestMessageFactory _userRequestMessageFactory;
         private readonly IWotService _wotService;
         private readonly IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
         private readonly IApiUriFactory _apiUriFactory;
         private readonly IUserPersonalDataRequestObjectFactory _userPersonalDataRequestObjectFactory;
 
         public WorkflowStepsFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory,
-            IUserInfoRequestMessageFactory userInfoRequestMessageFactory, IWotService wotService,
+            IUserRequestMessageFactory userRequestMessageFactory, IWotService wotService,
             IDeserializeUserIdHttpResponse deserializeUserIdHttpResponse,
             IApiUriFactory apiUriFactory,
             IUserPersonalDataRequestObjectFactory userPersonalDataRequestObjectFactory)
         {
             _userInfoRequestObjectFactory = userInfoRequestObjectFactory;
-            _userInfoRequestMessageFactory = userInfoRequestMessageFactory;
+            _userRequestMessageFactory = userRequestMessageFactory;
             _wotService = wotService;
             _deserializeUserIdHttpResponse = deserializeUserIdHttpResponse;
             _apiUriFactory = apiUriFactory;
@@ -43,7 +43,7 @@ namespace WotPersonalDataCollector.Workflow.Factory
 
         public BaseStep CreateUserInfoHttpRequestMessage()
         {
-            return new UserInfoRequestMessageCreateStep(_userInfoRequestMessageFactory);
+            return new UserInfoRequestMessageStep(_userRequestMessageFactory);
         }
 
         public BaseStep CreateSendRequestForUserId()
@@ -63,7 +63,7 @@ namespace WotPersonalDataCollector.Workflow.Factory
 
         public BaseStep CreateUserPersonalDataHttpRequestMessage()
         {
-            throw new NotImplementedException();
+            return new UserPersonalDataRequestMessageStep(_userRequestMessageFactory);
         }
 
         public BaseStep CreateUserInfoApiUri()
@@ -74,6 +74,11 @@ namespace WotPersonalDataCollector.Workflow.Factory
         public BaseStep CreateUserPersonalDataApiUri()
         {
             return new CreateUserPersonalDataUriStep(_apiUriFactory);
+        }
+
+        public BaseStep CreateSendRequestForUserPersonalDataStep()
+        {
+            return new SendRequestForUserPersonalDataStep(_wotService);
         }
     }
 }

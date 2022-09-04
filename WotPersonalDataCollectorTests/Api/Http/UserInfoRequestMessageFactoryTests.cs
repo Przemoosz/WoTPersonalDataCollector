@@ -12,14 +12,14 @@ namespace WotPersonalDataCollectorTests.Api.Http
     [TestFixture]
     public class UserInfoRequestMessageFactoryTests
     {
-        private IUserInfoRequestMessageFactory _uut;
+        private IUserRequestMessageFactory _uut;
         private IApiUriFactory _apiUriFactory;
 
         [SetUp]
         public void SetUp()
         {
             _apiUriFactory = Substitute.For<IApiUriFactory>();
-            _uut = new UserInfoRequestMessageFactory(_apiUriFactory);
+            _uut = new UserRequestMessageFactory(_apiUriFactory);
         }
 
         [Test]

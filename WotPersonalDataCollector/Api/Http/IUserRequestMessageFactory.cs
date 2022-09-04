@@ -2,7 +2,7 @@
 
 namespace WotPersonalDataCollector.Api.Http;
 
-internal interface IUserInfoRequestMessageFactory
+internal interface IUserRequestMessageFactory
 {
     HttpRequestMessage Create(string apiUri);
 }

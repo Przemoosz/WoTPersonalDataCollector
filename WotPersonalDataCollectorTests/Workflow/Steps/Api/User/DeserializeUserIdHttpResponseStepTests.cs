@@ -39,6 +39,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.User
 
             // Assert
             context.UserIdData.Should().NotBeNull();
+            _uut.SuccessfulStatus().Should().BeTrue();
             context.UserIdData.Should().Be(userIdData);
         }
 
