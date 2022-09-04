@@ -14,7 +14,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api
         public override async Task ExecuteInner(WorkflowContext context)
         {
             context.UserPersonalDataApiUrlWithParameters =
-                _apiUriFactory.Create(context.UserPersonalDataApiUrl, context.PersonalDataRequestObject);
+                _apiUriFactory.Create(context.UserPersonalDataApiUrl, context.UserPersonalDataRequestObject);
         }
     }
 }

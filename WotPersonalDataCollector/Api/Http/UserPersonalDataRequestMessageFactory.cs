@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WotPersonalDataCollector.Api.Http
 {
-    internal class UserDataRequestMessageFactory: IUserDataRequestMessageFactory
+    internal class UserPersonalDataRequestMessageFactory: IUserPersonalDataRequestMessageFactory
     {
         private readonly IApiUriFactory _apiUriFactory;
 
-        public UserDataRequestMessageFactory(IApiUriFactory apiUriFactory)
+        public UserPersonalDataRequestMessageFactory(IApiUriFactory apiUriFactory)
         {
             _apiUriFactory = apiUriFactory;
         }
@@ -22,7 +18,7 @@ namespace WotPersonalDataCollector.Api.Http
         }
     }
 
-    internal interface IUserDataRequestMessageFactory
+    internal interface IUserPersonalDataRequestMessageFactory
     {
     }
 }

@@ -32,7 +32,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
             var requestMessage = Any.Instance<HttpRequestMessage>();
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestMessage = null;
-            _userInfoRequestMessageFactory.Create(context.UserInfoApiUrlWithParameters).Returns(requestMessage);
+            _userInfoRequestMessageFactory.Create(context.UserInfoApiUriWithParameters).Returns(requestMessage);
 
             // Act
             await _uut.ExecuteInner(context);
@@ -50,7 +50,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
             var context = Any.Instance<WorkflowContext>();
             context.UserInfoRequestMessage = null;
             context.UnexpectedException = false;
-            _userInfoRequestMessageFactory.Create(context.UserInfoApiUrlWithParameters).Throws(new Exception());
+            _userInfoRequestMessageFactory.Create(context.UserInfoApiUriWithParameters).Throws(new Exception());
 
             // Act
             await _uut.ExecuteInner(context);

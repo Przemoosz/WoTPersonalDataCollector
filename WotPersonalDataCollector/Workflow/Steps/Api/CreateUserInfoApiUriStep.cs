@@ -3,17 +3,17 @@ using WotPersonalDataCollector.Api;
 
 namespace WotPersonalDataCollector.Workflow.Steps.Api
 {
-    internal class CreateUserInfoApiUrlStep: BaseStep
+    internal class CreateUserInfoApiUriStep: BaseStep
     {
         private readonly IApiUriFactory _apiUriFactory;
 
-        public CreateUserInfoApiUrlStep(IApiUriFactory apiUriFactory)
+        public CreateUserInfoApiUriStep(IApiUriFactory apiUriFactory)
         {
             _apiUriFactory = apiUriFactory;
         }
         public override async Task ExecuteInner(WorkflowContext context)
         {
-            context.UserInfoApiUrlWithParameters =
+            context.UserInfoApiUriWithParameters =
                 _apiUriFactory.Create(context.UserInfoApiUrl, context.UserInfoRequestObject);
         }
     }

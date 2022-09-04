@@ -18,7 +18,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
         {
             try
             {
-                context.UserInfoRequestMessage = _userInfoRequestMessageFactory.Create(context.UserInfoApiUrlWithParameters);
+                context.UserInfoRequestMessage = _userInfoRequestMessageFactory.Create(context.UserInfoApiUriWithParameters);
             }
             catch (Exception exception)
             {

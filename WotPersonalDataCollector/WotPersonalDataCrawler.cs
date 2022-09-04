@@ -22,7 +22,7 @@ namespace WotPersonalDataCollector
         {
             var startingWorkflow = new WorkflowBuilder()
                 .AddStep(_workflowStepsFactory.CreateUserInfoRequestObject())
-                .AddStep(_workflowStepsFactory.CreateUserInfoApiUrl())
+                .AddStep(_workflowStepsFactory.CreateUserInfoApiUri())
                 .AddStep(_workflowStepsFactory.CreateUserInfoHttpRequestMessage())
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserId())
                 .AddStep(_workflowStepsFactory.CreateDeserializeUserIdResponseMessage())

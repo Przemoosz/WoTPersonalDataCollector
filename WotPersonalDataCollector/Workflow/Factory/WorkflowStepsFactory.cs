@@ -66,9 +66,9 @@ namespace WotPersonalDataCollector.Workflow.Factory
             throw new NotImplementedException();
         }
 
-        public BaseStep CreateUserInfoApiUrl()
+        public BaseStep CreateUserInfoApiUri()
         {
-            return new CreateUserInfoApiUrlStep(_apiUriFactory);
+            return new CreateUserInfoApiUriStep(_apiUriFactory);
         }
     }
 }

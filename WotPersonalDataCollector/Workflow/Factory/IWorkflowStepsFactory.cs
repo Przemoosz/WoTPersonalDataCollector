@@ -10,5 +10,5 @@ internal interface IWorkflowStepsFactory
     BaseStep CreateDeserializeUserIdResponseMessage();
     BaseStep CreateUserPersonalDataRequestObject();
     BaseStep CreateUserPersonalDataHttpRequestMessage();
-    BaseStep CreateUserInfoApiUrl();
+    BaseStep CreateUserInfoApiUri();
 }

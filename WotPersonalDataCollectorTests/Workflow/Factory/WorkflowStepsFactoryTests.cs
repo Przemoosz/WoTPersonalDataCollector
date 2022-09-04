@@ -8,6 +8,7 @@ using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
+using WotPersonalDataCollector.Workflow.Steps.Api;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
@@ -40,7 +41,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         }
 
         [Test]
-        public void ShouldCreateUserRequestInfoObjectStep()
+        public void ShouldCreateUserInfoRequestIObjectStep()
         {
             // Act
             var actual = _uut.CreateUserInfoRequestObject();
@@ -52,7 +53,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         }
 
         [Test]
-        public void ShouldCreateHttpRequestMessageStep()
+        public void ShouldCreateUserInfoHttpRequestMessageStep()
         {
             // Act
             var actual = _uut.CreateUserInfoHttpRequestMessage();
@@ -85,6 +86,39 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<BaseStep>();
             actual.Should().BeOfType<DeserializeUserIdHttpResponseStep>();
+        }
+
+        [Test]
+        public void ShouldCreateUserPersonalDataRequestObjectStep()
+        {
+            // Act
+            var actual = _uut.CreateUserPersonalDataRequestObject();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateUserPersonalDataRequestObjectStep>();
+        }
+
+        [Test]
+        public void ShouldCreateUserPersonalDataHttpRequestMessageStep()
+        {
+            // Act
+
+            // Assert
+
+        }
+
+        [Test]
+        public void ShouldCreateUserInfoApiUriStep()
+        {
+            // Act
+            var actual = _uut.CreateUserInfoApiUri();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateUserInfoApiUriStep>();
         }
     }
 }
