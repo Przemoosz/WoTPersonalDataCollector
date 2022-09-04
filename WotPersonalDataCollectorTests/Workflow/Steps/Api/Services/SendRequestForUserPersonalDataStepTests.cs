@@ -13,16 +13,16 @@ using static TddXt.AnyRoot.Root;
 namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
 {
     [TestFixture]
-    public class SendRequestForUserIdStepTests
+    public class SendRequestForUserPersonalDataStepTests
     {
         private IWotService _wotService;
-        private SendRequestForUserIdStep _uut;
+        private SendRequestForUserPersonalDataStep _uut;
 
         [SetUp]
         public void SetUp()
         {
             _wotService = Substitute.For<IWotService>();
-            _uut = new SendRequestForUserIdStep(_wotService);
+            _uut = new SendRequestForUserPersonalDataStep(_wotService);
         }
 
         [Test]
@@ -30,16 +30,16 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
         {
             // Arrange
             var context = Any.Instance<WorkflowContext>();
-            context.UserIdResponseMessage = null;
+            context.UserPersonalDataResponseMessage = null;
             var responseMessage = Any.Instance<HttpResponseMessage>();
-            _wotService.GetUserApiResponseAsync(context.UserInfoRequestMessage).Returns(responseMessage);
+            _wotService.GetUserApiResponseAsync(context.UserPersonalDataRequestMessage).Returns(responseMessage);
 
             // Act 
             await _uut.ExecuteInner(context);
 
             // Assert
-            context.UserIdResponseMessage.Should().NotBeNull();
-            context.UserIdResponseMessage.Should().Be(responseMessage);
+            context.UserPersonalDataResponseMessage.Should().NotBeNull();
+            context.UserPersonalDataResponseMessage.Should().Be(responseMessage);
             _uut.SuccessfulStatus().Should().BeTrue();
         }
 
@@ -48,16 +48,16 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
         {
             // Assert
             var context = Any.Instance<WorkflowContext>();
-            context.UserIdResponseMessage = null;
+            context.UserPersonalDataResponseMessage = null;
             context.UnexpectedException = false;
-            _wotService.GetUserApiResponseAsync(context.UserInfoRequestMessage).ThrowsAsync(new HttpRequestException());
+            _wotService.GetUserApiResponseAsync(context.UserPersonalDataRequestMessage).ThrowsAsync(new HttpRequestException());
 
             // Act
             await _uut.ExecuteInner(context);
 
             // Assert
             _uut.SuccessfulStatus().Should().BeFalse();
-            context.UserIdResponseMessage.Should().BeNull();
+            context.UserPersonalDataResponseMessage.Should().BeNull();
             context.UnexpectedException.Should().BeFalse();
         }
 
@@ -66,16 +66,16 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
         {
             // Assert
             var context = Any.Instance<WorkflowContext>();
-            context.UserIdResponseMessage = null;
+            context.UserPersonalDataResponseMessage = null;
             context.UnexpectedException = false;
-            _wotService.GetUserApiResponseAsync(context.UserInfoRequestMessage).ThrowsAsync(new Exception());
+            _wotService.GetUserApiResponseAsync(context.UserPersonalDataRequestMessage).ThrowsAsync(new Exception());
 
             // Act
             await _uut.ExecuteInner(context);
 
             // Assert
             _uut.SuccessfulStatus().Should().BeFalse();
-            context.UserIdResponseMessage.Should().BeNull();
+            context.UserPersonalDataResponseMessage.Should().BeNull();
             context.UnexpectedException.Should().BeTrue();
         }
     }

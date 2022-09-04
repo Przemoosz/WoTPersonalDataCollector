@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 
-namespace WotPersonalDataCollector.Workflow.Steps.Api.Http
+namespace WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects
 {
-    internal class CreateUserInfoRequestObjectStep: BaseStep
+    internal class CreateUserInfoRequestObjectStep : BaseStep
     {
         private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
         private bool _createdUserInfoRequestObject = true;

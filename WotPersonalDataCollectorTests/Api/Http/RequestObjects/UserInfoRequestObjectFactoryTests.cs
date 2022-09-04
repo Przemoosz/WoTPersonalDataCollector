@@ -36,6 +36,8 @@ namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
 
             // Act
             var actual = _uut.Create();
+
+            // Assert
             actual.Should().BeAssignableTo<IRequestObject>();
             actual.Should().BeAssignableTo<UserInfoRequestObject>();
             var convertedActual = actual as UserInfoRequestObject;

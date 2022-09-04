@@ -3,18 +3,10 @@ using WotPersonalDataCollector.Api.Http.RequestObjects;
 
 namespace WotPersonalDataCollector.Api
 {
-    internal class ApiUrlFactory: IApiUrlFactory
+    internal class ApiUriFactory: IApiUriFactory
     {
-        private readonly IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
-
-        public ApiUrlFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory)
+        public string Create(string baseUrl, IRequestObject requestObject)
         {
-            _userInfoRequestObjectFactory = userInfoRequestObjectFactory;
-        }
-
-        public string Create(string baseUrl)
-        {
-            var requestObject = _userInfoRequestObjectFactory.Create();
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(baseUrl);
             stringBuilder.Append("?");

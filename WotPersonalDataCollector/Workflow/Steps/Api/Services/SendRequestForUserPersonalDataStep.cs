@@ -6,12 +6,12 @@ using WotPersonalDataCollector.Api.Services;
 
 namespace WotPersonalDataCollector.Workflow.Steps.Api.Services
 {
-    internal class SendRequestForUserIdStep: BaseStep
+    internal class SendRequestForUserPersonalDataStep: BaseStep
     {
         private readonly IWotService _wotService;
         private bool _getCurrentResponse = true;
 
-        public SendRequestForUserIdStep(IWotService wotService)
+        public SendRequestForUserPersonalDataStep(IWotService wotService)
         {
             _wotService = wotService;
         }
@@ -19,8 +19,9 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Services
         {
             try
             {
-                context.UserIdResponseMessage =
-                    await _wotService.GetUserApiResponseAsync(context.UserInfoRequestMessage);
+                context.UserPersonalDataResponseMessage =
+                    await _wotService.GetUserApiResponseAsync(context.UserPersonalDataRequestMessage);
+                Console.WriteLine(await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync());
             }
             catch (HttpRequestException exception)
             {

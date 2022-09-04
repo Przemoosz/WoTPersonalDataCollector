@@ -1,13 +1,16 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
+using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
+using WotPersonalDataCollector.Workflow.Steps.Api;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
+using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
 using WotPersonalDataCollector.Workflow.Steps.Api.User;
 
@@ -18,23 +21,27 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
     {
         private IWorkflowStepsFactory _uut;
         private IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;
-        private IHttpRequestMessageFactory _httpRequestMessagefactory;
+        private IUserRequestMessageFactory _userRequestMessagefactory;
         private IWotService _wotService;
         private IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
+        private IApiUriFactory _apiUriFactory;
+        private IUserPersonalDataRequestObjectFactory _userPersonalDataRequestObjectFactory;
 
         [SetUp]
         public void SetUp()
         {
             _userInfoRequestObjectFactory = Substitute.For<IUserInfoRequestObjectFactory>();
-            _httpRequestMessagefactory = Substitute.For<IHttpRequestMessageFactory>();
+            _userPersonalDataRequestObjectFactory = Substitute.For<IUserPersonalDataRequestObjectFactory>();
+            _userRequestMessagefactory = Substitute.For<IUserRequestMessageFactory>();
             _wotService = Substitute.For<IWotService>();
+            _apiUriFactory = Substitute.For<IApiUriFactory>();
             _deserializeUserIdHttpResponse = Substitute.For<IDeserializeUserIdHttpResponse>();
-            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _httpRequestMessagefactory, _wotService,
-                _deserializeUserIdHttpResponse);
+            _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _userRequestMessagefactory, _wotService,
+                _deserializeUserIdHttpResponse, _apiUriFactory, _userPersonalDataRequestObjectFactory);
         }
 
         [Test]
-        public void ShouldCreateUserRequestInfoObjectStep()
+        public void ShouldCreateUserInfoRequestIObjectStep()
         {
             // Act
             var actual = _uut.CreateUserInfoRequestObject();
@@ -46,15 +53,15 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         }
 
         [Test]
-        public void ShouldCreateHttpRequestMessageStep()
+        public void ShouldCreateUserInfoHttpRequestMessageStep()
         {
             // Act
-            var actual = _uut.CreateHttpRequestMessage();
+            var actual = _uut.CreateUserInfoHttpRequestMessage();
 
             // Assert
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<BaseStep>();
-            actual.Should().BeOfType<HttpRequestMessageCreateStep>();
+            actual.Should().BeOfType<UserInfoRequestMessageStep>();
         }
 
         [Test]
@@ -79,6 +86,66 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<BaseStep>();
             actual.Should().BeOfType<DeserializeUserIdHttpResponseStep>();
+        }
+
+        [Test]
+        public void ShouldCreateUserPersonalDataRequestObjectStep()
+        {
+            // Act
+            var actual = _uut.CreateUserPersonalDataRequestObject();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateUserPersonalDataRequestObjectStep>();
+        }
+
+        [Test]
+        public void ShouldCreateUserPersonalDataHttpRequestMessageStep()
+        {
+            // Act
+            var actual = _uut.CreateUserPersonalDataHttpRequestMessage();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<UserPersonalDataRequestMessageStep>();
+        }
+
+        [Test]
+        public void ShouldCreateUserInfoApiUriStep()
+        {
+            // Act
+            var actual = _uut.CreateUserInfoApiUri();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateUserInfoApiUriStep>();
+        }
+
+        [Test]
+        public void ShouldCreateUserPersonalDataUriStep()
+        {
+            // Act
+            var actual = _uut.CreateUserPersonalDataApiUri();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateUserPersonalDataUriStep>();
+        }
+
+        [Test]
+        public void ShouldCreateSendRequestForUserPersonalDataStep()
+        {
+            // Act
+            var actual = _uut.CreateSendRequestForUserPersonalDataStep();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<SendRequestForUserPersonalDataStep>();
         }
     }
 }

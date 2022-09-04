@@ -37,6 +37,23 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
+        public string PlayersUri
+        {
+            get
+            {
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("PlayersUri"), "PlayersUri local variable is not set!");
+                return Environment.GetEnvironmentVariable("PlayersUri");
+            }
+        }
+
+        public string PersonalDataUri
+        {
+            get
+            {
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("PersonalDataUri"), "PersonalDataUri local variable is not set!");
+                return Environment.GetEnvironmentVariable("PersonalDataUri");
+            }
+        }
         public bool TryGetUserName(out string userName)
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WotUserName")))

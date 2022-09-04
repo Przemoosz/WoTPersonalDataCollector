@@ -35,11 +35,12 @@ namespace WotPersonalDataCollectorTests.Api.Services
             _httpClientWrapperFactory.Create().PostAsync(context.UserInfoRequestMessage).Returns(responseMessage);
 
             // Act
-            var actual = await _uut.GetUserIdApiResponseAsync(context.UserInfoRequestMessage);
+            var actual = await _uut.GetUserApiResponseAsync(context.UserInfoRequestMessage);
 
             // Assert
             actual.Should().Be(responseMessage);
         }
+
         [Test]
         public async Task ShouldThrowExceptionWhenResponseNotOk()
         {
@@ -50,7 +51,7 @@ namespace WotPersonalDataCollectorTests.Api.Services
             _httpClientWrapperFactory.Create().PostAsync(context.UserInfoRequestMessage).Returns(responseMessage);
 
             // Act
-            Func<Task> act = async () => await _uut.GetUserIdApiResponseAsync(context.UserInfoRequestMessage);
+            Func<Task> act = async () => await _uut.GetUserApiResponseAsync(context.UserInfoRequestMessage);
 
             // Assert
             await act.Should().ThrowAsync<HttpRequestException>();

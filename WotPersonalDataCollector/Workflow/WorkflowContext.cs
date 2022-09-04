@@ -14,5 +14,11 @@ namespace WotPersonalDataCollector.Workflow
         public HttpResponseMessage UserIdResponseMessage { get; set; }
         public UserIdData UserIdData { get; set; }
         public bool UnexpectedException { get; set; }
+        public IRequestObject UserPersonalDataRequestObject { get; set; }
+        public string UserInfoApiUriWithParameters { get; set; }
+        public string UserPersonalDataApiUrlWithParameters { get; set; }
+        public string UserPersonalDataApiUrl { get; set; }
+        public HttpRequestMessage UserPersonalDataRequestMessage { get; set; }
+        public HttpResponseMessage UserPersonalDataResponseMessage { get; set; }
     }
 }

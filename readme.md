@@ -8,7 +8,7 @@ a user to collect the latest data about account like battles, average damage, et
 At this time function crawl data about user id after providing username as a local variable.
 In the future, this program will also crawl data about a given user, Ex. battles, average damage, etc.
 and it will store this data in CosmosDB. The project is ready to deploy as an azure app, but you can run it locally. 
-Solution include also 40+ unit tests written in the NUnit testing framework
+Solution include also 65 unit tests written in the NUnit testing framework
 
 For more information go to section called: Versions 
 ## About Solution
@@ -34,12 +34,12 @@ Used NuGet packages:
 Version name - Description - Status
 - WPD-1-CrawlDataAboutUser - Crawling Data About User id using WOT REST API - Finished and merged
 - WPD-2-ImplementChainOfResponsibility - Refactored azure function to implement chain of responsibility design pattern - Finished and merged
-- WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - In Development
-- WPD-4-SaveDataToCosmosDB - Saving data crawled from WOT REST API to CosmosDB - Planned
-
+- WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
+- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Planned
+- WPD-5-DisplayCollectedDataInAspNetApp - Displaying saved data in CosmosDb in ASP.NET app - Planned
 ## Installation
 
-To use this app locally you have to install Visual Studio 2022. After this clone solution and add "local.settings.json" 
+To use this app locally you have to install Visual Studio 2022. After this clone solution and add **local.settings.json** 
 inside WotPersonalDataCollector folder (the same folder which contains azure function)
 In this file add and fill missing data. File should look like this:
 
@@ -50,7 +50,9 @@ In this file add and fill missing data. File should look like this:
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     "ApplicationId": "Type your own WOT API Application Id",
-    "WotUserName" : "type your own username " 
+    "WotUserName" : "type your own username ",
+    "PlayersUri": "https://api.worldoftanks.eu/wot/account/list/",
+    "PersonalDataUri": "https://api.worldoftanks.eu/wot/account/info/"
   }
 }
 ```
@@ -66,3 +68,11 @@ To build project type:
 ```bash
 dotnet build
 ```
+
+## Configuration 
+In WotPersonalDataCrawler.cs change argument value in TimeTrigger attribute to trigger 
+function on different period of time. Attribute use NCRONTAB expressions more about this in [documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-csharp)
+Example of this app triggered once every one hour:
+```csharp
+public async Task Run([TimerTrigger("0 0 */1 * * *")]TimerInfo myTimer, ILogger log)
+```~~~~

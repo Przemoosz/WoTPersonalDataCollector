@@ -6,10 +6,10 @@ using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http;
+using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http
+namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http.RequestObjects
 {
     [TestFixture]
     public class CreateUserInfoRequestObjectStepTests
