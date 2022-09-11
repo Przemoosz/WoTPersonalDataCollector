@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.PersonalData.Dto;
 using WotPersonalDataCollector.Utilities;
