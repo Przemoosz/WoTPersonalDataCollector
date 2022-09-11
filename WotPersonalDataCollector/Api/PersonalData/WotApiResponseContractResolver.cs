@@ -17,8 +17,7 @@ namespace WotPersonalDataCollector.Api.PersonalData
 
         protected override string ResolvePropertyName(string propertyName)
         {
-            string resolvedName = null;
-            var resolved = this.PropertyMappings.TryGetValue(propertyName, out resolvedName);
+            var resolved = this.PropertyMappings.TryGetValue(propertyName, out var resolvedName);
             return (resolved) ? resolvedName : base.ResolvePropertyName(propertyName);
         }
     }
