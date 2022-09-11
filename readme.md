@@ -20,7 +20,7 @@ Used NuGet packages:
 - Microsoft.Azure.Functions.Extensions ver. 1.1.0
 - Microsoft.Extensions.DependencyInjection ver. 6.0.0
 - Microsoft.NET.Sdk.Functions ver. 4.1.1
-- Guard.Net ver. 2.0.0
+- Guard.Net ver. 3.0.0
 - Any ver. 7.0.0
 - FluentAssertions ver. 6.7.0
 - Microsoft.NET.Test.Sdk ver. 16.11.0
@@ -28,14 +28,16 @@ Used NuGet packages:
 - NUnit ver. 3.13.2
 - NUnit3TestAdapter ver. 4.0.0
 - coverlet.collector ver. 3.1.0
-- TddXt.Any.Extensibility ver 6.7.0
+- TddXt.Any.Extensibility ver. 6.7.0
+- Microsoft.Azure.Cosmos ver. 3.30.1
+- Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.8
 
 ## Versions
 Version name - Description - Status
 - WPD-1-CrawlDataAboutUser - Crawling Data About User id using WOT REST API - Finished and merged
 - WPD-2-ImplementChainOfResponsibility - Refactored azure function to implement chain of responsibility design pattern - Finished and merged
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
-- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Planned
+- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - In development~~~~
 - WPD-5-DisplayCollectedDataInAspNetApp - Displaying saved data in CosmosDb in ASP.NET app - Planned
 ## Installation
 

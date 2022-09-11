@@ -1,6 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using WotPersonalDataCollector.Api.Dto;
+using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Builder;
@@ -34,11 +41,20 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateUserPersonalDataHttpRequestMessage())
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserPersonalDataStep())
                 .Build();
-            await startingWorkflow.Execute(new WorkflowContext()
+            var context = new WorkflowContext()
             {
-                Logger = log, UserInfoApiUrl = _configuration.PlayersUri,
+                Logger = log,
+                UserInfoApiUrl = _configuration.PlayersUri,
                 UserPersonalDataApiUrl = _configuration.PersonalDataUri
-            });
+            };
+            await startingWorkflow.Execute(context);
+            JsonSerializerSettings options = new JsonSerializerSettings()
+            {
+                ContractResolver = new WotApiResponseContractResolver("504423071")
+            };
+
+            var a = JsonConvert.DeserializeObject<WotAccountDto>(await context.UserPersonalDataResponseMessage.Content
+                .ReadAsStringAsync(), options);
         }
     }
 }

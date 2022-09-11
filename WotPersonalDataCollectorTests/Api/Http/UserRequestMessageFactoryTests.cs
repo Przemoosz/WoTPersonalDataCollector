@@ -10,7 +10,7 @@ using WotPersonalDataCollector.Api.Http.RequestObjects;
 namespace WotPersonalDataCollectorTests.Api.Http
 {
     [TestFixture]
-    public class UserInfoRequestMessageFactoryTests
+    public class UserRequestMessageFactoryTests
     {
         private IUserRequestMessageFactory _uut;
         private IApiUriFactory _apiUriFactory;
