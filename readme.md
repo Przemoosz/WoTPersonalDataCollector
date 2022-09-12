@@ -37,8 +37,14 @@ Version name - Description - Status
 - WPD-1-CrawlDataAboutUser - Crawling Data About User id using WOT REST API - Finished and merged
 - WPD-2-ImplementChainOfResponsibility - Refactored azure function to implement chain of responsibility design pattern - Finished and merged
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
-- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - In development~~~~~~~~
+- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - In development
 - WPD-5-DisplayCollectedDataInAspNetApp - Displaying saved data in CosmosDb in ASP.NET app - Planned
+
+
+## CosmosDb
+
+cosmosDb info
+
 ## Installation
 
 To use this app locally you have to install Visual Studio 2022. After this clone solution and add **local.settings.json** 
@@ -54,7 +60,10 @@ In this file add and fill missing data. File should look like this:
     "ApplicationId": "Type your own WOT API Application Id",
     "WotUserName" : "type your own username ",
     "PlayersUri": "https://api.worldoftanks.eu/wot/account/list/",
-    "PersonalDataUri": "https://api.worldoftanks.eu/wot/account/info/"
+    "PersonalDataUri": "https://api.worldoftanks.eu/wot/account/info/",
+    "CosmosConnectionString": "Find this property in your Cosmos DB in Azure Portal or in Azure Cosmos DB Emulator",
+    "CosmosDbName": "WotUserData",
+    "DatabaseThroughput": "Manual throughput this variable can not be lower than 400!"
   }
 }
 ```
@@ -71,6 +80,9 @@ To build project type:
 dotnet build
 ```
 
+
+If you want to run this app in Azure. Set up this project in Azure Portal and add all listed above local
+variables in Configuration -> Application Settings -> New application setting
 ## Configuration 
 In WotPersonalDataCrawler.cs change argument value in TimeTrigger attribute to trigger 
 function on different period of time. Attribute use NCRONTAB expressions more about this in [documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=in-process&pivots=programming-language-csharp)
