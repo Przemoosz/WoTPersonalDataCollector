@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.Azure.Cosmos;
 using WotPersonalDataCollector.Utilities;
 
@@ -8,15 +7,11 @@ namespace WotPersonalDataCollector.CosmosDb
     internal sealed class WpdCosmosClientWrapper: IWpdCosmosClientWrapper
     {
         private readonly IConfiguration _configuration;
-        private CosmosClient _cosmosClient;
+        private static CosmosClient _cosmosClient;
 
         public WpdCosmosClientWrapper(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-
-        private void SetUpClient()
-        {
             if (_cosmosClient is null)
             {
                 _cosmosClient = new CosmosClient(_configuration.CosmosConnectionString);
@@ -31,12 +26,8 @@ namespace WotPersonalDataCollector.CosmosDb
         public async Task<Database> CreateDatabaseIfNotExistsAsync()
         {
             ThroughputProperties throughputProperties = ThroughputProperties.CreateManualThroughput(400);
-            return await _cosmosClient.CreateDatabaseIfNotExistsAsync("", throughputProperties);
+            return await _cosmosClient.CreateDatabaseIfNotExistsAsync(_configuration.CosmosDbName, throughputProperties);
         }
 
-    }
-
-    internal interface IWpdCosmosClientWrapper: IDisposable
-    {
     }
 }
