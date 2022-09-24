@@ -58,6 +58,9 @@ namespace WotPersonalDataCollector
             {
                 ContractResolver = new WotApiResponseContractResolver("504423071")
             };
+            var a = JsonConvert.DeserializeObject<WotAccountDto>(
+                await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync(), options);
+            var b = await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync();
         }
     }
 }

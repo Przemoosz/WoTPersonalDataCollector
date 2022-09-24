@@ -93,6 +93,15 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
+        public string ContainerName
+        {
+            get
+            {
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("ContainerName"), "ContainerName local variable is not set!");
+                return Environment.GetEnvironmentVariable("ContainerName");
+            }
+        }
+
         public bool TryGetUserName(out string userName)
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WotUserName")))

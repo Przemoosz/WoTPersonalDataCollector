@@ -10,5 +10,6 @@ internal interface IConfiguration
     public string CosmosConnectionString { get; }
     public string CosmosDbName { get; }
     public int DatabaseThroughput { get; }
+    public string ContainerName { get; }
     bool TryGetUserName(out string userName);
 }

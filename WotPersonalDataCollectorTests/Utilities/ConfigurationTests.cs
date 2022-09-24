@@ -134,6 +134,20 @@ namespace WotPersonalDataCollectorTests.Utilities
         }
 
         [Test]
+        public void ShouldReturnContainerName()
+        {
+            // Arrange
+            var containerName = Any.String();
+            Environment.SetEnvironmentVariable("ContainerName", containerName);
+
+            // Act 
+            var actual = _uut.ContainerName;
+
+            // Assert
+            actual.Should().Be(containerName);
+        }
+
+        [Test]
         public void ShouldThrowExceptionWhenDatabaseThroughputIsLowerThanFourHundred()
         {
             // Arrange
@@ -165,7 +179,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenCosmosDbNameNullOrEmpty(string cosmosDbName)
+        public void ShouldThrowExceptionWhenCosmosDbNameIsNullOrEmpty(string cosmosDbName)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("CosmosDbName", cosmosDbName);
@@ -179,7 +193,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenDatabaseThroughputNullOrEmpty(string databaseThroughput)
+        public void ShouldThrowExceptionWhenDatabaseThroughputIsNullOrEmpty(string databaseThroughput)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("DatabaseThroughput", databaseThroughput);
@@ -193,7 +207,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenApplicationIdNullOrEmpty(string applicationId)
+        public void ShouldThrowExceptionWhenApplicationIdIsNullOrEmpty(string applicationId)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("ApplicationId", applicationId);
@@ -207,7 +221,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenCosmosConnectionStringNullOrEmpty(string cosmosConnectionString)
+        public void ShouldThrowExceptionWhenCosmosConnectionStringIsNullOrEmpty(string cosmosConnectionString)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("CosmosConnectionString", cosmosConnectionString);
@@ -221,7 +235,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenUserNameNullOrEmpty(string userName)
+        public void ShouldThrowExceptionWhenUserNameIsNullOrEmpty(string userName)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("WotUserName", userName);
@@ -235,7 +249,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenUserIdNullOrEmpty(string userId)
+        public void ShouldThrowExceptionWhenUserIdIsNullOrEmpty(string userId)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("UserId", userId);
@@ -249,7 +263,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenPersonalDataUriNullOrEmpty(string personalDataUri)
+        public void ShouldThrowExceptionWhenPersonalDataUriIsNullOrEmpty(string personalDataUri)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("PersonalDataUri", personalDataUri);
@@ -263,7 +277,7 @@ namespace WotPersonalDataCollectorTests.Utilities
 
         [TestCase(null)]
         [TestCase("")]
-        public void ShouldThrowExceptionWhenPlayersUriNullOrEmpty(string playersUri)
+        public void ShouldThrowExceptionWhenPlayersUriIsNullOrEmpty(string playersUri)
         {
             // Arrange 
             Environment.SetEnvironmentVariable("PlayersUri", playersUri);
@@ -274,6 +288,21 @@ namespace WotPersonalDataCollectorTests.Utilities
             // Assert
             func.Should().Throw<LocalVariableException>().WithMessage("PlayersUri local variable is not set!");
         }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void ShouldThrowExceptionWhenContainerNameIsNullOrEmpty(string containerName)
+        {
+            // Arrange 
+            Environment.SetEnvironmentVariable("ContainerName", containerName);
+
+            // Act
+            Func<string> func = () => _uut.ContainerName;
+
+            // Assert
+            func.Should().Throw<LocalVariableException>().WithMessage("ContainerName local variable is not set!");
+        }
+
         [Test]
         public void ShouldReturnFalseWhenUserNameIsNull()
         {
