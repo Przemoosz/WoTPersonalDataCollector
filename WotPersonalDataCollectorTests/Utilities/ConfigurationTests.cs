@@ -148,6 +148,20 @@ namespace WotPersonalDataCollectorTests.Utilities
         }
 
         [Test]
+        public void ShouldReturnDtoVersion()
+        {
+            // Arrange
+            var dtoVersion = Any.String();
+            Environment.SetEnvironmentVariable("DtoVersion", dtoVersion);
+
+            // Act 
+            var actual = _uut.DtoVersion;
+
+            // Assert
+            actual.Should().Be(dtoVersion);
+        }
+
+        [Test]
         public void ShouldThrowExceptionWhenDatabaseThroughputIsLowerThanFourHundred()
         {
             // Arrange
@@ -302,6 +316,21 @@ namespace WotPersonalDataCollectorTests.Utilities
             // Assert
             func.Should().Throw<LocalVariableException>().WithMessage("ContainerName local variable is not set!");
         }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void ShouldThrowExceptionWhenDtoVersionIsNullOrEmpty(string dtoVersion)
+        {
+            // Arrange 
+            Environment.SetEnvironmentVariable("DtoVersion", dtoVersion);
+
+            // Act
+            Func<string> func = () => _uut.DtoVersion;
+
+            // Assert
+            func.Should().Throw<LocalVariableException>().WithMessage("DtoVersion local variable is not set!");
+        }
+
 
         [Test]
         public void ShouldReturnFalseWhenUserNameIsNull()

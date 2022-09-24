@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Cosmos.Storage.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;

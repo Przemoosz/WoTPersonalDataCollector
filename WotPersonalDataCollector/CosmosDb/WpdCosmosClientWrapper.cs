@@ -28,6 +28,5 @@ namespace WotPersonalDataCollector.CosmosDb
             ThroughputProperties throughputProperties = ThroughputProperties.CreateManualThroughput(400);
             return await _cosmosClient.CreateDatabaseIfNotExistsAsync(_configuration.CosmosDbName, throughputProperties);
         }
-
     }
 }

@@ -102,6 +102,15 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
+        public string DtoVersion
+        {
+            get
+            {
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("DtoVersion"), "DtoVersion local variable is not set!");
+                return Environment.GetEnvironmentVariable("DtoVersion");
+            }
+        }
+
         public bool TryGetUserName(out string userName)
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WotUserName")))

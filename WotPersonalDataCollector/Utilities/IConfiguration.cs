@@ -11,5 +11,6 @@ internal interface IConfiguration
     public string CosmosDbName { get; }
     public int DatabaseThroughput { get; }
     public string ContainerName { get; }
+    public string DtoVersion { get; }
     bool TryGetUserName(out string userName);
 }

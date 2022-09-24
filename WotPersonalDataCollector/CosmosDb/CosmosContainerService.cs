@@ -6,13 +6,13 @@ namespace WotPersonalDataCollector.CosmosDb
 {
     internal sealed class CosmosContainerService: ICosmosContainerService
     {
+        private const string PartitionKey = @"/ClassProperties/AccountId";
         private readonly IConfiguration _configuration;
 
         public CosmosContainerService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        private const string PartitionKey = @"/ClassProperties/AccountId";
         
         public async Task Create(Database database)
         {
