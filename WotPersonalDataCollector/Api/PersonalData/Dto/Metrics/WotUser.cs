@@ -16,4 +16,6 @@ public class WotUser
     public Statistics Statistics { get; set; }
     [JsonProperty("logout_at")]
     public int LogoutTime { get; set; }
+    [JsonProperty("account_id")]
+    public int AccountId { get; set; }
 }

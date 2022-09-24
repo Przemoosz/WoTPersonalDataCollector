@@ -15,7 +15,7 @@ namespace WotPersonalDataCollector.Api.Services
 
         public async Task<HttpResponseMessage> GetUserApiResponseAsync(HttpRequestMessage requestMessage)
         {
-            using var client = _clientWrapperFactory.Create();
+            var client = _clientWrapperFactory.Create();
             var result = await client.PostAsync(requestMessage);
             result.EnsureSuccessStatusCode();
             return result;

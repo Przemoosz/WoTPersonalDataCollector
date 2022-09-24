@@ -5,7 +5,11 @@
         private static IHttpClientWrapper _httpClient = null;
         public IHttpClientWrapper Create()
         {
-            return _httpClient ??= new HttpClientWrapper();
+            if (_httpClient is null)
+            {
+                _httpClient = new HttpClientWrapper();
+            }
+            return _httpClient;
         }
     }
 }
