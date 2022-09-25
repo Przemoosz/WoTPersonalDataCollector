@@ -54,6 +54,7 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserPersonalDataStep())
                 .AddStep(_workflowStepsFactory.CreateWotApiResponseContractResolverStep())
                 .AddStep(_workflowStepsFactory.CreateDeserializePersonalDataHttpResponseStep())
+                .AddStep(_workflowStepsFactory.CreateWotDataCosmosDbDtoCreateStep())
                 .Build();
 
             var context = new WorkflowContext()

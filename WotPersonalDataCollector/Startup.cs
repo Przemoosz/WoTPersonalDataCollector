@@ -7,6 +7,7 @@ using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.CosmosDb;
+using WotPersonalDataCollector.CosmosDb.DTO;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow.Factory;
 
@@ -45,6 +46,7 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<IDeserializeUserIdHttpResponse, DeserializeUserIdHttpResponse>();
             builder.Services.AddSingleton<IUserPersonalDataRequestObjectFactory, UserPersonalDataRequestObjectFactory>();
             builder.Services.AddSingleton<IDeserializePersonalDataHttpResponse, DeserializePersonalDataHttpResponse>();
+            builder.Services.AddSingleton<IWotDataCosmosDbDtoFactory, WotDataCosmosDbDtoFactory>();
         }
     }
 }
