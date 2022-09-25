@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
+using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.CosmosDb;
@@ -43,6 +44,7 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<IWorkflowStepsFactory, WorkflowStepsFactory>();
             builder.Services.AddSingleton<IDeserializeUserIdHttpResponse, DeserializeUserIdHttpResponse>();
             builder.Services.AddSingleton<IUserPersonalDataRequestObjectFactory, UserPersonalDataRequestObjectFactory>();
+            builder.Services.AddSingleton<IDeserializePersonalDataHttpResponse, DeserializePersonalDataHttpResponse>();
         }
     }
 }

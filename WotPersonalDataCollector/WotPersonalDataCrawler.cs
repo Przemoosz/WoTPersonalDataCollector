@@ -34,7 +34,7 @@ namespace WotPersonalDataCollector
         [FunctionName("WotPersonalDataCrawler")]
         public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            if (!_cosmosDbSetUpFinished)
+            if (_cosmosDbSetUpFinished)
             {
                 log.LogInformation("Creating database");
                 var databaseObject = await _cosmosClientWrapperFactory.Create().CreateDatabaseIfNotExistsAsync();
@@ -45,6 +45,7 @@ namespace WotPersonalDataCollector
                 log.LogInformation("Finished setup execution");
                 _cosmosDbSetUpFinished = true;
             }
+
             var startingWorkflow = new WorkflowBuilder()
                 .AddStep(_workflowStepsFactory.CreateUserInfoRequestObject())
                 .AddStep(_workflowStepsFactory.CreateUserInfoApiUri())
@@ -55,7 +56,9 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateUserPersonalDataApiUri())
                 .AddStep(_workflowStepsFactory.CreateUserPersonalDataHttpRequestMessage())
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserPersonalDataStep())
+                .AddStep(_workflowStepsFactory.CreateWotApiResponseContractResolverStep())
                 .Build();
+
             var context = new WorkflowContext()
             {
                 Logger = log,
@@ -63,13 +66,15 @@ namespace WotPersonalDataCollector
                 UserPersonalDataApiUrl = _configuration.PersonalDataUri
             };
             await startingWorkflow.Execute(context);
-            JsonSerializerSettings options = new JsonSerializerSettings()
-            {
-                ContractResolver = new WotApiResponseContractResolver("504423071")
-            };
-            var a = JsonConvert.DeserializeObject<WotAccountDto>(
-                await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync(), options);
-            var b = await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync();
+            DeserializePersonalDataHttpResponse d = new DeserializePersonalDataHttpResponse();
+            await d.Deserialize(context.UserPersonalDataResponseMessage, context.ContractResolver);
+            // JsonSerializerSettings options = new JsonSerializerSettings()
+            // {
+            //     ContractResolver = new WotApiResponseContractResolver("504423071")
+            // };
+            // var a = JsonConvert.DeserializeObject<WotAccountDto>(
+            //     await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync(), options);
+            // var b = await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync();
         }
     }
 }

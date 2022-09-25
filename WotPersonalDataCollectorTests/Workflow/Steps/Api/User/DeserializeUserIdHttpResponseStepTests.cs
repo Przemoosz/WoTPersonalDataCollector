@@ -98,7 +98,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.User
         }
 
         [Test]
-        public async Task ShouldSetSuccessfulStatusToFalseWhenAnyExceptionIsThrown()
+        public async Task ShouldSetSuccessfulStatusToFalseWhenUnHandledExceptionIsThrown()
         {
             // Arrange
             var context = Any.Instance<WorkflowContext>();
