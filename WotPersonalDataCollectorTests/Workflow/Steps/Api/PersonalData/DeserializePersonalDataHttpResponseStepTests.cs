@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using NSubstitute.ExceptionExtensions;
 using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.PersonalData.Dto;
-using WotPersonalDataCollector.Api.User.DTO;
 using WotPersonalDataCollector.Exceptions;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;

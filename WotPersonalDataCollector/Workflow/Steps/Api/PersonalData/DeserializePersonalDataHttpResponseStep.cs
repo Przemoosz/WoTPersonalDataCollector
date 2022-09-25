@@ -20,7 +20,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.PersonalData
         {
             try
             {
-                context.AccountDto = await _deserializePersonalDataHttpResponse.Deserialize(context.UserIdResponseMessage, context.ContractResolver);
+                context.AccountDto = await _deserializePersonalDataHttpResponse.Deserialize(context.UserPersonalDataResponseMessage, context.ContractResolver);
             }
             catch (DeserializeJsonException exception)
             {

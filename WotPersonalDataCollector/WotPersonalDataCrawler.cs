@@ -1,10 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Api.PersonalData;
-using WotPersonalDataCollector.Api.PersonalData.Dto;
 using WotPersonalDataCollector.CosmosDb;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow;
@@ -57,6 +53,7 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateUserPersonalDataHttpRequestMessage())
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserPersonalDataStep())
                 .AddStep(_workflowStepsFactory.CreateWotApiResponseContractResolverStep())
+                .AddStep(_workflowStepsFactory.CreateDeserializePersonalDataHttpResponseStep())
                 .Build();
 
             var context = new WorkflowContext()
@@ -66,15 +63,6 @@ namespace WotPersonalDataCollector
                 UserPersonalDataApiUrl = _configuration.PersonalDataUri
             };
             await startingWorkflow.Execute(context);
-            DeserializePersonalDataHttpResponse d = new DeserializePersonalDataHttpResponse();
-            await d.Deserialize(context.UserPersonalDataResponseMessage, context.ContractResolver);
-            // JsonSerializerSettings options = new JsonSerializerSettings()
-            // {
-            //     ContractResolver = new WotApiResponseContractResolver("504423071")
-            // };
-            // var a = JsonConvert.DeserializeObject<WotAccountDto>(
-            //     await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync(), options);
-            // var b = await context.UserPersonalDataResponseMessage.Content.ReadAsStringAsync();
         }
     }
 }
