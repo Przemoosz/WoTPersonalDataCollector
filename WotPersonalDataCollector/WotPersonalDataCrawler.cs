@@ -17,18 +17,15 @@ namespace WotPersonalDataCollector
         private readonly IConfiguration _configuration;
         private readonly IWpdCosmosClientWrapperFactory _cosmosClientWrapperFactory;
         private readonly ICosmosContainerService _cosmosContainerService;
-        private readonly ICosmosDbService _cosmosDbService;
         private bool _cosmosDbSetUpFinished;
 
         public WotPersonalDataCrawler(IWorkflowStepsFactory workflowStepsFactory, IConfiguration configuration,
-             IWpdCosmosClientWrapperFactory cosmosClientWrapperFactory, ICosmosContainerService cosmosContainerService, 
-             ICosmosDbService cosmosDbService)
+             IWpdCosmosClientWrapperFactory cosmosClientWrapperFactory, ICosmosContainerService cosmosContainerService)
         {
             _workflowStepsFactory = workflowStepsFactory;
             _configuration = configuration;
             _cosmosClientWrapperFactory = cosmosClientWrapperFactory;
             _cosmosContainerService = cosmosContainerService;
-            _cosmosDbService = cosmosDbService;
         }
 
         [FunctionName("WotPersonalDataCrawler")]
@@ -59,6 +56,7 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateWotApiResponseContractResolverStep())
                 .AddStep(_workflowStepsFactory.CreateDeserializePersonalDataHttpResponseStep())
                 .AddStep(_workflowStepsFactory.CreateWotDataCosmosDbDtoCreateStep())
+                .AddStep(_workflowStepsFactory.CreateSaveDataToCosmosDatabaseStep())
                 .Build();
 
             var context = new WorkflowContext()
@@ -68,7 +66,6 @@ namespace WotPersonalDataCollector
                 UserPersonalDataApiUrl = _configuration.PersonalDataUri
             };
             await startingWorkflow.Execute(context);
-            await _cosmosDbService.SaveAsync(context.CosmosDbDto);
         }
     }
 }

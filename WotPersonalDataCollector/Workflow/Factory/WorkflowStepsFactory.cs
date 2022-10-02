@@ -1,11 +1,11 @@
-﻿using System;
-using WotPersonalDataCollector.Api;
+﻿using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
 using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.CosmosDb.DTO;
+using WotPersonalDataCollector.CosmosDb.Services;
 using WotPersonalDataCollector.Workflow.Steps;
 using WotPersonalDataCollector.Workflow.Steps.Api;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
@@ -27,13 +27,15 @@ namespace WotPersonalDataCollector.Workflow.Factory
         private readonly IUserPersonalDataRequestObjectFactory _userPersonalDataRequestObjectFactory;
         private readonly IDeserializePersonalDataHttpResponse _deserializePersonalDataHttpResponse;
         private readonly IWotDataCosmosDbDtoFactory _wotDataCosmosDbDtoFactory;
+        private readonly ICosmosDbService _cosmosDbService;
 
         public WorkflowStepsFactory(IUserInfoRequestObjectFactory userInfoRequestObjectFactory,
             IUserRequestMessageFactory userRequestMessageFactory, IWotService wotService,
             IDeserializeUserIdHttpResponse deserializeUserIdHttpResponse,
             IApiUriFactory apiUriFactory,
             IUserPersonalDataRequestObjectFactory userPersonalDataRequestObjectFactory,
-            IDeserializePersonalDataHttpResponse deserializePersonalDataHttpResponse, IWotDataCosmosDbDtoFactory wotDataCosmosDbDtoFactory)
+            IDeserializePersonalDataHttpResponse deserializePersonalDataHttpResponse,
+            IWotDataCosmosDbDtoFactory wotDataCosmosDbDtoFactory, ICosmosDbService cosmosDbService)
         {
             _userInfoRequestObjectFactory = userInfoRequestObjectFactory;
             _userRequestMessageFactory = userRequestMessageFactory;
@@ -43,6 +45,7 @@ namespace WotPersonalDataCollector.Workflow.Factory
             _userPersonalDataRequestObjectFactory = userPersonalDataRequestObjectFactory;
             _deserializePersonalDataHttpResponse = deserializePersonalDataHttpResponse;
             _wotDataCosmosDbDtoFactory = wotDataCosmosDbDtoFactory;
+            _cosmosDbService = cosmosDbService;
         }
         
         public BaseStep CreateUserInfoRequestObject()
@@ -103,6 +106,11 @@ namespace WotPersonalDataCollector.Workflow.Factory
         public BaseStep CreateWotDataCosmosDbDtoCreateStep()
         {
             return new WotDataCosmosDbDtoCreateStep(_wotDataCosmosDbDtoFactory);
+        }
+
+        public BaseStep CreateSaveDataToCosmosDatabaseStep()
+        {
+            return new SaveDataToCosmosDatabaseStep(_cosmosDbService);
         }
     }
 }

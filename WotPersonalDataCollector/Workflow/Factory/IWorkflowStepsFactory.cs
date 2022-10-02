@@ -16,4 +16,5 @@ internal interface IWorkflowStepsFactory
     BaseStep CreateWotApiResponseContractResolverStep();
     BaseStep CreateDeserializePersonalDataHttpResponseStep();
     BaseStep CreateWotDataCosmosDbDtoCreateStep();
+    BaseStep CreateSaveDataToCosmosDatabaseStep();
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WotPersonalDataCollector.CosmosDb.DatabaseContext;
 using WotPersonalDataCollector.CosmosDb.DTO;
-using WotPersonalDataCollector.Utilities;
 
 namespace WotPersonalDataCollector.CosmosDb.Services
 {
@@ -19,15 +17,8 @@ namespace WotPersonalDataCollector.CosmosDb.Services
         {
             await using (var context = _wotContextWrapperFactory.Create())
             {
-                try
-                {
-                    await context.AddPersonalDataAsync(wotDataCosmosDbDto);
-                    await context.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                await context.AddPersonalDataAsync(wotDataCosmosDbDto);
+                await context.SaveChangesAsync();
             }
         }
     }

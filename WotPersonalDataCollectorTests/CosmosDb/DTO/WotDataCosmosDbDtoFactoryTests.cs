@@ -38,7 +38,7 @@ namespace WotPersonalDataCollectorTests.CosmosDb.DTO
             // Assert
             actual.AccountData.Should().Be(wotAccountDto);
             actual.ClassProperties.Type.Should().Be("WotAccount");
-            actual.ClassProperties.AccountId.Should().Be(userIdData.AccountId.ToString());
+            actual.AccountId.Should().Be(userIdData.AccountId.ToString());
             actual.ClassProperties.DtoVersion.Should().Be(dtoVersion);
         }
     }
