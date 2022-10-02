@@ -14,13 +14,14 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api
         {
             _apiUriFactory = apiUriFactory;
         }
-        public override async Task ExecuteInner(WorkflowContext context)
+        public override Task ExecuteInner(WorkflowContext context)
         {
 
             try
             {
                 context.UserPersonalDataApiUrlWithParameters =
                     _apiUriFactory.Create(context.UserPersonalDataApiUrl, context.UserPersonalDataRequestObject);
+                return Task.CompletedTask;
             }
             catch (Exception exception)
             {
@@ -28,6 +29,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api
                     $"Unexpected error occurred when creating api uri for personal data collector. Message: {exception.Message}\n At: {exception.StackTrace}");
                 _createdUserPersonalDataApiUriWithParameters = false;
                 context.UnexpectedException = true;
+                return Task.CompletedTask;
             }
         }
 

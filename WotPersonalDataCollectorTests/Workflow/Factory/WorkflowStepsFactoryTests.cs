@@ -4,15 +4,20 @@ using NUnit.Framework;
 using WotPersonalDataCollector.Api;
 using WotPersonalDataCollector.Api.Http;
 using WotPersonalDataCollector.Api.Http.RequestObjects;
+using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
+using WotPersonalDataCollector.CosmosDb.DTO;
+using WotPersonalDataCollector.CosmosDb.Services;
 using WotPersonalDataCollector.Workflow.Factory;
 using WotPersonalDataCollector.Workflow.Steps;
 using WotPersonalDataCollector.Workflow.Steps.Api;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
+using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
 using WotPersonalDataCollector.Workflow.Steps.Api.User;
+using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
 
 namespace WotPersonalDataCollectorTests.Workflow.Factory
 {
@@ -26,6 +31,9 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
         private IDeserializeUserIdHttpResponse _deserializeUserIdHttpResponse;
         private IApiUriFactory _apiUriFactory;
         private IUserPersonalDataRequestObjectFactory _userPersonalDataRequestObjectFactory;
+        private IDeserializePersonalDataHttpResponse _deserializePersonalDataHttpResponse;
+        private IWotDataCosmosDbDtoFactory _wotDataCosmosDbDtoFactory;
+        private ICosmosDbService _cosmosDbService;
 
         [SetUp]
         public void SetUp()
@@ -36,8 +44,12 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             _wotService = Substitute.For<IWotService>();
             _apiUriFactory = Substitute.For<IApiUriFactory>();
             _deserializeUserIdHttpResponse = Substitute.For<IDeserializeUserIdHttpResponse>();
+            _deserializePersonalDataHttpResponse = Substitute.For<IDeserializePersonalDataHttpResponse>();
+            _wotDataCosmosDbDtoFactory = Substitute.For<IWotDataCosmosDbDtoFactory>();
+            _cosmosDbService = Substitute.For<ICosmosDbService>();
             _uut = new WorkflowStepsFactory(_userInfoRequestObjectFactory, _userRequestMessagefactory, _wotService,
-                _deserializeUserIdHttpResponse, _apiUriFactory, _userPersonalDataRequestObjectFactory);
+                _deserializeUserIdHttpResponse, _apiUriFactory, _userPersonalDataRequestObjectFactory,
+                _deserializePersonalDataHttpResponse, _wotDataCosmosDbDtoFactory, _cosmosDbService);
         }
 
         [Test]
@@ -146,6 +158,54 @@ namespace WotPersonalDataCollectorTests.Workflow.Factory
             actual.Should().NotBeNull();
             actual.Should().BeAssignableTo<BaseStep>();
             actual.Should().BeOfType<SendRequestForUserPersonalDataStep>();
+        }
+
+        [Test]
+        public void ShouldCreateCreateWotApiResponseContractResolverStep()
+        {
+            // Act
+            var actual = _uut.CreateWotApiResponseContractResolverStep();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<CreateWotApiResponseContractResolverStep>();
+        }
+
+        [Test]
+        public void ShouldCreateDeserializePersonalDataHttpResponseStep()
+        {
+            // Act
+            var actual = _uut.CreateDeserializePersonalDataHttpResponseStep();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<DeserializePersonalDataHttpResponseStep>();
+        }
+
+        [Test]
+        public void ShouldCreateWotDataCosmosDbDtoCreateStep()
+        {
+            // Act
+            var actual = _uut.CreateWotDataCosmosDbDtoCreateStep();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<WotDataCosmosDbDtoCreateStep>();
+        }
+
+        [Test]
+        public void ShouldCreateSaveDataToCosmosDatabaseStep()
+        {
+            // Act
+            var actual = _uut.CreateSaveDataToCosmosDatabaseStep();
+
+            // Assert
+            actual.Should().NotBeNull();
+            actual.Should().BeAssignableTo<BaseStep>();
+            actual.Should().BeOfType<SaveDataToCosmosDatabaseStep>();
         }
     }
 }

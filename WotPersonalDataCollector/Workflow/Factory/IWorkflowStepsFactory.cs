@@ -13,4 +13,8 @@ internal interface IWorkflowStepsFactory
     BaseStep CreateUserInfoApiUri();
     BaseStep CreateUserPersonalDataApiUri();
     BaseStep CreateSendRequestForUserPersonalDataStep();
+    BaseStep CreateWotApiResponseContractResolverStep();
+    BaseStep CreateDeserializePersonalDataHttpResponseStep();
+    BaseStep CreateWotDataCosmosDbDtoCreateStep();
+    BaseStep CreateSaveDataToCosmosDatabaseStep();
 }

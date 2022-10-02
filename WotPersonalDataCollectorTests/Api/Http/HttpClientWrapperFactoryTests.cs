@@ -27,5 +27,19 @@ namespace WotPersonalDataCollectorTests.Api.Http
             actual.Should().BeAssignableTo<IHttpClientWrapper>();
             actual.Should().BeAssignableTo<IDisposable>();
         }
+
+        [Test]
+        public void ShouldReturnSameInstanceOfHttpClient()
+        {
+            // Act
+            using var actual = _uut.Create();
+            using var actual2 = _uut.Create();
+            using var actual3 = _uut.Create();
+
+            // Assert
+            actual.Should().BeSameAs(actual2);
+            actual.Should().BeSameAs(actual3);
+            actual2.Should().BeSameAs(actual3);
+        }
     }
 }

@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using WotPersonalDataCollector.CosmosDb;
+using WotPersonalDataCollector.CosmosDb.Services;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Builder;
@@ -13,16 +15,34 @@ namespace WotPersonalDataCollector
     {
         private readonly IWorkflowStepsFactory _workflowStepsFactory;
         private readonly IConfiguration _configuration;
+        private readonly IWpdCosmosClientWrapperFactory _cosmosClientWrapperFactory;
+        private readonly ICosmosContainerService _cosmosContainerService;
+        private bool _cosmosDbSetUpFinished;
 
-        public WotPersonalDataCrawler(IWorkflowStepsFactory workflowStepsFactory, IConfiguration configuration)
+        public WotPersonalDataCrawler(IWorkflowStepsFactory workflowStepsFactory, IConfiguration configuration,
+             IWpdCosmosClientWrapperFactory cosmosClientWrapperFactory, ICosmosContainerService cosmosContainerService)
         {
             _workflowStepsFactory = workflowStepsFactory;
             _configuration = configuration;
+            _cosmosClientWrapperFactory = cosmosClientWrapperFactory;
+            _cosmosContainerService = cosmosContainerService;
         }
 
         [FunctionName("WotPersonalDataCrawler")]
         public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
+            if (!_cosmosDbSetUpFinished)
+            {
+                log.LogInformation("Creating database");
+                var databaseObject = await _cosmosClientWrapperFactory.Create().CreateDatabaseIfNotExistsAsync();
+                log.LogInformation("Database created");
+                log.LogInformation("Creating container");
+                await _cosmosContainerService.Create(databaseObject);
+                log.LogInformation("Container created");
+                log.LogInformation("Finished setup execution");
+                _cosmosDbSetUpFinished = true;
+            }
+
             var startingWorkflow = new WorkflowBuilder()
                 .AddStep(_workflowStepsFactory.CreateUserInfoRequestObject())
                 .AddStep(_workflowStepsFactory.CreateUserInfoApiUri())
@@ -33,12 +53,19 @@ namespace WotPersonalDataCollector
                 .AddStep(_workflowStepsFactory.CreateUserPersonalDataApiUri())
                 .AddStep(_workflowStepsFactory.CreateUserPersonalDataHttpRequestMessage())
                 .AddStep(_workflowStepsFactory.CreateSendRequestForUserPersonalDataStep())
+                .AddStep(_workflowStepsFactory.CreateWotApiResponseContractResolverStep())
+                .AddStep(_workflowStepsFactory.CreateDeserializePersonalDataHttpResponseStep())
+                .AddStep(_workflowStepsFactory.CreateWotDataCosmosDbDtoCreateStep())
+                .AddStep(_workflowStepsFactory.CreateSaveDataToCosmosDatabaseStep())
                 .Build();
-            await startingWorkflow.Execute(new WorkflowContext()
+
+            var context = new WorkflowContext()
             {
-                Logger = log, UserInfoApiUrl = _configuration.PlayersUri,
+                Logger = log,
+                UserInfoApiUrl = _configuration.PlayersUri,
                 UserPersonalDataApiUrl = _configuration.PersonalDataUri
-            });
+            };
+            await startingWorkflow.Execute(context);
         }
     }
 }

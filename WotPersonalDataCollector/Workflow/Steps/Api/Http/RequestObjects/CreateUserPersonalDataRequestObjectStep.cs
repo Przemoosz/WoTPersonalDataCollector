@@ -14,11 +14,12 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects
         {
             _userPersonalDataRequestObjectFactory = userPersonalDataRequestObjectFactory;
         }
-        public override async Task ExecuteInner(WorkflowContext context)
+        public override Task ExecuteInner(WorkflowContext context)
         {
             try
             {
                 context.UserPersonalDataRequestObject = _userPersonalDataRequestObjectFactory.Create(context.UserIdData);
+                return Task.CompletedTask;
             }
             catch (Exception exception)
             {
@@ -26,6 +27,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects
                     $"Unexpected error occurred during creating userPersonalDataRequestObject. Message: {exception.Message}\n At: {exception.StackTrace} ");
                 _createdUserPersonalDataRequestObject = false;
                 context.UnexpectedException = true;
+                return Task.CompletedTask;
             }
         }
 
