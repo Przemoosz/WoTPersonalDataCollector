@@ -12,14 +12,13 @@ namespace WotPersonalDataCollector.CosmosDb.DTO
         public string Id { get; set; }
         public string CreationDate { get; set; }
         public WotAccountDto AccountData { get; set; }
-
         public ClassProperties ClassProperties { get; set; }
         public string AccountId { get; set; }
 
         public WotDataCosmosDbDto()
         {
-            
         }
+
         public WotDataCosmosDbDto(WotAccountDto wotAccountDto, string accountId, string dtoVersion)
         {
             AccountId = accountId;

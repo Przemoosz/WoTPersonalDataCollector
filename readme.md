@@ -37,7 +37,7 @@ Version name - Description - Status
 - WPD-1-CrawlDataAboutUser - Crawling Data About User id using WOT REST API - Finished and merged
 - WPD-2-ImplementChainOfResponsibility - Refactored azure function to implement chain of responsibility design pattern - Finished and merged
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
-- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - In development
+- WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Displaying saved data in CosmosDb in ASP.NET app - Planned
 
 
