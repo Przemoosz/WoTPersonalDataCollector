@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using WotPersonalDataCollector.CosmosDb;
+using WotPersonalDataCollector.CosmosDb.Services;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Builder;
@@ -16,21 +17,24 @@ namespace WotPersonalDataCollector
         private readonly IConfiguration _configuration;
         private readonly IWpdCosmosClientWrapperFactory _cosmosClientWrapperFactory;
         private readonly ICosmosContainerService _cosmosContainerService;
-        private bool _cosmosDbSetUpFinished = false;
+        private readonly ICosmosDbService _cosmosDbService;
+        private bool _cosmosDbSetUpFinished;
 
         public WotPersonalDataCrawler(IWorkflowStepsFactory workflowStepsFactory, IConfiguration configuration,
-             IWpdCosmosClientWrapperFactory cosmosClientWrapperFactory, ICosmosContainerService cosmosContainerService)
+             IWpdCosmosClientWrapperFactory cosmosClientWrapperFactory, ICosmosContainerService cosmosContainerService, 
+             ICosmosDbService cosmosDbService)
         {
             _workflowStepsFactory = workflowStepsFactory;
             _configuration = configuration;
             _cosmosClientWrapperFactory = cosmosClientWrapperFactory;
             _cosmosContainerService = cosmosContainerService;
+            _cosmosDbService = cosmosDbService;
         }
 
         [FunctionName("WotPersonalDataCrawler")]
         public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            if (_cosmosDbSetUpFinished)
+            if (!_cosmosDbSetUpFinished)
             {
                 log.LogInformation("Creating database");
                 var databaseObject = await _cosmosClientWrapperFactory.Create().CreateDatabaseIfNotExistsAsync();
@@ -64,6 +68,7 @@ namespace WotPersonalDataCollector
                 UserPersonalDataApiUrl = _configuration.PersonalDataUri
             };
             await startingWorkflow.Execute(context);
+            await _cosmosDbService.SaveAsync(context.CosmosDbDto);
         }
     }
 }

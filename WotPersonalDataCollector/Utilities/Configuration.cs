@@ -14,6 +14,7 @@ namespace WotPersonalDataCollector.Utilities
                 return Environment.GetEnvironmentVariable("ApplicationId");
             }
         }
+
         public string UserName
         {
             get

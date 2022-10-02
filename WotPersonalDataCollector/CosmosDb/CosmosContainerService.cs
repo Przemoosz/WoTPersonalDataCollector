@@ -6,7 +6,7 @@ namespace WotPersonalDataCollector.CosmosDb
 {
     internal sealed class CosmosContainerService: ICosmosContainerService
     {
-        private const string PartitionKey = @"/ClassProperties/AccountId";
+        private const string PartitionKey = @"/AccountId";
         private readonly IConfiguration _configuration;
 
         public CosmosContainerService(IConfiguration configuration)

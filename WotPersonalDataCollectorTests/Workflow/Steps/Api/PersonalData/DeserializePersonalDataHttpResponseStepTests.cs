@@ -33,7 +33,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.PersonalData
             var context = Any.Instance<WorkflowContext>();
             context.AccountDto = null;
             var accountDto = Any.Instance<WotAccountDto>();
-            _deserializePersonalDataHttpResponse.Deserialize(context.UserIdResponseMessage, context.ContractResolver).Returns(accountDto);
+            _deserializePersonalDataHttpResponse.Deserialize(context.UserPersonalDataResponseMessage, context.ContractResolver).Returns(accountDto);
 
             // Act
             await _uut.ExecuteInner(context);
@@ -51,7 +51,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.PersonalData
             var context = Any.Instance<WorkflowContext>();
             context.UnexpectedException = false;
             context.AccountDto = null;
-            _deserializePersonalDataHttpResponse.Deserialize(context.UserIdResponseMessage, context.ContractResolver).ThrowsAsync(new DeserializeJsonException());
+            _deserializePersonalDataHttpResponse.Deserialize(context.UserPersonalDataResponseMessage, context.ContractResolver).ThrowsAsync(new DeserializeJsonException());
 
             // Act
             await _uut.ExecuteInner(context);
@@ -69,7 +69,7 @@ namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.PersonalData
             var context = Any.Instance<WorkflowContext>();
             context.UnexpectedException = false;
             context.AccountDto = null;
-            _deserializePersonalDataHttpResponse.Deserialize(context.UserIdResponseMessage, context.ContractResolver).ThrowsAsync(new Exception());
+            _deserializePersonalDataHttpResponse.Deserialize(context.UserPersonalDataResponseMessage, context.ContractResolver).ThrowsAsync(new Exception());
 
             // Act
             await _uut.ExecuteInner(context);

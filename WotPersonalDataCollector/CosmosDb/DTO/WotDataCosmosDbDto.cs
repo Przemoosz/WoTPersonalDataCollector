@@ -10,21 +10,27 @@ namespace WotPersonalDataCollector.CosmosDb.DTO
 
         [JsonProperty("id")]
         public string Id { get; set; }
-
+        public string CreationDate { get; set; }
         public WotAccountDto AccountData { get; set; }
 
         public ClassProperties ClassProperties { get; set; }
+        public string AccountId { get; set; }
 
+        public WotDataCosmosDbDto()
+        {
+            
+        }
         public WotDataCosmosDbDto(WotAccountDto wotAccountDto, string accountId, string dtoVersion)
         {
+            AccountId = accountId;
             ClassProperties = new ClassProperties()
             {
-                AccountId = accountId,
                 DtoVersion = dtoVersion,
                 Type = DtoType
             };
             AccountData = wotAccountDto;
             Id = Guid.NewGuid().ToString("D");
+            CreationDate = DateTime.UtcNow.ToString("G");
         }
     }
 }

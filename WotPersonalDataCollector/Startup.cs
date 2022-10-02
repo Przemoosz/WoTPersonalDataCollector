@@ -7,7 +7,9 @@ using WotPersonalDataCollector.Api.PersonalData;
 using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.CosmosDb;
+using WotPersonalDataCollector.CosmosDb.DatabaseContext;
 using WotPersonalDataCollector.CosmosDb.DTO;
+using WotPersonalDataCollector.CosmosDb.Services;
 using WotPersonalDataCollector.Utilities;
 using WotPersonalDataCollector.Workflow.Factory;
 
@@ -28,6 +30,9 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<IWpdCosmosClientWrapper, WpdCosmosClientWrapper>();
             builder.Services.AddSingleton<IWpdCosmosClientWrapperFactory, WpdCosmosClientWrapperFactory>();
             builder.Services.AddSingleton<ICosmosContainerService, CosmosContainerService>();
+            builder.Services.AddSingleton<IWotContextWrapper, WotContextWrapper>();
+            builder.Services.AddSingleton<IWotContextWrapperFactory, WotContextWrapperFactory>();
+            builder.Services.AddSingleton<ICosmosDbService, CosmosDbService>();
         }
 
         private void LocalDataInstaller(IFunctionsHostBuilder builder)

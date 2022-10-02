@@ -11,9 +11,10 @@ namespace WotPersonalDataCollector.Workflow.Steps.CosmosDb
         {
             _wotDataCosmosDbDtoFactory = wotDataCosmosDbDtoFactory;
         }
-        public override async Task ExecuteInner(WorkflowContext context)
+        public override Task ExecuteInner(WorkflowContext context)
         {
             context.CosmosDbDto = _wotDataCosmosDbDtoFactory.Create(context.AccountDto, context.UserIdData);
+            return Task.CompletedTask;
         }
     }
 }
