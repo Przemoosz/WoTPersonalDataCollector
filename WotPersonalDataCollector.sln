@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WotPersonalDataCollectorTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WotPersonalDataCollectorWebApp", "WotPersonalDataCollectorWebApp\WotPersonalDataCollectorWebApp.csproj", "{34CDF208-5BB1-4851-9A07-742545317270}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WotPersonalDataCollectorWebApp.UnitTests", "WotPersonalDataCollectorWebApp.UnitTests\WotPersonalDataCollectorWebApp.UnitTests.csproj", "{4CD983A6-107E-4274-9074-49D4B5B5D9B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{34CDF208-5BB1-4851-9A07-742545317270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34CDF208-5BB1-4851-9A07-742545317270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34CDF208-5BB1-4851-9A07-742545317270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD983A6-107E-4274-9074-49D4B5B5D9B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD983A6-107E-4274-9074-49D4B5B5D9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD983A6-107E-4274-9074-49D4B5B5D9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD983A6-107E-4274-9074-49D4B5B5D9B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
