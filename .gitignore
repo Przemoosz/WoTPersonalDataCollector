@@ -2,10 +2,4 @@
 .idea/*
 WotPersonalDataCollectorTests/bin/*
 WotPersonalDataCollectorTests/obj/*
-WotPersonalDataCollectorWebApp.UnitTests/bin/*
-WotPersonalDataCollectorWebApp.UnitTests/obj/*
 WotPersonalDataCollector.sln.DotSettings.user
-WotPersonalDataCollectorWebApp/Properties/launchSettings.json
-WotPersonalDataCollectorWebApp/wwwroot/lib/jquery/LICENSE.txt
-WotPersonalDataCollectorWebApp/wwwroot/lib/jquery-validation/LICENSE.md
-WotPersonalDataCollectorWebApp/wwwroot/lib/bootstrap/LICENSE
