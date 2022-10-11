@@ -5,5 +5,5 @@ internal interface IAspConfiguration
     string DatabaseName { get; }
     string ContainerName { get; }
     string CosmosConnectionString { get; }
-    string CurrentDtoVersion { get; }
+    string WotDtoVersion { get; }
 }

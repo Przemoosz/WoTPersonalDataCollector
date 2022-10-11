@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto
+namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics
 {
     public class WotUser
     {

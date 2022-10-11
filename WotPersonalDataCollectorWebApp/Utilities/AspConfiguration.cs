@@ -37,5 +37,14 @@ namespace WotPersonalDataCollectorWebApp.Utilities
                 return connectionString;
             }
         }
+
+        public string WotDtoVersion
+        {
+            get
+            {
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("WotDtoVersion"), "WotDtoVersion local variable is not set!");
+                return Environment.GetEnvironmentVariable("WotDtoVersion")!;
+            }
+        }
     }
 }

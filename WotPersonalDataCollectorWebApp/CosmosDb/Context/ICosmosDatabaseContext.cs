@@ -4,7 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     public interface ICosmosDatabaseContext
     {
-        DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
+        DbSet<UserPersonalData> PersonalData { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
