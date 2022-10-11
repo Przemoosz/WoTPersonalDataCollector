@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WotPersonalDataCollectorWebApp.Models;
 
 namespace WotPersonalDataCollectorWebApp.Controllers;
@@ -13,10 +14,6 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public string Hi()
-    {
-        return "Hi";
-    }
     public IActionResult Index()
     {
         return View();

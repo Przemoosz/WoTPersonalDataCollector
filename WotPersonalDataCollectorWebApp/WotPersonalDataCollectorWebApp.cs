@@ -1,22 +1,29 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using WotPersonalDataCollectorWebApp.Data;
+using WotPersonalDataCollectorWebApp.CosmosDb.Context;
+using WotPersonalDataCollectorWebApp.Utilities;
 
 namespace WotPersonalDataCollectorWebApp
 {
-    public static class WotPersonalDataCollectorWebApp
+    internal static class WotPersonalDataCollectorWebApp
     {
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(connectionString));
+            var config = new AspConfiguration(); 
+            // builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //     options.UseSqlite(connectionString));
+            // builder.Services.AddDbContext<CosmosDatabaseContext>(s => new CosmosDatabaseContext()
+            //    );
+            builder.Services.AddDbContext<ICosmosDatabaseContext ,CosmosDatabaseContext>(b =>
+                b.UseCosmos(config.CosmosConnectionString, config.DatabaseName));
+            //// builder.Services.AddScoped<ICosmosDatabaseContext>();
+            
+            builder.Services.BuildServiceProvider().GetService<CosmosDatabaseContext>();
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<CosmosDatabaseContext>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
