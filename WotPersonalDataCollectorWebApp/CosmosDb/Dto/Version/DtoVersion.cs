@@ -1,6 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 {
-    internal class DtoVersion: IEquatable<DtoVersion>
+    internal class DtoVersion : IEquatable<DtoVersion>
     {
         public int Major { get; init; }
         public int Minor { get; init; }
@@ -24,8 +24,13 @@
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((DtoVersion)obj);
+        }
+
+        public override string ToString()
+        {
+            return $"{Major}.{Minor}.{Patch}";
         }
 
         public override int GetHashCode()
@@ -33,7 +38,7 @@
             return HashCode.Combine(Major, Minor, Patch);
         }
 
-        public static bool operator == (DtoVersion first, DtoVersion other)
+        public static bool operator ==(DtoVersion first, DtoVersion other)
         {
             return first.Equals(other);
         }

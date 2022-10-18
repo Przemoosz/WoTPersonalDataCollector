@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
 using WotPersonalDataCollectorWebApp.Exceptions;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
@@ -19,7 +19,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
         [TestCase("1.0.0", 1, 0, 0)]
         [TestCase("4.9.11", 4, 9, 11)]
         [TestCase("15.124.98", 15, 124, 98)]
-        public void ShouldSplitStringProvidedVersionAndCreateDtoVerionObject(string stringVersion, int major, int minor,
+        public void ShouldSplitStringProvidedVersionAndCreateDtoVersionObject(string stringVersion, int major, int minor,
             int patch)
         {
             // Act
@@ -33,7 +33,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 
         [TestCase("1.0.0.0")]
         [TestCase("23.19")]
-        public void ShouldThrowDtoVersionComponentsExceptionWhenVersionDoesNotMatchSemanticVersioningPattern(
+        public void ShouldThrowDtoVersionComponentsExceptionWhenVersionDoesNotMatchSemanticVersiresharponingPattern(
             string version)
         {
             // Act
