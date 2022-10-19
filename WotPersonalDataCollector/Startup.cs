@@ -20,12 +20,12 @@ namespace WotPersonalDataCollector
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            LocalDataInstaller(builder);
-            CosmosDbInstaller(builder);
-            DataCrawlerInstaller(builder);
+            InstallLocalData(builder);
+            InstallCosmosDbDependencies(builder);
+            InstallDataCrawlerDependencies(builder);
         }
 
-        private void CosmosDbInstaller(IFunctionsHostBuilder builder)
+        private void InstallCosmosDbDependencies(IFunctionsHostBuilder builder)
         {
             builder.Services.AddSingleton<IWpdCosmosClientWrapper, WpdCosmosClientWrapper>();
             builder.Services.AddSingleton<IWpdCosmosClientWrapperFactory, WpdCosmosClientWrapperFactory>();
@@ -35,12 +35,12 @@ namespace WotPersonalDataCollector
             builder.Services.AddSingleton<ICosmosDbService, CosmosDbService>();
         }
 
-        private void LocalDataInstaller(IFunctionsHostBuilder builder)
+        private void InstallLocalData(IFunctionsHostBuilder builder)
         {
             builder.Services.AddSingleton<IConfiguration, Configuration>();
         }
 
-        private void DataCrawlerInstaller(IFunctionsHostBuilder builder)
+        private void InstallDataCrawlerDependencies(IFunctionsHostBuilder builder)
         {
             builder.Services.AddSingleton<IHttpClientWrapperFactory, HttpClientWrapperFactory>();
             builder.Services.AddSingleton<IUserInfoRequestObjectFactory, UserInfoRequestObjectFactory>();

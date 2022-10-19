@@ -9,7 +9,7 @@ namespace WotPersonalDataCollectorWebApp
     {
         public static async Task Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             var config = new AspConfiguration(); 
             // builder.Services.AddDbContext<ApplicationDbContext>(options =>
             //     options.UseSqlite(connectionString));
