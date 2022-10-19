@@ -19,23 +19,25 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 
         public void EnsureVersionCorrectness(UserPersonalData userPersonalData)
         {
-            var webDtoVersion = _dtoVersionFactory.Create(_aspConfiguration.WotDtoVersion);
-            var cosmosDtoVersion = _dtoVersionFactory.Create(userPersonalData.ClassProperties.DtoVersion);
+            DtoVersion webDtoVersion = _dtoVersionFactory.Create(_aspConfiguration.WotDtoVersion);
+            DtoVersion cosmosDtoVersion = _dtoVersionFactory.Create(userPersonalData.ClassProperties.DtoVersion);
             if (webDtoVersion.Major < cosmosDtoVersion.Major)
             {
-                _logger.LogError("CosmosDb have old version of dto than this used in ASP.NET!");
+                //Tested
+                _logger.LogError("CosmosDb have higher version of dto than this used in ASP.NET!");
                 throw new DtoVersionException($"Version used in CosmosDb have higher Major number than Dto version used in ASP.NET app. Update ASP.NET! \n Cosmos: {cosmosDtoVersion.Major} \n ASP.NET: {webDtoVersion.Major}");
             }
 
             if (webDtoVersion.Major > cosmosDtoVersion.Major)
             {
-                _logger.LogError("CosmosDb have lower major version number than this used in ASP.NET!");
+                //Tested
+	            _logger.LogError("CosmosDb have lower major version number than this used in ASP.NET!");
                 throw new DtoVersionException($"Version used in CosmosDb have lower Major number than Dto version used in ASP.NET app. Update CosmosDto! \n Cosmos: {cosmosDtoVersion.Major} \n ASP.NET: {webDtoVersion.Major}");
             }
 
             if (webDtoVersion.Minor > cosmosDtoVersion.Minor)
             {
-                _logger.LogError("CosmosDb have old version of dto than this used in ASP.NET!");
+                _logger.LogError("CosmosDb have older version of dto than this used in ASP.NET!");
                 throw new DtoVersionException($"Version used in CosmosDb have lower Minor number than Dto version used in ASP.NET app. Update CosmosDto! \n Cosmos: {cosmosDtoVersion.Minor} \n ASP.NET: {webDtoVersion.Minor}");
             }
 
@@ -49,6 +51,7 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
             }
             else
             {
+                // Tested
                 _logger.LogInformation("ASP.NET Dto version matches CosmosDb Dto Version");
             }
 
