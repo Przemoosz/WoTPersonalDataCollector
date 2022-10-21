@@ -1,19 +1,19 @@
 ﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 {
-    internal class DtoVersion : IEquatable<DtoVersion>
+    internal class SemanticVersionModel : IEquatable<SemanticVersionModel>
     {
         public int Major { get; init; }
         public int Minor { get; init; }
         public int Patch { get; init; }
 
-        public DtoVersion(int major, int minor, int patch)
+        public SemanticVersionModel(int major, int minor, int patch)
         {
             Major = major;
             Minor = minor;
             Patch = patch;
         }
 
-        public bool Equals(DtoVersion? other)
+        public bool Equals(SemanticVersionModel? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -25,7 +25,7 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((DtoVersion)obj);
+            return Equals((SemanticVersionModel)obj);
         }
 
         public override string ToString()
@@ -38,12 +38,12 @@
             return HashCode.Combine(Major, Minor, Patch);
         }
 
-        public static bool operator ==(DtoVersion first, DtoVersion other)
+        public static bool operator ==(SemanticVersionModel first, SemanticVersionModel other)
         {
             return first.Equals(other);
         }
 
-        public static bool operator !=(DtoVersion first, DtoVersion other)
+        public static bool operator !=(SemanticVersionModel first, SemanticVersionModel other)
         {
             return !first.Equals(other);
         }

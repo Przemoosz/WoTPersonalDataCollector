@@ -2,9 +2,9 @@
 
 namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 {
-    internal class DtoVersionFactory : IDtoVersionFactory
+    internal class SemanticVersionModelFactory : ISemanticVersionModelFactory
     {
-        public DtoVersion Create(string version)
+        public SemanticVersionModel Create(string version)
         {
             var components = version.Split('.');
 
@@ -30,7 +30,7 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
                     "Cannot parse Patch version component to Int32!");
             }
 
-            return new DtoVersion(numericalComponents[0], numericalComponents[1], numericalComponents[2]);
+            return new SemanticVersionModel(numericalComponents[0], numericalComponents[1], numericalComponents[2]);
         }
     }
 }

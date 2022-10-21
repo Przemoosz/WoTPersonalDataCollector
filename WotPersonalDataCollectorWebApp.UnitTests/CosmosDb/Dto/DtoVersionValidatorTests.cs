@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -15,7 +14,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 	public class DtoVersionValidatorTests
 	{
 		private ILogger _logger;
-		private IDtoVersionFactory _dtoVesrionFactory;
+		private ISemanticVersionModelFactory _semanticVesrionModelFactory;
 		private IAspConfiguration _aspConfiguration;
 		private IDtoVersionValidator _uut;
 
@@ -24,8 +23,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 		{
 			_aspConfiguration = Substitute.For<IAspConfiguration>();
 			_logger = Substitute.For<ILogger>();
-			_dtoVesrionFactory = Substitute.For<IDtoVersionFactory>();
-			_uut = new DtoVersionValidator(_aspConfiguration, _dtoVesrionFactory, _logger);
+			_semanticVesrionModelFactory = Substitute.For<ISemanticVersionModelFactory>();
+			_uut = new DtoVersionValidator(_aspConfiguration, _semanticVesrionModelFactory, _logger);
 		}
 
 		[Test]
@@ -34,10 +33,10 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 			// Arrange
 			string dtoVersion = "3.12.9";
 			UserPersonalData userPersonalData = Any.Instance<UserPersonalData>();
-			DtoVersion dtoVersionObject = new DtoVersion(3, 12, 9);
+			SemanticVersionModel semanticVersionModelObject = new SemanticVersionModel(3, 12, 9);
 			userPersonalData.ClassProperties.DtoVersion = dtoVersion;
 			_aspConfiguration.WotDtoVersion.Returns(dtoVersion);
-			_dtoVesrionFactory.Create(dtoVersion).Returns(dtoVersionObject);
+			_semanticVesrionModelFactory.Create(dtoVersion).Returns(semanticVersionModelObject);
 
 			// Act
 			Action act = () => _uut.EnsureVersionCorrectness(userPersonalData);
@@ -54,12 +53,12 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 			string cosmosDtoVersion = "3.12.9";
 			string aspDtoVersion = "2.14.19";
 			UserPersonalData userPersonalData = Any.Instance<UserPersonalData>();
-			DtoVersion cosmosDtoVersionObject = new DtoVersion(3, 12, 9);
-			DtoVersion aspDtoVersionObject = new DtoVersion(2, 14, 19);
+			SemanticVersionModel cosmosSemanticVersionModelObject = new SemanticVersionModel(3, 12, 9);
+			SemanticVersionModel aspSemanticVersionModelObject = new SemanticVersionModel(2, 14, 19);
 			userPersonalData.ClassProperties.DtoVersion = cosmosDtoVersion;
 			_aspConfiguration.WotDtoVersion.Returns(aspDtoVersion);
-			_dtoVesrionFactory.Create(aspDtoVersion).Returns(aspDtoVersionObject);
-			_dtoVesrionFactory.Create(cosmosDtoVersion).Returns(cosmosDtoVersionObject);
+			_semanticVesrionModelFactory.Create(aspDtoVersion).Returns(aspSemanticVersionModelObject);
+			_semanticVesrionModelFactory.Create(cosmosDtoVersion).Returns(cosmosSemanticVersionModelObject);
 
 			// Act
 			Action act = () => _uut.EnsureVersionCorrectness(userPersonalData);
@@ -76,12 +75,12 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 			string cosmosDtoVersion = "2.12.9";
 			string aspDtoVersion = "3.14.19";
 			UserPersonalData userPersonalData = Any.Instance<UserPersonalData>();
-			DtoVersion cosmosDtoVersionObject = new DtoVersion(2, 12, 9);
-			DtoVersion aspDtoVersionObject = new DtoVersion(3, 14, 19);
+			SemanticVersionModel cosmosSemanticVersionModelObject = new SemanticVersionModel(2, 12, 9);
+			SemanticVersionModel aspSemanticVersionModelObject = new SemanticVersionModel(3, 14, 19);
 			userPersonalData.ClassProperties.DtoVersion = cosmosDtoVersion;
 			_aspConfiguration.WotDtoVersion.Returns(aspDtoVersion);
-			_dtoVesrionFactory.Create(aspDtoVersion).Returns(aspDtoVersionObject);
-			_dtoVesrionFactory.Create(cosmosDtoVersion).Returns(cosmosDtoVersionObject);
+			_semanticVesrionModelFactory.Create(aspDtoVersion).Returns(aspSemanticVersionModelObject);
+			_semanticVesrionModelFactory.Create(cosmosDtoVersion).Returns(cosmosSemanticVersionModelObject);
 
 			// Act
 			Action act = () => _uut.EnsureVersionCorrectness(userPersonalData);

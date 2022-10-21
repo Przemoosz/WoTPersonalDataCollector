@@ -6,20 +6,20 @@ using WotPersonalDataCollectorWebApp.Exceptions;
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 {
     [TestFixture]
-    public class DtoVersionFactoryTests
+    public class SemanticVersionModelFactoryTests
     {
-        private IDtoVersionFactory _uut;
+        private ISemanticVersionModelFactory _uut;
 
         [SetUp]
         public void SetUp()
         {
-            _uut = new DtoVersionFactory();
+            _uut = new SemanticVersionModelFactory();
         }
 
         [TestCase("1.0.0", 1, 0, 0)]
         [TestCase("4.9.11", 4, 9, 11)]
         [TestCase("15.124.98", 15, 124, 98)]
-        public void ShouldSplitStringProvidedVersionAndCreateDtoVersionObject(string stringVersion, int major, int minor,
+        public void ShouldSplitStringProvidedVersionAndCreateSemanticVersionModel(string stringVersion, int major, int minor,
             int patch)
         {
             // Act
@@ -37,7 +37,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
             string version)
         {
             // Act
-            Func<DtoVersion> act = () => _uut.Create(version);
+            Func<SemanticVersionModel> act = () => _uut.Create(version);
 
             // Assert
             act.Should().Throw<DtoVersionComponentsException>()
@@ -51,7 +51,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
             var version = "X.0.0";
 
             // Act
-            Func<DtoVersion> act = () => _uut.Create(version);
+            Func<SemanticVersionModel> act = () => _uut.Create(version);
 
             // Arrange 
             act.Should().Throw<DtoVersionComponentsException>()
@@ -65,7 +65,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
             var version = "1.X.0";
 
             // Act
-            Func<DtoVersion> act = () => _uut.Create(version);
+            Func<SemanticVersionModel> act = () => _uut.Create(version);
 
             // Arrange 
             act.Should().Throw<DtoVersionComponentsException>()
@@ -79,7 +79,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
             var version = "1.0.X";
 
             // Act
-            Func<DtoVersion> act = () => _uut.Create(version);
+            Func<SemanticVersionModel> act = () => _uut.Create(version);
 
             // Arrange 
             act.Should().Throw<DtoVersionComponentsException>()
