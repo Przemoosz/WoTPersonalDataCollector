@@ -16,7 +16,7 @@ using WotPersonalDataCollector.Workflow.Factory;
 [assembly: FunctionsStartup(typeof(WotPersonalDataCollector.Startup))]
 namespace WotPersonalDataCollector
 {
-    internal class Startup: FunctionsStartup
+    internal sealed class Startup: FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
