@@ -1,6 +1,8 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine;
+﻿using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+
+namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine;
 
 internal interface IVersionRuleEngine
 {
-	void Validate(VersionRulesContext context);
+	void Validate(VersionRulesContext context, IEnumerable<IVersionRule> rules);
 }

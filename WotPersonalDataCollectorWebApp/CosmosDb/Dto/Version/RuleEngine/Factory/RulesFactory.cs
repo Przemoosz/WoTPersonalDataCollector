@@ -37,7 +37,7 @@
 
 		public IVersionRule CreateLowerAspPatchVersionRule()
 		{
-			return new LowerAspMinorVersionRule(_logger);
+			return new LowerAspPatchVersionRule(_logger);
 		}
 
 		public IVersionRule CreateAspVersionEqualsCosmosVersionRule()

@@ -24,8 +24,4 @@
     <ProjectReference Include="..\WotPersonalDataCollectorWebApp\WotPersonalDataCollectorWebApp.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CosmosDb\Dto\RuleEngine\Factory\" />
-  </ItemGroup>
-
 </Project>

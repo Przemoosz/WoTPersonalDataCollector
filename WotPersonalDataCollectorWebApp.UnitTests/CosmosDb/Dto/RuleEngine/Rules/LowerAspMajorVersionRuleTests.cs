@@ -9,6 +9,7 @@ using WotPersonalDataCollectorWebApp.Exceptions;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
 {
+	[TestFixture]
 	public class LowerAspMajorVersionRuleTests
 	{
 		private ILogger _logger;
