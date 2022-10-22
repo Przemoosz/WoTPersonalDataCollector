@@ -8,6 +8,7 @@
 		{
 			_logger = logger;
 		}
+
 		public void Evaluate(VersionRulesContext context)
 		{
 			_logger.LogInformation("ASP.NET Dto version matches CosmosDb Dto Version");

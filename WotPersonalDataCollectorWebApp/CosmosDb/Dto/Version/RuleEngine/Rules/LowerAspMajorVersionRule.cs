@@ -13,7 +13,7 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules
 
 		public void Evaluate(VersionRulesContext context)
 		{
-			if (context.AspVersionModel.Major > context.CosmosVersionModel.Major)
+			if (context.AspVersionModel.Major < context.CosmosVersionModel.Major)
 			{
 				_logger.LogError("CosmosDb have higher version of dto than this used in ASP.NET!");
 				throw new DtoVersionException($"Version used in CosmosDb have higher Major number than Dto version used in ASP.NET app. Update ASP.NET! \n Cosmos: {context.CosmosVersionModel.Major} \n ASP.NET: {context.AspVersionModel.Major}");
