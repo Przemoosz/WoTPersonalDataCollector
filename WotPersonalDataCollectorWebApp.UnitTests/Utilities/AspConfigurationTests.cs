@@ -2,16 +2,17 @@
 using NUnit.Framework;
 using TddXt.AnyRoot.Strings;
 using WotPersonalDataCollectorWebApp.Exceptions;
+using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 using WotPersonalDataCollectorWebApp.Utilities;
 using static TddXt.AnyRoot.Root;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
 {
-    [TestFixture]
+    [TestFixture, ConfigurationTests]
     public class AspConfigurationTests
     {
-        private IAspConfiguration _uut;
-
+        private IAspConfiguration _uut = null!;
+        
         [SetUp]
         public void SetUp()
         {

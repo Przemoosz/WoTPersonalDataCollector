@@ -5,10 +5,11 @@ using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
 {
-	[TestFixture]
+	[TestFixture, RuleTests]
 	public class AspVersionEqualsCosmosVersionRuleTests
 	{
 		private ILogger _logger;

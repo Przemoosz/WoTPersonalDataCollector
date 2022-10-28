@@ -4,10 +4,11 @@ using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Factory
 {
-	[TestFixture]
+	[TestFixture, FactoryTests, Parallelizable]
 	public class RulesFactoryTests
 	{
 		private ILogger _logger;

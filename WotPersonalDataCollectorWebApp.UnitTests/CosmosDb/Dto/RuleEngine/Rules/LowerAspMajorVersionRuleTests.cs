@@ -6,10 +6,11 @@ using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
 using WotPersonalDataCollectorWebApp.Exceptions;
+using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
 {
-	[TestFixture]
+	[TestFixture, RuleTests]
 	public class LowerAspMajorVersionRuleTests
 	{
 		private ILogger _logger;
@@ -22,7 +23,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
 			_uut = new LowerAspMajorVersionRule(_logger);
 		}
 
-		[Test]
+		[Test] 
 		public void ShouldEvaluateWhenAspMajorAreLowerThanCosmos()
 		{
 			// Arrange

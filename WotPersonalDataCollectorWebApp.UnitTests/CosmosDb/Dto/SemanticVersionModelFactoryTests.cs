@@ -5,7 +5,7 @@ using WotPersonalDataCollectorWebApp.Exceptions;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 {
-    [TestFixture]
+    [TestFixture, Parallelizable]
     public class SemanticVersionModelFactoryTests
     {
         private ISemanticVersionModelFactory _uut;
