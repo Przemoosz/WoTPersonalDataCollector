@@ -10,22 +10,9 @@ namespace WotPersonalDataCollectorWebApp
         public static async Task Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-            var config = new AspConfiguration(); 
-            // builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            //     options.UseSqlite(connectionString));
-            // builder.Services.AddDbContext<CosmosDatabaseContext>(s => new CosmosDatabaseContext()
-            //    );
-            builder.Services.AddDbContext<ICosmosDatabaseContext ,CosmosDatabaseContext>(b =>
-                b.UseCosmos(config.CosmosConnectionString, config.DatabaseName));
-            //// builder.Services.AddScoped<ICosmosDatabaseContext>();
-            
-            builder.Services.BuildServiceProvider().GetService<CosmosDatabaseContext>();
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<CosmosDatabaseContext>();
             builder.Services.AddControllersWithViews();
-
+            StartupInstaller startupInstaller = new StartupInstaller();
+            startupInstaller.InstallComponents(builder);
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

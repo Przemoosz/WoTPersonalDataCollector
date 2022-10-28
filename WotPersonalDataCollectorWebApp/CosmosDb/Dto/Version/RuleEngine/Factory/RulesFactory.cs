@@ -1,11 +1,13 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Factory
+﻿using Microsoft.Extensions.Logging.Abstractions;
+
+namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Factory
 {
 	using Rules;
 	internal class RulesFactory: IRulesFactory
 	{
 		private readonly ILogger _logger;
 
-		public RulesFactory(ILogger logger)
+		public RulesFactory(ILogger<RulesFactory> logger)
 		{
 			_logger = logger;
 		}

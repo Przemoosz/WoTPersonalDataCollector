@@ -31,5 +31,8 @@
 			<_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Views\Settings\" />
+	</ItemGroup>
 
 </Project>
