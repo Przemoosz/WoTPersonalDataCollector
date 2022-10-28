@@ -1,8 +1,11 @@
-﻿using WotPersonalDataCollectorWebApp.Utilities;
-
-namespace WotPersonalDataCollectorWebApp
+﻿namespace WotPersonalDataCollectorWebApp
 {
-	public class StartupInstaller: IStartupInstaller
+	using CosmosDb.Dto.Version;
+	using CosmosDb.Dto.Version.RuleEngine;
+	using CosmosDb.Dto.Version.RuleEngine.Factory;
+	using Utilities;
+
+	internal sealed  class StartupInstaller: IStartupInstaller
 	{
 		public void InstallComponents(WebApplicationBuilder builder)
 		{
@@ -23,7 +26,10 @@ namespace WotPersonalDataCollectorWebApp
 
 		private void InstalDependencies(WebApplicationBuilder builder)
 		{
-
+			builder.Services.AddSingleton<IVersionRuleEngine, VersionRuleEngine>();
+			builder.Services.AddSingleton<IDtoVersionValidator, DtoVersionValidator>();
+			builder.Services.AddSingleton<ISemanticVersionModelFactory, SemanticVersionModelFactory>();
+			builder.Services.AddSingleton<IRulesFactory, RulesFactory>();
 		}
 	}
 
