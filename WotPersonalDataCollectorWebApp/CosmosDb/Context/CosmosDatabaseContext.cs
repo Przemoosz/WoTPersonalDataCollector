@@ -9,7 +9,7 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
     {
         private const string IdJson = "id";
         private readonly IAspConfiguration _configuration = new AspConfiguration();
-        public DbSet<UserPersonalData> PersonalData { get; set; }
+        public DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
         public CosmosDatabaseContext() : base()
         {
         }
@@ -20,9 +20,9 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserPersonalData>().ToContainer(_configuration.ContainerName);
-            modelBuilder.Entity<UserPersonalData>().HasPartitionKey(d => d.AccountId);
-            modelBuilder.Entity<UserPersonalData>().Property(d => d.Id).ToJsonProperty(IdJson);
+            modelBuilder.Entity<WotDataCosmosDbDto>().ToContainer(_configuration.ContainerName);
+            modelBuilder.Entity<WotDataCosmosDbDto>().HasPartitionKey(d => d.AccountId);
+            modelBuilder.Entity<WotDataCosmosDbDto>().Property(d => d.Id).ToJsonProperty(IdJson);
             base.OnModelCreating(modelBuilder);
         }
 

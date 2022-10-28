@@ -2,5 +2,5 @@
 
 public interface IDtoVersionValidator
 {
-    void EnsureVersionCorrectness(UserPersonalData userPersonalData);
+    void EnsureVersionCorrectness(WotDataCosmosDbDto wotDataCosmosDbDto);
 }

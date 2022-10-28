@@ -31,7 +31,7 @@ namespace WotPersonalDataCollector
         [FunctionName("WotPersonalDataCrawler")]
         public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
-            if (!_cosmosDbSetUpFinished)
+            if (!true)
             {
                 log.LogInformation("Creating database");
                 var databaseObject = await _cosmosClientWrapperFactory.Create().CreateDatabaseIfNotExistsAsync();

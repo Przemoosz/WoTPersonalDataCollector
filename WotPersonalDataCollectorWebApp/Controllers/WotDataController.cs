@@ -6,9 +6,9 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 {
     public class WotDataController: Controller
     {
-        private readonly ICosmosDatabaseContext _context;
+        private readonly CosmosDatabaseContext _context;
 
-        public WotDataController(ICosmosDatabaseContext context)
+        public WotDataController(CosmosDatabaseContext context)
         {
             _context = context;
         }

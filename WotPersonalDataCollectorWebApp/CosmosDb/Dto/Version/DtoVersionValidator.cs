@@ -22,10 +22,10 @@
             _versionRuleEngine = versionRuleEngine;
         }
 
-        public void EnsureVersionCorrectness(UserPersonalData userPersonalData)
+        public void EnsureVersionCorrectness(WotDataCosmosDbDto wotDataCosmosDbDto)
         {
             SemanticVersionModel aspVersionModel = _semanticVersionModelFactory.Create(_aspConfiguration.WotDtoVersion);
-            SemanticVersionModel cosmosVersionModel = _semanticVersionModelFactory.Create(userPersonalData.ClassProperties.DtoVersion);
+            SemanticVersionModel cosmosVersionModel = _semanticVersionModelFactory.Create(wotDataCosmosDbDto.ClassProperties.DtoVersion);
             var context = new VersionRulesContext()
             {
 	            AspVersionModel = aspVersionModel,
