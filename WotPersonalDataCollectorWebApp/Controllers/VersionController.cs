@@ -1,14 +1,14 @@
-﻿using WotPersonalDataCollectorWebApp.CosmosDb.Context;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
-
-namespace WotPersonalDataCollectorWebApp.Controllers
+﻿namespace WotPersonalDataCollectorWebApp.Controllers
 {
-	using global::WotPersonalDataCollectorWebApp.Exceptions;
+	using Exceptions;
 	using Microsoft.AspNetCore.Mvc;
+	using CosmosDb.Context;
+	using CosmosDb.Dto;
+	using CosmosDb.Dto.Version;
 	public sealed class VersionController : Controller, IVersionController
 	{
+		private const string DtoType = "WotAccount";
+
 		private readonly ICosmosDatabaseContext _context;
 		private readonly IDtoVersionValidator _dtoVersionValidator;
 
@@ -40,7 +40,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 			await foreach (var data in wotData)
 			{
 				totalObjectsCount++;
-				if (data.ClassProperties == null || !data.ClassProperties.Type.Equals("WotAccount") || data.ClassProperties.DtoVersion == null)
+				if (data.ClassProperties == null || !data.ClassProperties.Type.Equals(DtoType) || data.ClassProperties.DtoVersion == null)
 				{
 					wrongObjectsCount++;
 					continue;
