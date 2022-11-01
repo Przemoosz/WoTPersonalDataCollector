@@ -8,7 +8,7 @@
 	using Microsoft.EntityFrameworkCore;
 	using CosmosDb.Context;
 
-	internal sealed class StartupInstaller: IStartupInstaller
+	internal sealed class StartupInstaller
 	{
 		public void InstallComponents(WebApplicationBuilder builder)
 		{
@@ -46,10 +46,5 @@
 			builder.Services.AddSingleton<ISemanticVersionModelFactory, SemanticVersionModelFactory>();
 			builder.Services.AddSingleton<IRulesFactory, RulesFactory>();
 		}
-	}
-
-	public interface IStartupInstaller
-	{
-		void InstallComponents(WebApplicationBuilder builder);
 	}
 }

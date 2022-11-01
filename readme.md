@@ -38,8 +38,10 @@ Version name - Description - Status
 - WPD-2-ImplementChainOfResponsibility - Refactored azure function to implement chain of responsibility design pattern - Finished and merged
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
-- WPD-5-DisplayCollectedDataInAspNetApp - Displaying saved data in CosmosDb in ASP.NET app - Planned
-
+- WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
+- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Planned
+- WPD-7-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-8-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
 
 ## CosmosDb
 
@@ -49,8 +51,19 @@ you can set up database locally. Tutorial how to install Azure Cosmos Db Emulato
 [Microsoft Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/local-emulator?tabs=ssl-netstd21). 
 All crawled data will be stored in database named *WotUserData* and in container named *WotAccountData*
 
+## ASP.NET App
+
+Follow Local Installation to install your app correctly. After you run application go to _"https://localhost:7097/Wot/All"_ to see if result
+are displayed correctly from Cosmos DB. You should see multiple times your account create date. If you dont see anything probably cosmos db is empty.
+Null fixes and protection will be available from next versions.
+
+### Note
+This version is prototype version of web app. New features will be implemented in the future. Follow versioning to see what changes
+will be made in the future. *Version* controller is now not available and will be activated in next app version.
+
 ## Local Installation
 
+### Azure app
 To use this app locally you have to install Visual Studio 2022. 
 After this clone solution and add *local.settings.json*
 inside WotPersonalDataCollector folder (the same folder which contains azure function)
@@ -74,13 +87,57 @@ In this file add and fill missing data. File should look like this:
   }
 }
 ```
+### ASP.NET app 
+To use asp.net app locally you have to provide some environmental variables. To do this create file named *launchSettings.json*
+in folder _"WotPersonalDataCollector\WotPersonalDataCollectorWebApp\Properties"_ If you don't have folder *Properties* create one.
+In this file add and fill missing data. File should look like this:
+```json
+{
+  "profiles": {
+    "WotPersonalDataCollectorWebApp": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DatabaseName": "WotUserData",
+        "ContainerName": "WotAccountData",
+        "WotDtoVersion": "1.0.0",
+        "CosmosConnectionString": "Find this property in your Cosmos DB in Azure Portal or in Azure Cosmos DB Emulator"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7097;http://localhost:5080"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:57541",
+      "sslPort": 44325
+    }
+  }
+}
+```
 
-After adding this file run your azure app using VS 2022. 
+### Note
+Note that ASP.NET app won't work correctly without data in Cosmos DB. 
+To use this app you should run first azure app to collect data.
+
+
+
+After adding both of this files run your azure app using VS 2022. 
 To run tests you can use VS 2022 or type in powershell:
 ```bash
 dotnet test
 ```
-To build project type:
+To build solution type:
 
 
 ```bash

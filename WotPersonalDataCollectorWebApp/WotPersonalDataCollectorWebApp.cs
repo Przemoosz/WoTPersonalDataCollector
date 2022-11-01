@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WotPersonalDataCollectorWebApp.CosmosDb.Context;
-using WotPersonalDataCollectorWebApp.Utilities;
-
 namespace WotPersonalDataCollectorWebApp
 {
     internal static class WotPersonalDataCollectorWebApp
@@ -13,7 +8,7 @@ namespace WotPersonalDataCollectorWebApp
             builder.Services.AddControllersWithViews();
             StartupInstaller startupInstaller = new StartupInstaller();
             startupInstaller.InstallComponents(builder);
-            var app = builder.Build();
+            WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {

@@ -10,6 +10,7 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
         private const string IdJson = "id";
         private readonly IAspConfiguration _configuration = new AspConfiguration();
         public DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
+
         public CosmosDatabaseContext() : base()
         {
         }

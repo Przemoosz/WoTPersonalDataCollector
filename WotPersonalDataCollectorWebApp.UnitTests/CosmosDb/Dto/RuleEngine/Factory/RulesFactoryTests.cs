@@ -11,13 +11,13 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Facto
 	[TestFixture, FactoryTests, Parallelizable]
 	public class RulesFactoryTests
 	{
-		private ILogger _logger;
+		private ILogger<RulesFactory> _logger;
 		private IRulesFactory _uut;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_logger = Substitute.For<ILogger>();
+			_logger = Substitute.For<ILogger<RulesFactory>>();
 			_uut = new RulesFactory(_logger);
 		}
 

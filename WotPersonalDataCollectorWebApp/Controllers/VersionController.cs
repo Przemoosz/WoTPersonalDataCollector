@@ -5,7 +5,10 @@
 	using CosmosDb.Context;
 	using CosmosDb.Dto;
 	using CosmosDb.Dto.Version;
-	public sealed class VersionController : Controller, IVersionController
+	/// <summary>
+	/// Not implemented in this Version
+	/// </summary>
+	public sealed class VersionController: IVersionController
 	{
 		private const string DtoType = "WotAccount";
 
@@ -18,18 +21,18 @@
 			_dtoVersionValidator = dtoVersionValidator;
 		}
 
-		public IActionResult Index()
-		{
-			return View();
-		}
+		// public IActionResult Index()
+		// {
+		// 	return View();
+		// }
 
-		[HttpGet]
-		public async Task<IActionResult> Validate()
-		{
-			var wotUserData = _context.PersonalData.AsAsyncEnumerable();
-			var validationResult = await ValidateDto(wotUserData);
-			return RedirectToAction(nameof(Index));
-		}
+		// [HttpGet]
+		// public async Task<IActionResult> Validate()
+		// {
+		// 	var wotUserData = _context.PersonalData.AsAsyncEnumerable();
+		// 	var validationResult = await ValidateDto(wotUserData);
+		// 	return RedirectToAction(nameof(Index));
+		// }
 
 		private async Task<VersionValidateModel> ValidateDto(IAsyncEnumerable<WotDataCosmosDbDto> wotData)
 		{
