@@ -8,7 +8,7 @@ a user to collect the latest data about account like battles, average damage, et
 At this time function crawl data about user id after providing username as a local variable.
 In the future, this program will also crawl data about a given user, Ex. battles, average damage, etc.
 and it will store this data in CosmosDB. The project is ready to deploy as an azure app, but you can run it locally. 
-Solution include also 102 unit tests written in the NUnit testing framework
+Solution include also 142 unit tests written in the NUnit testing framework
 
 For more information go to section called: Versions 
 ## About Solution
