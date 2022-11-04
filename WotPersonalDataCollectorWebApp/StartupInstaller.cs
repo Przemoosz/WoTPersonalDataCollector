@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp
+﻿using WotPersonalDataCollectorWebApp.Services;
+
+namespace WotPersonalDataCollectorWebApp
 {
 	using CosmosDb.Dto.Version;
 	using CosmosDb.Dto.Version.RuleEngine;
@@ -45,6 +47,7 @@
 			builder.Services.AddSingleton<IDtoVersionValidator, DtoVersionValidator>();
 			builder.Services.AddSingleton<ISemanticVersionModelFactory, SemanticVersionModelFactory>();
 			builder.Services.AddSingleton<IRulesFactory, RulesFactory>();
+			builder.Services.AddSingleton<IValidationCancellationService, ValidationCancellationService>();
 		}
 	}
 }

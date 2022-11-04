@@ -32,9 +32,14 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
             optionsBuilder.UseCosmos(_configuration.CosmosConnectionString, _configuration.DatabaseName);
         }
 
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public Task<int> SaveChangesAsync()
         {
-            return await base.SaveChangesAsync(cancellationToken);
+	        return base.SaveChangesAsync();
+        }
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

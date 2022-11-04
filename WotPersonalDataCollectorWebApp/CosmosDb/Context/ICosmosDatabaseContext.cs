@@ -6,6 +6,8 @@
     {
         DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync();
+
     }
 }
 
