@@ -2,12 +2,38 @@
 {
 	internal sealed class ValidationCancellationService: IValidationCancellationService
 	{
-		private readonly object _ctsCreateLock = new object();
+		private readonly object _ctsCreateAndGetLock = new object();
 		private readonly object _ctsCancelLock = new object();
 		private CancellationTokenSource _validationCts;
+
+		public bool IsCancellationRequested => _validationCts is not null && _validationCts.IsCancellationRequested;
+
+		public bool IsCancellationAvailable
+		{
+			get
+			{
+				lock (_ctsCreateAndGetLock)
+				{
+					if (_validationCts is null)
+					{
+						return false;
+					}
+					try
+					{
+						var token = _validationCts!.Token;
+					}
+					catch (ObjectDisposedException)
+					{
+						return false;
+					}
+					return true;
+				}
+			}
+		}
+
 		public CancellationToken GetValidationCancellationToken()
 		{
-			lock (_ctsCreateLock)
+			lock (_ctsCreateAndGetLock)
 			{
 				if (_validationCts is null)
 				{
@@ -32,7 +58,7 @@
 
 		public CancellationToken GetValidationCancellationToken(CancellationToken externalCancellationToken)
 		{
-			lock (_ctsCreateLock)
+			lock (_ctsCreateAndGetLock)
 			{
 				if (_validationCts is null)
 				{
@@ -50,7 +76,10 @@
 
 		public void Dispose()
 		{
-			_validationCts.Dispose();
+			if (_validationCts is not null)
+			{
+				_validationCts.Dispose();
+			}
 		}
 	}
 }

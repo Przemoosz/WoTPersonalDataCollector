@@ -8,7 +8,7 @@ using static TddXt.AnyRoot.Root;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
 {
-    [TestFixture, ConfigurationTests]
+    [TestFixture, ConfigurationTests, Parallelizable]
     public class AspConfigurationTests
     {
         private IAspConfiguration _uut = null!;
@@ -38,10 +38,10 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
         {
             // Arrange
             var containerName = Any.String(139);
-            Environment.SetEnvironmentVariable("ContainerName", containerName);
+            Environment.SetEnvironmentVariable("WotDtoContainerName", containerName);
 
             // Act
-            var actual = _uut.ContainerName;
+            var actual = _uut.WotDtoContainerName;
 
             // Assert
             actual.Should().Be(containerName);
@@ -61,7 +61,21 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
             actual.Should().Be(databaseName);
         }
 
-        [TestCase(null)]
+        [Test]
+        public void ShouldReturnVersionModelContainerName()
+        {
+	        // Arrange
+	        var versionModelContainerName = Any.String();
+	        Environment.SetEnvironmentVariable("VersionModelContainerName", versionModelContainerName);
+
+	        // Act
+	        var actual = _uut.VersionModelContainerName;
+
+	        // Assert
+	        actual.Should().Be(versionModelContainerName);
+        }
+
+		[TestCase(null)]
         [TestCase("")]
         public void ShouldThrowLocalVariableExceptionWhenConnectionStringIsNotSet(string connectionString)
         {
@@ -94,13 +108,13 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
         public void ShouldThrowLocalVariableExceptionWhenContainerNameIsNotSet(string containerName)
         {
             // Arrange
-            Environment.SetEnvironmentVariable("ContainerName", containerName);
+            Environment.SetEnvironmentVariable("WotDtoContainerName", containerName);
 
             // Act
-            Func<string> act = () => _uut.ContainerName;
+            Func<string> act = () => _uut.WotDtoContainerName;
 
             // Assert
-            act.Should().Throw<LocalVariableException>().WithMessage("ContainerName local variable is not set!");
+            act.Should().Throw<LocalVariableException>().WithMessage("WotDtoContainerName local variable is not set!");
         }
 
         [TestCase(180)]
@@ -117,5 +131,19 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
             // Assert
             act.Should().Throw<LocalVariableException>().WithMessage("Connection string length is not valid. 139 chars connection string is required!");
         }
-    }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void ShouldThrowLocalVariableExceptionWhenVersionModelContainerNameIsNotSet(string versionModelContainerName)
+        {
+	        // Arrange
+	        Environment.SetEnvironmentVariable("VersionModelContainerName", versionModelContainerName);
+
+	        // Act
+	        Func<string> act = () => _uut.VersionModelContainerName;
+
+	        // Assert
+	        act.Should().Throw<LocalVariableException>().WithMessage("VersionModelContainerName local variable is not set!");
+        }
+	}
 }

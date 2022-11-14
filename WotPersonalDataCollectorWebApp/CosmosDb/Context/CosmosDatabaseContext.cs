@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
 using WotPersonalDataCollectorWebApp.Data;
+using WotPersonalDataCollectorWebApp.Models;
 using WotPersonalDataCollectorWebApp.Utilities;
 
 namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
@@ -21,9 +22,10 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WotDataCosmosDbDto>().ToContainer(_configuration.ContainerName);
+            modelBuilder.Entity<WotDataCosmosDbDto>().ToContainer(_configuration.WotDtoContainerName);
             modelBuilder.Entity<WotDataCosmosDbDto>().HasPartitionKey(d => d.AccountId);
             modelBuilder.Entity<WotDataCosmosDbDto>().Property(d => d.Id).ToJsonProperty(IdJson);
+            modelBuilder.Entity<VersionValidateResultModel>().ToContainer("ds");
             base.OnModelCreating(modelBuilder);
         }
 

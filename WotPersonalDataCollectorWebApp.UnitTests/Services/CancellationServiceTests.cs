@@ -31,6 +31,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			// Assert
 			actual.Should().BeOfType<CancellationToken>();
 			actual.IsCancellationRequested.Should().BeFalse();
+			_uut.IsCancellationAvailable.Should().BeTrue();
 		}
 
 		[Test]
@@ -45,6 +46,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			// Assert
 			actual.Should().BeOfType<CancellationToken>();
 			actual.IsCancellationRequested.Should().BeFalse();
+			_uut.IsCancellationAvailable.Should().BeTrue();
 		}
 
 		[Test]
@@ -124,6 +126,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 
 			// Assert
 			actual.IsCancellationRequested.Should().BeTrue();
+			_uut.IsCancellationRequested.Should().BeTrue();
 		}
 
 		[Test]
@@ -138,6 +141,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 
 			// Assert
 			actual.IsCancellationRequested.Should().BeTrue();
+			_uut.IsCancellationRequested.Should().BeTrue();
 		}
 
 		[Test]
@@ -151,6 +155,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 
 			// Assert
 			actual.IsCancellationRequested.Should().BeTrue();
+			_uut.IsCancellationRequested.Should().BeTrue();
 		}
 
 		[Test]
@@ -180,6 +185,103 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 
 			// Assert
 			getCt.Should().Throw<ObjectDisposedException>();
+		}
+
+		[Test]
+		public void ShouldNotThrowDisposeExceptionWhenTokenWasNotInitialized()
+		{
+			// Arrange
+			Func<CancellationToken> getCt = () => _uut.GetValidationCancellationToken();
+
+			// Act
+			_uut.Dispose();
+
+			// Assert
+			getCt.Should().NotThrow<ObjectDisposedException>();
+		}
+
+		[Test]
+		public void IsCancellationRequestedShouldBeFalseWhenNoGetCtWasCalled()
+		{
+			// Assert
+			_uut.IsCancellationRequested.Should().BeFalse();
+		}
+
+		[Test]
+		public void IsCancellationRequestedShouldBeFalseWhenNoCancelWasCalled()
+		{
+			// Act
+			_uut.GetValidationCancellationToken();
+
+			// Assert
+			_uut.IsCancellationRequested.Should().BeFalse();
+		}
+
+		[Test]
+		public void IsCancellationRequestedShouldBeFalseWhenNoCancelWasCalledWithExtrenalCt()
+		{
+			// Arrange
+			CancellationToken externalCancellationToken = new CancellationToken(false);
+
+			// Act
+			_uut.GetValidationCancellationToken(externalCancellationToken);
+
+			// Assert
+			_uut.IsCancellationRequested.Should().BeFalse();
+		}
+
+		[Test]
+		public void IsCancellationAvailableShouldBeFalseWhenNoGetCtWasCalled()
+		{
+			// Assert
+			_uut.IsCancellationAvailable.Should().BeFalse();
+		}
+
+		[Test]
+		public void ShouldSetIsCancellationAvailableToFalseAfterDispose()
+		{
+			// Act
+			_uut.GetValidationCancellationToken();
+			_uut.Dispose();
+
+			// Assert
+			_uut.IsCancellationAvailable.Should().BeFalse();
+		}
+
+		[Test]
+		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithGettingFirst()
+		{
+			// Arrange
+			Task<bool> gettingTask = new Task<bool>(() => _uut.IsCancellationAvailable);
+			Task<CancellationToken> settingTask = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken());
+
+			// Act
+			gettingTask.Start();
+			Thread.Sleep(2); // Slowing down to ensure that getting thread will run first 
+			settingTask.Start();
+			Task.WaitAll(settingTask, gettingTask);
+			bool result = gettingTask.Result;
+
+			// Assert
+			result.Should().BeFalse();
+		}
+
+		[Test]
+		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithSettingFirst()
+		{
+			// Arrange
+			Task<CancellationToken> settingTask = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken());
+			Task<bool> gettingTask = new Task<bool>(() => _uut.IsCancellationAvailable);
+
+			// Act
+			settingTask.Start();
+			Thread.Sleep(2); // Slowing down to ensure that setting thread will run first 
+			gettingTask.Start();
+			Task.WaitAll(settingTask, gettingTask);
+			bool result = gettingTask.Result;
+
+			// Assert
+			result.Should().BeTrue();
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using WotPersonalDataCollectorWebApp.Services;
+﻿using WotPersonalDataCollectorWebApp.Models;
+using WotPersonalDataCollectorWebApp.Models.ViewModels;
+using WotPersonalDataCollectorWebApp.Services;
 
 namespace WotPersonalDataCollectorWebApp.Controllers
 {
@@ -7,6 +9,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 	using CosmosDb.Context;
 	using CosmosDb.Dto;
 	using CosmosDb.Dto.Version;
+	using System.Threading.Tasks;
 
 	public sealed class VersionController: Controller, IVersionController
 	{
@@ -27,31 +30,43 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		{
 			return View();
 		}
+		public IActionResult Index(VersionValidateViewModel viewModel)
+		{
+			return View(viewModel);
+		}
 
 		[HttpGet]
-		public async Task<IActionResult> Validate(CancellationToken token)
+		public async Task<IActionResult> RequestValidationProcess(CancellationToken token)
 		{
-			
 			CancellationToken cancellationToken = _validationCancellationService.GetValidationCancellationToken(token);
-			
-			//Thread.Sleep(10000);
-			// cts.Cancel();
 			var a = _validationCancellationService.GetValidationCancellationToken(token);
 			Thread.Sleep(10000);
-			//_validationCancellationToken
 			var wotUserData = _context.PersonalData.AsAsyncEnumerable();
 			var validationResult = await ValidateDto(wotUserData,cancellationToken);
 			return RedirectToAction(nameof(Index));
 		}
 
 		[HttpGet]
-		public Task Cancel()
+		public async Task<IActionResult> CancelValidationProcess()
 		{
+			if (_validationCancellationService.IsCancellationAvailable)
+			{
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Can not cancel operation that was not started!"});
+			}
+			if(_validationCancellationService.IsCancellationRequested)
+			{
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation is already cancelled"});
+			}
 			_validationCancellationService.CancelValidation();
-			return Task.CompletedTask;
+			return RedirectToAction(nameof(Index));
 		}
 
-		private async Task<VersionValidateModel> ValidateDto(IAsyncEnumerable<WotDataCosmosDbDto> wotData, CancellationToken cancellationToken)
+		private async Task SaveValidationResult(VersionValidateResultModel validationResult)
+		{
+			
+		}
+
+		private async Task<VersionValidateResultModel> ValidateDto(IAsyncEnumerable<WotDataCosmosDbDto> wotData, CancellationToken cancellationToken)
 		{
 			int totalObjectsCount = 0;
 			int wrongVersionCount = 0;
@@ -80,27 +95,16 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 					wrongVersionCount++;
 				}
 			}
-			return new VersionValidateModel()
+			return new VersionValidateResultModel()
 			{
+				ValidationDate = DateTime.Now,
 				CorrectVersionDtoCount = correctVersionCount,
 				TotalItemsInCosmosDb = totalObjectsCount,
 				WrongObjectsCount = wrongObjectsCount,
-				WrongVersionDtoCount = wrongVersionCount
+				WrongVersionDtoCount = wrongVersionCount,
+				WasValidationCanceled = cancellationToken.IsCancellationRequested
 			};
 		}
 
-	}
-
-	public sealed class VersionValidateModel
-	{
-		public int TotalItemsInCosmosDb { get; init; }
-		public int CorrectVersionDtoCount { get; init; }
-		public int WrongObjectsCount { get; init; }
-		public int WrongVersionDtoCount { get; init; }
-
-	}
-
-	public interface IVersionController
-	{
 	}
 }
