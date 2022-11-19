@@ -1,8 +1,4 @@
-﻿using WotPersonalDataCollectorWebApp.Models;
-using WotPersonalDataCollectorWebApp.Models.ViewModels;
-using WotPersonalDataCollectorWebApp.Services;
-
-namespace WotPersonalDataCollectorWebApp.Controllers
+﻿namespace WotPersonalDataCollectorWebApp.Controllers
 {
 	using Exceptions;
 	using Microsoft.AspNetCore.Mvc;
@@ -10,6 +6,9 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 	using CosmosDb.Dto;
 	using CosmosDb.Dto.Version;
 	using System.Threading.Tasks;
+	using Models;
+	using Models.ViewModels;
+	using Services;
 
 	public sealed class VersionController: Controller, IVersionController
 	{
@@ -26,11 +25,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 			_validationCancellationService = validationCancellationService;
 		}
 
-		public IActionResult Index()
-		{
-			return View();
-		}
-		public IActionResult Index(VersionValidateViewModel viewModel)
+		public IActionResult Index(VersionValidateViewModel viewModel = null)
 		{
 			return View(viewModel);
 		}
@@ -49,13 +44,13 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		[HttpGet]
 		public async Task<IActionResult> CancelValidationProcess()
 		{
-			if (_validationCancellationService.IsCancellationAvailable)
+			if (!_validationCancellationService.IsCancellationAvailable)
 			{
 				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Can not cancel operation that was not started!"});
 			}
 			if(_validationCancellationService.IsCancellationRequested)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation is already cancelled"});
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation cancellation is already started"});
 			}
 			_validationCancellationService.CancelValidation();
 			return RedirectToAction(nameof(Index));

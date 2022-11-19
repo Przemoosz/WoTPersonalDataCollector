@@ -75,6 +75,20 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
 	        actual.Should().Be(versionModelContainerName);
         }
 
+        [Test]
+        public void ShouldReturnVersionModelWotDtoVersionName()
+        {
+	        // Arrange
+	        var wotDtoVersion = Any.String();
+	        Environment.SetEnvironmentVariable("WotDtoVersion", wotDtoVersion);
+
+	        // Act
+	        var actual = _uut.WotDtoVersion;
+
+	        // Assert
+	        actual.Should().Be(wotDtoVersion);
+        }
+
 		[TestCase(null)]
         [TestCase("")]
         public void ShouldThrowLocalVariableExceptionWhenConnectionStringIsNotSet(string connectionString)
@@ -144,6 +158,20 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
 
 	        // Assert
 	        act.Should().Throw<LocalVariableException>().WithMessage("VersionModelContainerName local variable is not set!");
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void ShouldThrowLocalVariableExceptionWhenVersionModelWotDtoVersionNameIsNotSet(string wotDtoVersion)
+        {
+	        // Arrange
+	        Environment.SetEnvironmentVariable("WotDtoVersion", wotDtoVersion);
+
+	        // Act
+	        Func<string> act = () => _uut.WotDtoVersion;
+
+	        // Assert
+	        act.Should().Throw<LocalVariableException>().WithMessage("WotDtoVersion local variable is not set!");
         }
 	}
 }

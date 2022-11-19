@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp.Services
+﻿using WotPersonalDataCollectorWebApp.Exceptions;
+
+namespace WotPersonalDataCollectorWebApp.Services
 {
 	internal sealed class ValidationCancellationService: IValidationCancellationService
 	{
@@ -51,7 +53,7 @@
 			{
 				if (_validationCts is null)
 				{
-					throw new Exception("not");
+					throw new ValidationCancellationException("Can not cancel operation that was not initialized - CancellationTokenService was not called");
 				}
 				_validationCts.Cancel();
 			}

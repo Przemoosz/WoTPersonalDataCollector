@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using WotPersonalDataCollectorWebApp.Exceptions;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 
@@ -20,6 +21,60 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 		public void TearDown()
 		{
 			_uut.Dispose();
+		}
+
+		[Test]
+		public void IsCancellationAvailableShouldBeFalseWhenNoGetCtWasCalled()
+		{
+			// Assert
+			_uut.IsCancellationAvailable.Should().BeFalse();
+		}
+
+		[Test]
+		public void IsCancellationRequestedShouldBeFalseWhenNoGetCtWasCalled()
+		{
+			// Assert
+			_uut.IsCancellationRequested.Should().BeFalse();
+		}
+
+		[Test]
+		public void TokenShouldNotBeCanceledWhenExternalTokenIsNotCanceled()
+		{
+			// Arrange
+			CancellationToken externalCancellationToken = new CancellationToken(false);
+
+			// Act
+			var actual = _uut.GetValidationCancellationToken(externalCancellationToken);
+			_uut.CancelValidation();
+
+			// Assert
+			actual.IsCancellationRequested.Should().BeTrue();
+			_uut.IsCancellationRequested.Should().BeTrue();
+		}
+
+		[Test]
+		public void TokenShouldBeCanceledWhenExternalTokenIsCanceled()
+		{
+			// Arrange
+			CancellationToken externalCancellationToken = new CancellationToken(true);
+
+			// Act
+			var actual = _uut.GetValidationCancellationToken(externalCancellationToken);
+
+			// Assert
+			actual.IsCancellationRequested.Should().BeTrue();
+			_uut.IsCancellationRequested.Should().BeTrue();
+		}
+
+		[Test]
+		public void ShouldThrowValidationCancellationExceptionWhenTokenWasNotInitialized()
+		{
+			// Arrange
+			Action action = () => _uut.CancelValidation();
+
+			// Assert
+			action.Should().Throw<ValidationCancellationException>().WithMessage("Can not cancel operation that was not initialized - CancellationTokenService was not called");
+
 		}
 
 		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
@@ -77,36 +132,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			actual.IsCancellationRequested.Should().BeTrue();
 			_uut.IsCancellationRequested.Should().BeTrue();
 		}
-
-		[Test]
-		public void TokenShouldNotBeCanceledWhenExternalTokenIsNotCanceled()
-		{
-			// Arrange
-			CancellationToken externalCancellationToken = new CancellationToken(false);
-
-			// Act
-			var actual = _uut.GetValidationCancellationToken(externalCancellationToken);
-			_uut.CancelValidation();
-
-			// Assert
-			actual.IsCancellationRequested.Should().BeTrue();
-			_uut.IsCancellationRequested.Should().BeTrue();
-		}
-
-		[Test]
-		public void TokenShouldBeCanceledWhenExternalTokenIsCanceled()
-		{
-			// Arrange
-			CancellationToken externalCancellationToken = new CancellationToken(true);
-
-			// Act
-			var actual = _uut.GetValidationCancellationToken(externalCancellationToken);
-
-			// Assert
-			actual.IsCancellationRequested.Should().BeTrue();
-			_uut.IsCancellationRequested.Should().BeTrue();
-		}
-
+		
 		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
 		public void ShouldDisposeTokenCorrectly(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
@@ -140,20 +166,6 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			// Act
 			getValidationTokenFunction(_uut, false);
 
-			// Assert
-			_uut.IsCancellationRequested.Should().BeFalse();
-		}
-
-		[Test]
-		public void IsCancellationAvailableShouldBeFalseWhenNoGetCtWasCalled()
-		{
-			// Assert
-			_uut.IsCancellationAvailable.Should().BeFalse();
-		}
-
-		[Test]
-		public void IsCancellationRequestedShouldBeFalseWhenNoGetCtWasCalled()
-		{
 			// Assert
 			_uut.IsCancellationRequested.Should().BeFalse();
 		}
@@ -204,6 +216,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			// Assert
 			result.Should().BeTrue();
 		}
+		
 		private static IEnumerable<TestCaseData> MethodsOverloadsTestSource()
 		{
 			Func<IValidationCancellationService, bool, CancellationToken> singleCancellationToken = (v, isCancelled) => v.GetValidationCancellationToken();

@@ -43,13 +43,65 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		[Test]
 		public async Task ShouldActivateCancellationToken()
 		{
+			// Arrange
+			_validationCancellationService.IsCancellationAvailable.Returns(true);
+			_validationCancellationService.IsCancellationRequested.Returns(false);
+
 			// Act
 			var actual = await _uut.CancelValidationProcess();
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
 
 			// Assert
 			_validationCancellationService.ReceivedWithAnyArgs(1).CancelValidation();
-			actual.Should().BeOfType<ViewResult>();
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction!.ActionName.Should().Be("Index");
+			actualAsRedirectToAction.RouteValues.Should().BeNull();
 		}
+
+		[Test]
+		public async Task ShouldRedirectToIndexWithMessageWhenCancellationIsNotAvailable()
+		{
+			// Arrange
+			_validationCancellationService.IsCancellationAvailable.Returns(false);
+			KeyValuePair<string, object?> expected =
+				new KeyValuePair<string, object?>("Message", "Can not cancel operation that was not started!");
+			// Act
+			var actual = await _uut.CancelValidationProcess();
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var redirectValues = actualAsRedirectToAction?.RouteValues?.First();
+
+			// Assert
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
+			redirectValues.Should().NotBeNull();
+			redirectValues.Should().Be(expected);
+			
+
+		}
+
+		[Test]
+		public async Task ShouldRedirectToIndexWithMessageWhenCancellationWasRequested()
+		{
+			// Arrange
+			_validationCancellationService.IsCancellationAvailable.Returns(true);
+			_validationCancellationService.IsCancellationRequested.Returns(true);
+			KeyValuePair<string, object?> expected =
+				new KeyValuePair<string, object?>("Message", "Operation cancellation is already started");
+
+			// Act
+			var actual = await _uut.CancelValidationProcess();
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var redirectValues = actualAsRedirectToAction?.RouteValues?.First();
+
+			// Assert
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
+			redirectValues.Should().NotBeNull();
+			redirectValues.Should().Be(expected);
+		}
+
 
 	}
 }
