@@ -22,40 +22,25 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			_uut.Dispose();
 		}
 
-		[Test]
-		public void ShouldReturnCancellationToken()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldReturnCancellationToken(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Act
-			var actual = _uut.GetValidationCancellationToken();
+			var actual = getValidationTokenFunction(_uut, false);
 
 			// Assert
 			actual.Should().BeOfType<CancellationToken>();
 			actual.IsCancellationRequested.Should().BeFalse();
 			_uut.IsCancellationAvailable.Should().BeTrue();
 		}
-
-		[Test]
-		public void ShouldReturnCancellationTokenWithExternalOne()
-		{
-			// Arrange
-			CancellationToken externalCancellationToken = new CancellationToken();
-
-			// Act
-			var actual = _uut.GetValidationCancellationToken(externalCancellationToken);
-
-			// Assert
-			actual.Should().BeOfType<CancellationToken>();
-			actual.IsCancellationRequested.Should().BeFalse();
-			_uut.IsCancellationAvailable.Should().BeTrue();
-		}
-
-		[Test]
-		public void ShouldReturnSameCancellationToken()
+		
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldReturnSameCancellationToken(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Act
-			var actual1 = _uut.GetValidationCancellationToken();
-			var actual2 = _uut.GetValidationCancellationToken();
-			var actual3 = _uut.GetValidationCancellationToken();
+			var actual1 = getValidationTokenFunction(_uut, false);
+			var actual2 = getValidationTokenFunction(_uut, false);
+			var actual3 = getValidationTokenFunction(_uut, false);
 
 			// Assert
 			actual1.Should().Be(actual2);
@@ -63,29 +48,12 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			actual3.Should().Be(actual1);
 		}
 
-		[Test]
-		public void ShouldReturnSameCancellationTokenWhenCreatingWithExternalCt()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void DifferentThreadsShouldGetSameToken(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Arrange
-			CancellationToken externalCancellationToken = new CancellationToken();
-
-			// Act
-			var actual1 = _uut.GetValidationCancellationToken(externalCancellationToken);
-			var actual2 = _uut.GetValidationCancellationToken(externalCancellationToken);
-			var actual3 = _uut.GetValidationCancellationToken(externalCancellationToken);
-
-			// Assert
-			actual1.Should().Be(actual2);
-			actual2.Should().Be(actual3);
-			actual3.Should().Be(actual1);
-		}
-
-		[Test]
-		public void DifferentThreadsShouldGetSameToken()
-		{
-			// Arrange
-			Task<CancellationToken> task1 = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken());
-			Task<CancellationToken> task2 = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken());
+			Task<CancellationToken> task1 = new Task<CancellationToken>(() => getValidationTokenFunction(_uut, false));
+			Task<CancellationToken> task2 = new Task<CancellationToken>(() => getValidationTokenFunction(_uut, false));
 			
 			// Act
 			task1.Start();
@@ -98,30 +66,11 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			actual1.Should().Be(actual2);
 		}
 
-		[Test]
-		public void DifferentThreadsShouldGetSameTokenWithExternalCt()
-		{
-			// Arrange
-			var externalCancellationToken = new CancellationToken();
-			Task<CancellationToken> task1 = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken(externalCancellationToken));
-			Task<CancellationToken> task2 = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken(externalCancellationToken));
-
-			// Act
-			task1.Start();	
-			task2.Start();
-			Task.WaitAll(task1, task2);
-			var actual1 = task1.Result;
-			var actual2 = task2.Result;
-
-			// Assert
-			actual1.Should().Be(actual2);
-		}
-
-		[Test]
-		public void ShouldCancelToken()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldCancelToken(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Act
-			var actual = _uut.GetValidationCancellationToken();
+			var actual = getValidationTokenFunction(_uut,false);
 			_uut.CancelValidation();
 
 			// Assert
@@ -130,7 +79,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 		}
 
 		[Test]
-		public void ShouldCancelTokenWithExternalNotCanceledCt()
+		public void TokenShouldNotBeCanceledWhenExternalTokenIsNotCanceled()
 		{
 			// Arrange
 			CancellationToken externalCancellationToken = new CancellationToken(false);
@@ -145,7 +94,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 		}
 
 		[Test]
-		public void ShouldCancelTokenWithExternalCanceledCt()
+		public void TokenShouldBeCanceledWhenExternalTokenIsCanceled()
 		{
 			// Arrange
 			CancellationToken externalCancellationToken = new CancellationToken(true);
@@ -158,40 +107,25 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			_uut.IsCancellationRequested.Should().BeTrue();
 		}
 
-		[Test]
-		public void ShouldDisposeTokenCorrectly()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldDisposeTokenCorrectly(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Arrange
-			Func<CancellationToken> getCt = () => _uut.GetValidationCancellationToken();
+			Func<CancellationToken> getCt = () => getValidationTokenFunction(_uut, false);
 
 			// Act
-			_uut.GetValidationCancellationToken();
+			getValidationTokenFunction(_uut, false);
 			_uut.Dispose();
 
 			// Assert
 			getCt.Should().Throw<ObjectDisposedException>();
 		}
 
-		[Test]
-		public void ShouldDisposeTokenCorrectlyWithExternalCt()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldNotThrowDisposeExceptionWhenTokenWasNotInitialized(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Arrange
-			CancellationToken externalCancellationToken = new CancellationToken(false);
-			Func<CancellationToken> getCt = () => _uut.GetValidationCancellationToken(externalCancellationToken);
-
-			// Act
-			_uut.GetValidationCancellationToken(externalCancellationToken);
-			_uut.Dispose();
-
-			// Assert
-			getCt.Should().Throw<ObjectDisposedException>();
-		}
-
-		[Test]
-		public void ShouldNotThrowDisposeExceptionWhenTokenWasNotInitialized()
-		{
-			// Arrange
-			Func<CancellationToken> getCt = () => _uut.GetValidationCancellationToken();
+			Func<CancellationToken> getCt = () => getValidationTokenFunction(_uut, false);
 
 			// Act
 			_uut.Dispose();
@@ -200,31 +134,11 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			getCt.Should().NotThrow<ObjectDisposedException>();
 		}
 
-		[Test]
-		public void IsCancellationRequestedShouldBeFalseWhenNoGetCtWasCalled()
-		{
-			// Assert
-			_uut.IsCancellationRequested.Should().BeFalse();
-		}
-
-		[Test]
-		public void IsCancellationRequestedShouldBeFalseWhenNoCancelWasCalled()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void IsCancellationRequestedShouldBeFalseWhenNoCancelWasCalled(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Act
-			_uut.GetValidationCancellationToken();
-
-			// Assert
-			_uut.IsCancellationRequested.Should().BeFalse();
-		}
-
-		[Test]
-		public void IsCancellationRequestedShouldBeFalseWhenNoCancelWasCalledWithExtrenalCt()
-		{
-			// Arrange
-			CancellationToken externalCancellationToken = new CancellationToken(false);
-
-			// Act
-			_uut.GetValidationCancellationToken(externalCancellationToken);
+			getValidationTokenFunction(_uut, false);
 
 			// Assert
 			_uut.IsCancellationRequested.Should().BeFalse();
@@ -238,22 +152,29 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 		}
 
 		[Test]
-		public void ShouldSetIsCancellationAvailableToFalseAfterDispose()
+		public void IsCancellationRequestedShouldBeFalseWhenNoGetCtWasCalled()
+		{
+			// Assert
+			_uut.IsCancellationRequested.Should().BeFalse();
+		}
+
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldSetIsCancellationAvailableToFalseAfterDispose(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Act
-			_uut.GetValidationCancellationToken();
+			getValidationTokenFunction(_uut, false);
 			_uut.Dispose();
 
 			// Assert
 			_uut.IsCancellationAvailable.Should().BeFalse();
 		}
 
-		[Test]
-		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithGettingFirst()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithGettingFirst(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Arrange
 			Task<bool> gettingTask = new Task<bool>(() => _uut.IsCancellationAvailable);
-			Task<CancellationToken> settingTask = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken());
+			Task<CancellationToken> settingTask = new Task<CancellationToken>(() => getValidationTokenFunction(_uut, false));
 
 			// Act
 			gettingTask.Start();
@@ -266,11 +187,11 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			result.Should().BeFalse();
 		}
 
-		[Test]
-		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithSettingFirst()
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithSettingFirst(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Arrange
-			Task<CancellationToken> settingTask = new Task<CancellationToken>(() => _uut.GetValidationCancellationToken());
+			Task<CancellationToken> settingTask = new Task<CancellationToken>(() => getValidationTokenFunction(_uut, false));
 			Task<bool> gettingTask = new Task<bool>(() => _uut.IsCancellationAvailable);
 
 			// Act
@@ -282,6 +203,13 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 
 			// Assert
 			result.Should().BeTrue();
+		}
+		private static IEnumerable<TestCaseData> MethodsOverloadsTestSource()
+		{
+			Func<IValidationCancellationService, bool, CancellationToken> singleCancellationToken = (v, isCancelled) => v.GetValidationCancellationToken();
+			Func<IValidationCancellationService, bool, CancellationToken> cancellationTokenWithExternalOne = (v, isCancelled) => v.GetValidationCancellationToken(new CancellationToken(isCancelled));
+			yield return new TestCaseData(singleCancellationToken);
+			yield return new TestCaseData(cancellationTokenWithExternalOne);
 		}
 	}
 }

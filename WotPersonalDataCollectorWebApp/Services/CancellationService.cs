@@ -35,11 +35,12 @@
 		{
 			lock (_ctsCreateAndGetLock)
 			{
-				if (_validationCts is null)
+				if (_validationCts is not null)
 				{
-					_validationCts = new CancellationTokenSource();
-					_validationCts.Token.Register(CancellationMessage);
+					return _validationCts.Token;
 				}
+				_validationCts = new CancellationTokenSource();
+				_validationCts.Token.Register(CancellationMessage);
 				return _validationCts.Token;
 			}
 		}
@@ -60,11 +61,12 @@
 		{
 			lock (_ctsCreateAndGetLock)
 			{
-				if (_validationCts is null)
+				if (_validationCts is not null)
 				{
-					_validationCts = CancellationTokenSource.CreateLinkedTokenSource(externalCancellationToken);
-					_validationCts.Token.Register(CancellationMessage);
+					return _validationCts.Token;
 				}
+				_validationCts = CancellationTokenSource.CreateLinkedTokenSource(externalCancellationToken);
+				_validationCts.Token.Register(CancellationMessage);
 				return _validationCts.Token;
 			}
 		}
