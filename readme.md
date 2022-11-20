@@ -17,24 +17,24 @@ Solution is build in .Net 6.0 with C# 10, used azure function version is 4, and 
 
 Used NuGet packages:
 
-- Microsoft.Azure.Functions.Extensions ver. 1.1.0
-- Microsoft.Extensions.DependencyInjection ver. 6.0.1
-- Microsoft.NET.Sdk.Functions ver. 4.1.1
-- Microsoft.Azure.Cosmos ver. 3.31.2
-- Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.8
+- Any ver. 8.2.0
+- Coverlet.collector ver. 3.2.0
+- FluentAssertions ver. 6.8.0
+- Guard.Net ver. 3.0.0
 - Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore ver. 6.0.11
 - Microsoft.AspNetCore.Identity.EntityFrameworkCore ver. 6.0.11
 - Microsoft.AspNetCore.Identity.UI ver. 6.0.11
+- Microsoft.Azure.Cosmos ver. 3.31.2
+- Microsoft.Azure.Functions.Extensions ver. 1.1.0
+- Microsoft.Extensions.DependencyInjection ver. 6.0.1
 - Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.11
 - Microsoft.EntityFrameworkCore.Tools ver. 6.0.11
-- Guard.Net ver. 3.0.0
-- Any ver. 8.2.0
-- FluentAssertions ver. 6.8.0
-- Microsoft.NET.Test.Sdk ver. 16.11.0
+- Microsoft.NET.Sdk.Functions ver. 4.1.3
+- Microsoft.NET.Test.Sdk ver. 17.4.0
 - NSubstitute ver. 4.4.0
-- NUnit ver. 3.13.2
-- NUnit3TestAdapter ver. 4.0.0
-- coverlet.collector ver. 3.2.0
+- NUnit ver. 3.13.3
+- NUnit.Analyzers ver. 3.5.0
+- NUnit3TestAdapter ver. 4.3.1
 - TddXt.Any.Extensibility ver. 6.7.0
  
 
@@ -45,7 +45,7 @@ Version name - Description - Status
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
-- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Planned
+- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - In development
 - WPD-7-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
 - WPD-8-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
 - WPD-9-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
