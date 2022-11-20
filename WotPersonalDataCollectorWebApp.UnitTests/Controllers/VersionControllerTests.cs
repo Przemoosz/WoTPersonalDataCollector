@@ -4,9 +4,13 @@ using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
+using WotPersonalDataCollectorWebApp.UnitTests.TestUtilities;
+using static TddXt.AnyRoot.Root;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 {
@@ -102,6 +106,40 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			redirectValues.Should().Be(expected);
 		}
 
+		[TestCase(5)]
+		public async Task ShouldCorrectlyValidateData(int itemsCount)
+		{
+			// Arrange
+			CancellationToken nonCancelledCancellationToken = new CancellationToken(false);
+			IAsyncEnumerable<WotDataCosmosDbDto> databaseCollection = CreateFakeDefaultData(itemsCount);
+			_validationCancellationService.GetValidationCancellationToken(nonCancelledCancellationToken)
+				.ReturnsForAnyArgs(nonCancelledCancellationToken);
+			_cosmosDatabaseContext.PersonalData.AsAsyncEnumerable().Returns(databaseCollection);
 
+			// Act
+			var actual = await _uut.RequestValidationProcess(nonCancelledCancellationToken);
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
+
+			// Assert
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("ValidationResult");
+			routeValueDictionary.Should().NotBeNull();
+			routeValueDictionary!["TotalItemsInCosmosDb"].Should().Be(itemsCount);
+			routeValueDictionary!["CorrectVersionDtoCount"].Should().Be(itemsCount);
+			routeValueDictionary["WasValidationCanceled"].Should().Be(false);
+
+		}
+
+		private IAsyncEnumerable<WotDataCosmosDbDto> CreateFakeDefaultData(int itemsCount)
+		{
+			var collection = new AsyncEnumerable<WotDataCosmosDbDto>(itemsCount);
+			for (int i = 0; i < itemsCount; i++)
+			{
+				collection.Add(new WotDataCosmosDbDto(){ClassProperties = new ClassProperties(){Type = "WotAccount" , DtoVersion = "1.0.0"} });
+			}
+			return collection;
+		}
 	}
 }

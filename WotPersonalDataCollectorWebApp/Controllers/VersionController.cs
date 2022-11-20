@@ -9,6 +9,7 @@
 	using Models;
 	using Models.ViewModels;
 	using Services;
+	using System.ComponentModel.DataAnnotations;
 
 	public sealed class VersionController: Controller, IVersionController
 	{
@@ -34,11 +35,17 @@
 		public async Task<IActionResult> RequestValidationProcess(CancellationToken token)
 		{
 			CancellationToken cancellationToken = _validationCancellationService.GetValidationCancellationToken(token);
-			var a = _validationCancellationService.GetValidationCancellationToken(token);
-			Thread.Sleep(10000);
+			//Thread.Sleep(10000);
 			var wotUserData = _context.PersonalData.AsAsyncEnumerable();
 			var validationResult = await ValidateDto(wotUserData,cancellationToken);
-			return RedirectToAction(nameof(Index));
+			SaveValidationResult(validationResult);
+			return RedirectToAction(nameof(ValidationResult),validationResult);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> ValidationResult(ValidationResult validationResult = null)
+		{
+			return null;
 		}
 
 		[HttpGet]
@@ -69,7 +76,7 @@
 			int wrongObjectsCount = 0;
 			await foreach (var data in wotData.WithCancellation(cancellationToken))
 			{
-				Thread.Sleep(4000);
+				//Thread.Sleep(4000);
 				totalObjectsCount++;
 				if (data.ClassProperties is null || !data.ClassProperties.Type.Equals(DtoType) || data.ClassProperties.DtoVersion is null)
 				{
