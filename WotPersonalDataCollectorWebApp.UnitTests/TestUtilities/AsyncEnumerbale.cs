@@ -8,6 +8,20 @@
 		{
 		}
 
+		public AsyncEnumerable(IEnumerable<T> startingCollection)
+		{
+			_collection = new List<T>(startingCollection);
+		}
+
+		public AsyncEnumerable(params IEnumerable<T>[] collections)
+		{
+			_collection = new List<T>();
+			foreach (var collection in collections)
+			{
+				_collection.AddRange(collection);
+			}
+		}
+
 		public AsyncEnumerable(int capacity)
 		{
 			_collection = new List<T>(capacity);
