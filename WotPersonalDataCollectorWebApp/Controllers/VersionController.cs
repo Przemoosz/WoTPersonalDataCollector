@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp.Controllers
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace WotPersonalDataCollectorWebApp.Controllers
 {
 	using Exceptions;
 	using Microsoft.AspNetCore.Mvc;
@@ -43,9 +45,13 @@
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> ValidationResult(ValidationResult validationResult = null)
+		public async Task<IActionResult> ValidationResult(VersionValidateResultModel validationResult = null)
 		{
-			return null;
+			if (validationResult is null || validationResult.Id is null)
+			{
+				validationResult = await _context.VersionValidateResult.OrderBy(s => s.ValidationDate).FirstAsync();
+			}
+			return View(validationResult);
 		}
 
 		[HttpGet]
@@ -65,7 +71,8 @@
 
 		private async Task SaveValidationResult(VersionValidateResultModel validationResult)
 		{
-			
+			_context.VersionValidateResult.Add(validationResult);
+			await _context.SaveChangesAsync();
 		}
 
 		private async Task<VersionValidateResultModel> ValidateDto(IAsyncEnumerable<WotDataCosmosDbDto> wotData, CancellationToken cancellationToken)
@@ -99,6 +106,7 @@
 			}
 			return new VersionValidateResultModel()
 			{
+				Id = Guid.NewGuid().ToString("D"),
 				ValidationDate = DateTime.Now,
 				CorrectVersionDtoCount = correctVersionCount,
 				TotalItemsInCosmosDb = totalObjectsCount,

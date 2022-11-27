@@ -2,13 +2,14 @@
 {
     using Dto;
     using Microsoft.EntityFrameworkCore;
-    public interface ICosmosDatabaseContext
+    using Models;
+	public interface ICosmosDatabaseContext
     {
-        DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
+        DbSet<WotDataCosmosDbDto> PersonalData { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveChangesAsync();
-
-    }
+        DbSet<VersionValidateResultModel> VersionValidateResult { get;}
+	}
 }
 
 
