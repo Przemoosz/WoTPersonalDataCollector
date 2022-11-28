@@ -1,6 +1,4 @@
-﻿using WotPersonalDataCollectorWebApp.Services;
-
-namespace WotPersonalDataCollectorWebApp
+﻿namespace WotPersonalDataCollectorWebApp
 {
 	using CosmosDb.Dto.Version;
 	using CosmosDb.Dto.Version.RuleEngine;
@@ -9,15 +7,17 @@ namespace WotPersonalDataCollectorWebApp
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.EntityFrameworkCore;
 	using CosmosDb.Context;
+	using Services;
 
 	internal sealed class StartupInstaller
 	{
 		public void InstallComponents(WebApplicationBuilder builder)
 		{
-			InstalLocalData(builder);
 			InstallCosmosDatabase(builder);
 			InstallLogger(builder);
-			InstalDependencies(builder);
+			InstallOtherModules(builder);
+			InstallFactories(builder);
+			InstallServices(builder);
 		}
 
 		private void InstallCosmosDatabase(WebApplicationBuilder builder)
@@ -28,6 +28,7 @@ namespace WotPersonalDataCollectorWebApp
 			builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 			builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddEntityFrameworkStores<CosmosDatabaseContext>();
+			builder.Services.AddSingleton<ICosmosContext, CosmosDatabaseContext>(); // For non controller classes
 		}
 
 		private void InstallLogger(WebApplicationBuilder builder)
@@ -36,18 +37,23 @@ namespace WotPersonalDataCollectorWebApp
 			builder.Logging.AddConsole();
 		}
 
-		private void InstalLocalData(WebApplicationBuilder builder)
+		private void InstallServices(WebApplicationBuilder builder)
 		{
-			builder.Services.AddSingleton<IAspConfiguration, AspConfiguration>();
+			builder.Services.AddSingleton<IValidationCancellationService, ValidationCancellationService>();
+			builder.Services.AddTransient<IValidationService, ValidationService>();
 		}
 
-		private void InstalDependencies(WebApplicationBuilder builder)
+		private void InstallFactories(WebApplicationBuilder builder)
 		{
-			builder.Services.AddSingleton<IVersionRuleEngine, VersionRuleEngine>();
-			builder.Services.AddSingleton<IDtoVersionValidator, DtoVersionValidator>();
 			builder.Services.AddSingleton<ISemanticVersionModelFactory, SemanticVersionModelFactory>();
 			builder.Services.AddSingleton<IRulesFactory, RulesFactory>();
-			builder.Services.AddSingleton<IValidationCancellationService, ValidationCancellationService>();
+		}
+
+		private void InstallOtherModules(WebApplicationBuilder builder)
+		{
+			builder.Services.AddSingleton<IAspConfiguration, AspConfiguration>();
+			builder.Services.AddSingleton<IVersionRuleEngine, VersionRuleEngine>();
+			builder.Services.AddSingleton<IDtoVersionValidator, DtoVersionValidator>();
 		}
 	}
 }

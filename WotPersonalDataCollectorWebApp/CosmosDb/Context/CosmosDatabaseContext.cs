@@ -33,15 +33,9 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        private bool ConvertToString(string s)
-        {
-	        if (s.Equals("true"))
-	        {
-		        return true;
-	        }
-
-	        return false;
-        }
+        // TODO
+        // Remove hardcoded value
+        private bool ConvertToString(string s) => s.ToLower().Equals("true");
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

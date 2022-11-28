@@ -1,7 +1,7 @@
-﻿using WotPersonalDataCollectorWebApp.Exceptions;
-
-namespace WotPersonalDataCollectorWebApp.Services
+﻿namespace WotPersonalDataCollectorWebApp.Services
 {
+	using Exceptions;
+
 	internal sealed class ValidationCancellationService: IValidationCancellationService
 	{
 		private readonly object _ctsCreateAndGetLock = new object();
