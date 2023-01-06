@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-WotPersonalDataCollectorWebApp-B9EBC63E-D5E7-4610-BD07-890D329D1835</UserSecretsId>
     </PropertyGroup>

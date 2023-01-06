@@ -199,6 +199,25 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			result.Should().BeFalse();
 		}
 
+		[Test]
+		public void ShouldAvoidRunConditionWhenGettingIsCancellationRequestedWithGettingFirst()
+		{
+			// Arrange
+			_uut.GetValidationCancellationToken();
+			Task<bool> gettingTask = new Task<bool>(() => _uut.IsCancellationRequested);
+			Task cancellingTask = new Task(() => _uut.CancelValidation());
+
+			// Act
+			gettingTask.Start();
+			Thread.Sleep(2); // Slowing down to ensure that getting thread will run first 
+			cancellingTask.Start();
+			Task.WaitAll(cancellingTask, gettingTask);
+			bool result = gettingTask.Result;
+
+			// Assert
+			result.Should().BeFalse();
+		}
+
 		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
 		public void ShouldAvoidRunConditionWhenGettingIsCancellationAvailableWithSettingFirst(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{

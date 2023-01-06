@@ -8,7 +8,16 @@
 		private readonly object _ctsCancelLock = new object();
 		private CancellationTokenSource _validationCts;
 
-		public bool IsCancellationRequested => _validationCts is not null && _validationCts.IsCancellationRequested;
+		public bool IsCancellationRequested
+		{
+			get
+			{
+				lock (_ctsCreateAndGetLock)
+				{
+					return _validationCts is not null && _validationCts.IsCancellationRequested;
+				}
+			}
+		}
 
 		public bool IsCancellationAvailable
 		{
@@ -22,7 +31,7 @@
 					}
 					try
 					{
-						var token = _validationCts!.Token;
+						var _ = _validationCts!.Token;
 					}
 					catch (ObjectDisposedException)
 					{
@@ -37,13 +46,11 @@
 		{
 			lock (_ctsCreateAndGetLock)
 			{
-				if (_validationCts is not null)
+				if (_validationCts is null)
 				{
-					return _validationCts.Token;
+					RegisterCancellationToken();
 				}
-				_validationCts = new CancellationTokenSource();
-				_validationCts.Token.Register(CancellationMessage);
-				return _validationCts.Token;
+				return _validationCts!.Token;
 			}
 		}
 
@@ -63,19 +70,12 @@
 		{
 			lock (_ctsCreateAndGetLock)
 			{
-				if (_validationCts is not null)
+				if (_validationCts is null)
 				{
-					return _validationCts.Token;
+					RegisterCancellationToken(externalCancellationToken);
 				}
-				_validationCts = CancellationTokenSource.CreateLinkedTokenSource(externalCancellationToken);
-				_validationCts.Token.Register(CancellationMessage);
-				return _validationCts.Token;
+				return _validationCts!.Token;
 			}
-		}
-
-		private void CancellationMessage()
-		{
-			Console.WriteLine($"Cancellation for validation requested by thread {Thread.CurrentThread.Name}");
 		}
 
 		public void Dispose()
@@ -84,6 +84,23 @@
 			{
 				_validationCts.Dispose();
 			}
+		}
+
+		private void CancellationMessage()
+		{
+			Console.WriteLine($"Cancellation for validation requested by thread {Thread.CurrentThread.Name}");
+		}
+
+		private void RegisterCancellationToken()
+		{
+			_validationCts = new CancellationTokenSource();
+			_validationCts.Token.Register(CancellationMessage);
+		}
+
+		private void RegisterCancellationToken(CancellationToken cancellationToken)
+		{
+			_validationCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+			_validationCts.Token.Register(CancellationMessage);
 		}
 	}
 }
