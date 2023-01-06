@@ -24,18 +24,24 @@
 
 		public IActionResult Index(VersionValidateViewModel viewModel = null)
 		{
-			// if (viewModel == null)
-			// {
-			// 	return View(new VersionValidateViewModel() {})
-			// }
 			return View(viewModel);
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> RequestValidationProcess(CancellationToken token)
 		{
+			if (!_validationService.IsValidationFinished)
+			{
+				return RedirectToAction(nameof(Index),
+					new VersionValidateViewModel()
+					{
+						IsCancellationEnabled = true,
+						Message = "Validation Operation has already started, can't start another one. Please wait."
+					});
+			}
+
 			_validationCancellationService.GetValidationCancellationToken(token);
-			ThreadPool.QueueUserWorkItem(s => _validationService.RequestValidationProcess());
+			ThreadPool.QueueUserWorkItem(s => _validationService.RunValidationProcessAsync());
 			return RedirectToAction(nameof(Index), new VersionValidateViewModel() {IsCancellationEnabled = true});
 		}
 		
@@ -58,10 +64,14 @@
 			}
 			if(_validationCancellationService.IsCancellationRequested)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation cancellation has already started"});
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation cancellation has already started."});
+			}
+			if (_validationCancellationService.IsTokenDisposed)
+			{
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel() { Message = "Cancellation token was disposed, that means validation operation is finished." });
 			}
 			_validationCancellationService.CancelValidation();
-			return RedirectToAction(nameof(Index));
+			return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Canceling validation", IsCancellationEnabled = false});
 		}
 	}
 }

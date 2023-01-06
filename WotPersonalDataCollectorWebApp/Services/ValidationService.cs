@@ -12,6 +12,8 @@
 		private readonly IValidationCancellationService _validationCancellationService;
 		private const string DtoType = "WotAccount";
 
+		public bool IsValidationFinished { get; private set; } = true;
+
 		public ValidationService(IDtoVersionValidator dtoVersionValidator, ICosmosContext cosmosContext, IValidationCancellationService validationCancellationService)
 		{ 
 			_dtoVersionValidator = dtoVersionValidator;
@@ -19,13 +21,16 @@
 			_validationCancellationService = validationCancellationService;
 		}
 
-		public async Task RequestValidationProcess()
+		public async Task RunValidationProcessAsync()
 		{
+			IsValidationFinished = false;
 			var wotUserData =  _cosmosContext.PersonalData.AsAsyncEnumerable();
 			var validationResult = await ValidateDto(wotUserData);
 			await SaveValidationResult(validationResult);
+			IsValidationFinished = true;
+			_validationCancellationService.Dispose();
 		}
-
+		
 		private async Task SaveValidationResult(VersionValidateResultModel validationResult)
 		{
 			await _cosmosContext.VersionValidateResult.AddAsync(validationResult);
@@ -40,7 +45,6 @@
 			int wrongObjectsCount = 0;
 			await foreach (var data in wotData)
 			{
-				Thread.Sleep(3000);
 				totalObjectsCount++;
 				if (data.ClassProperties is null || !data.ClassProperties.Type.Equals(DtoType) || data.ClassProperties.DtoVersion is null)
 				{
@@ -65,6 +69,7 @@
 					break;
 				}
 			}
+
 			return new VersionValidateResultModel()
 			{
 				Id = Guid.NewGuid().ToString("D"),

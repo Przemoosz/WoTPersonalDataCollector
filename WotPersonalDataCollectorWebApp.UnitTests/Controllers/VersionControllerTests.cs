@@ -54,7 +54,6 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_validationCancellationService.ReceivedWithAnyArgs(1).CancelValidation();
 			actual.Should().BeOfType<RedirectToActionResult>();
 			actualAsRedirectToAction!.ActionName.Should().Be("Index");
-			actualAsRedirectToAction.RouteValues.Should().BeNull();
 		}
 
 		[Test]
@@ -94,7 +93,28 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction.Should().NotBeNull();
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["Message"].Should().Be("Operation cancellation has already started");
+			routeValueDictionary!["Message"].Should().Be("Operation cancellation has already started.");
+		}
+
+		[Test]
+		public async Task ShouldRedirectToIndexWithMessageWhenTokenWasDisposed()
+		{
+			// Arrange
+			_validationCancellationService.IsCancellationAvailable.Returns(true);
+			_validationCancellationService.IsCancellationRequested.Returns(false);
+			_validationCancellationService.IsTokenDisposed.Returns(true);
+
+			// Act
+			var actual = await _uut.CancelValidationProcess();
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
+
+			// Assert
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
+			routeValueDictionary.Should().NotBeNull();
+			routeValueDictionary!["Message"].Should().Be("Cancellation token was disposed, that means validation operation is finished.");
 		}
 	}
 }

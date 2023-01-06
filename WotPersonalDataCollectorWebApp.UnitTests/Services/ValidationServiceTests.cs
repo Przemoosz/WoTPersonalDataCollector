@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
 using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
@@ -43,7 +44,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			SetUpMocksForRequestValidateProcess(databaseCollection);
 
 			// Act
-			await _uut.RequestValidationProcess();
+			await _uut.RunValidationProcessAsync();
 
 			// Assert
 			await _cosmosDatabaseContext.VersionValidateResult.Received()
@@ -60,7 +61,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			SetUpMocksForRequestValidateProcess(databaseCollection);
 
 			// Act
-			await _uut.RequestValidationProcess();
+			await _uut.RunValidationProcessAsync();
 
 			// Assert
 			await _cosmosDatabaseContext.VersionValidateResult.Received()
@@ -79,7 +80,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			SetUpMocksForRequestValidateProcess(databaseCollection);
 
 			// Act
-			await _uut.RequestValidationProcess();
+			await _uut.RunValidationProcessAsync();
 
 			// Assert
 			await _cosmosDatabaseContext.VersionValidateResult.Received()
@@ -97,7 +98,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			SetUpMocksForRequestValidateProcess(databaseCollection);
 
 			// Act
-			await _uut.RequestValidationProcess();
+			await _uut.RunValidationProcessAsync();
 
 			// Assert
 			await _cosmosDatabaseContext.VersionValidateResult.Received()
@@ -119,7 +120,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			SetUpMocksForRequestValidateProcess(databaseCollection);
 
 			// Act
-			await _uut.RequestValidationProcess();
+			await _uut.RunValidationProcessAsync();
 
 			// Assert
 			await _cosmosDatabaseContext.VersionValidateResult.Received()
@@ -138,13 +139,33 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			SetUpMocksForRequestValidateProcess(databaseCollection);
 			_validationCancellationService.IsCancellationRequested.Returns(s => false, s => false, s => true, s => true);
 			// Act
-			await _uut.RequestValidationProcess();
+			await _uut.RunValidationProcessAsync();
 
 			// Assert
 			await _cosmosDatabaseContext.VersionValidateResult.Received()
 				.AddAsync(Arg.Is<VersionValidateResultModel>(s =>
 					s.TotalItemsInCosmosDb == cancellationAfter && s.WasValidationCanceled == true &&
 					s.WrongObjectsCount == 0 && s.WrongVersionDtoCount == 0 && s.CorrectVersionDtoCount == cancellationAfter));
+		}
+
+		[Test]
+		public async Task IsValidationFinishedShouldBeFalseTrueIfOperationFinished()
+		{
+			// Arrange
+			SetUpMocksForRequestValidateProcess(new AsyncEnumerable<WotDataCosmosDbDto>(0));
+
+			// Act
+			await _uut.RunValidationProcessAsync();
+
+			// Assert
+			_uut.IsValidationFinished.Should().BeTrue();
+		}
+
+		[Test]
+		public void IsValidationFinishedShouldBeTrueByDefault()
+		{
+			// Assert
+			_uut.IsValidationFinished.Should().BeTrue();
 		}
 
 		private void SetUpMocksForRequestValidateProcess(IAsyncEnumerable<WotDataCosmosDbDto> dataCollection)

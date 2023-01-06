@@ -40,7 +40,7 @@
 		private void InstallServices(WebApplicationBuilder builder)
 		{
 			builder.Services.AddSingleton<IValidationCancellationService, ValidationCancellationService>();
-			builder.Services.AddTransient<IValidationService, ValidationService>();
+			builder.Services.AddSingleton<IValidationService, ValidationService>();
 		}
 
 		private void InstallFactories(WebApplicationBuilder builder)

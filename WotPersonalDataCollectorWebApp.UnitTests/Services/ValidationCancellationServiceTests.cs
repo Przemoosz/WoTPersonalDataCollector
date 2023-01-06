@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NuGet.Common;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Exceptions;
 using WotPersonalDataCollectorWebApp.Services;
@@ -7,7 +8,7 @@ using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 {
 	[TestFixture, ServiceTest, Parallelizable]
-	public class CancellationServiceTests
+	public class ValidationCancellationServiceTests
 	{
 		private IValidationCancellationService _uut = null!;
 
@@ -88,7 +89,22 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			actual.IsCancellationRequested.Should().BeFalse();
 			_uut.IsCancellationAvailable.Should().BeTrue();
 		}
-		
+
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void ShouldReturnCancellationTokenDespiteThePreviousOneWasDisposed(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
+		{
+			// Act
+			var previousToken = getValidationTokenFunction(_uut, false);
+			_uut.Dispose();
+			var actualToken = getValidationTokenFunction(_uut, false);
+
+			// Assert
+			actualToken.Should().BeOfType<CancellationToken>();
+			actualToken.IsCancellationRequested.Should().BeFalse();
+			actualToken.Should().NotBe(previousToken);
+			_uut.IsCancellationAvailable.Should().BeTrue();
+		}
+
 		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
 		public void ShouldReturnSameCancellationToken(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
@@ -144,20 +160,46 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Services
 			_uut.Dispose();
 
 			// Assert
-			getCt.Should().Throw<ObjectDisposedException>();
+			_uut.IsTokenDisposed.Should().BeTrue();
 		}
 
 		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
-		public void ShouldNotThrowDisposeExceptionWhenTokenWasNotInitialized(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
+		public void IsTokenDisposedShouldReturnFalseIfTokenWasNotDisposed(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
 		{
 			// Arrange
 			Func<CancellationToken> getCt = () => getValidationTokenFunction(_uut, false);
 
 			// Act
-			_uut.Dispose();
+			getValidationTokenFunction(_uut, false);
 
 			// Assert
-			getCt.Should().NotThrow<ObjectDisposedException>();
+			_uut.IsTokenDisposed.Should().BeFalse();
+		}
+
+		[Test]
+		public void IsTokenDisposedShouldReturnTrueIfTokenWasNotInitialized()
+		{
+			// Assert
+			_uut.IsTokenDisposed.Should().BeTrue();
+		}
+
+		[TestCaseSource(nameof(MethodsOverloadsTestSource))]
+		public void IsTokenDisposedShouldAvoidRaceCondition(Func<IValidationCancellationService, bool, CancellationToken> getValidationTokenFunction)
+		{
+			// Arrange
+			getValidationTokenFunction(_uut, false);
+			Task<bool> gettingTask = new Task<bool>(() => _uut.IsTokenDisposed);
+			Task disposingTask = new Task(() => _uut.Dispose());
+
+			// Act
+			gettingTask.Start();
+			Thread.Sleep(2); // Slowing down to ensure that setting thread will run first 
+			disposingTask.Start();
+			Task.WaitAll(gettingTask, disposingTask);
+			bool result = gettingTask.Result;
+
+			// Assert
+			result.Should().BeFalse();
 		}
 
 		[TestCaseSource(nameof(MethodsOverloadsTestSource))]

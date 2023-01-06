@@ -2,10 +2,12 @@
 {
 	using Exceptions;
 
+	/// <inheritdoc />
 	internal sealed class ValidationCancellationService: IValidationCancellationService
 	{
 		private readonly object _ctsCreateAndGetLock = new object();
 		private readonly object _ctsCancelLock = new object();
+		private readonly object _ctsDisposeLock = new object();
 		private CancellationTokenSource _validationCts;
 
 		public bool IsCancellationRequested
@@ -42,6 +44,29 @@
 			}
 		}
 
+		public bool IsTokenDisposed
+		{
+			get
+			{
+				lock (_ctsDisposeLock)
+				{
+					if (_validationCts is null)
+					{
+						return true;
+					}
+					try
+					{
+						var _ = _validationCts!.Token;
+						return false;
+					}
+					catch (ObjectDisposedException)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
 		public CancellationToken GetValidationCancellationToken()
 		{
 			lock (_ctsCreateAndGetLock)
@@ -49,6 +74,28 @@
 				if (_validationCts is null)
 				{
 					RegisterCancellationToken();
+				}
+				if (IsTokenDisposed)
+				{
+					RegisterCancellationToken();
+					return _validationCts!.Token;
+				}
+				return _validationCts!.Token;
+			}
+		}
+
+		public CancellationToken GetValidationCancellationToken(CancellationToken externalCancellationToken)
+		{
+			lock (_ctsCreateAndGetLock)
+			{
+				if (_validationCts is null)
+				{
+					RegisterCancellationToken(externalCancellationToken);
+				}
+				if (IsTokenDisposed)
+				{
+					RegisterCancellationToken(externalCancellationToken);
+					return _validationCts!.Token;
 				}
 				return _validationCts!.Token;
 			}
@@ -66,23 +113,14 @@
 			}
 		}
 
-		public CancellationToken GetValidationCancellationToken(CancellationToken externalCancellationToken)
-		{
-			lock (_ctsCreateAndGetLock)
-			{
-				if (_validationCts is null)
-				{
-					RegisterCancellationToken(externalCancellationToken);
-				}
-				return _validationCts!.Token;
-			}
-		}
-
 		public void Dispose()
 		{
-			if (_validationCts is not null)
+			lock (_ctsCancelLock)
 			{
-				_validationCts.Dispose();
+				if (_validationCts is not null)
+				{
+					_validationCts.Dispose();
+				}
 			}
 		}
 
