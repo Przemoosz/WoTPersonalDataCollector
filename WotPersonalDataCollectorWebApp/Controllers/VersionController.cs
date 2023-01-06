@@ -1,45 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace WotPersonalDataCollectorWebApp.Controllers
+﻿namespace WotPersonalDataCollectorWebApp.Controllers
 {
-	using Exceptions;
 	using Microsoft.AspNetCore.Mvc;
 	using CosmosDb.Context;
-	using CosmosDb.Dto;
-	using CosmosDb.Dto.Version;
 	using System.Threading.Tasks;
 	using Models;
 	using Models.ViewModels;
 	using Services;
 	using System.Threading;
+	using Microsoft.EntityFrameworkCore;
 
 	public sealed class VersionController: Controller, IVersionController
 	{
-		private const string DtoType = "WotAccount";
-
 		private readonly ICosmosDatabaseContext _context;
-		private readonly IDtoVersionValidator _dtoVersionValidator;
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
 
-		public VersionController(ICosmosDatabaseContext context, IDtoVersionValidator dtoVersionValidator, IValidationCancellationService validationCancellationService, IValidationService validationService)
+		public VersionController(ICosmosDatabaseContext context, IValidationCancellationService validationCancellationService, IValidationService validationService)
 		{
 			_context = context;
-			_dtoVersionValidator = dtoVersionValidator;
 			_validationCancellationService = validationCancellationService;
 			_validationService = validationService;
 		}
 
-		private async void OnValidateRequested()
-		{
-			Thread.Sleep(3000);
-			var wotUserData = _context.PersonalData.AsAsyncEnumerable();
-			var validationResult = await ValidateDto(wotUserData, new CancellationToken());
-			await SaveValidationResult(validationResult);
-		}
-
 		public IActionResult Index(VersionValidateViewModel viewModel = null)
 		{
+			// if (viewModel == null)
+			// {
+			// 	return View(new VersionValidateViewModel() {})
+			// }
 			return View(viewModel);
 		}
 
@@ -48,7 +36,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		{
 			_validationCancellationService.GetValidationCancellationToken(token);
 			ThreadPool.QueueUserWorkItem(s => _validationService.RequestValidationProcess());
-			return RedirectToAction(nameof(Index));
+			return RedirectToAction(nameof(Index), new VersionValidateViewModel() {IsCancellationEnabled = true});
 		}
 		
 		[HttpGet]
@@ -70,58 +58,10 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 			}
 			if(_validationCancellationService.IsCancellationRequested)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation cancellation is already started"});
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation cancellation has already started"});
 			}
 			_validationCancellationService.CancelValidation();
 			return RedirectToAction(nameof(Index));
 		}
-
-		private async Task SaveValidationResult(VersionValidateResultModel validationResult)
-		{
-			_context.VersionValidateResult.Add(validationResult);
-			await _context.SaveChangesAsync();
-		}
-
-		private async Task<VersionValidateResultModel> ValidateDto(IAsyncEnumerable<WotDataCosmosDbDto> wotData, CancellationToken cancellationToken)
-		{
-			int totalObjectsCount = 0;
-			int wrongVersionCount = 0;
-			int correctVersionCount = 0;
-			int wrongObjectsCount = 0;
-			await foreach (var data in wotData.WithCancellation(cancellationToken))
-			{
-				//Thread.Sleep(4000);
-				totalObjectsCount++;
-				if (data.ClassProperties is null || !data.ClassProperties.Type.Equals(DtoType) || data.ClassProperties.DtoVersion is null)
-				{
-					wrongObjectsCount++;
-					continue;
-				}
-				try
-				{
-					_dtoVersionValidator.EnsureVersionCorrectness(data);
-					correctVersionCount++;
-				}
-				catch (DtoVersionComponentsException)
-				{
-					wrongObjectsCount++;
-				}
-				catch (DtoVersionException)
-				{
-					wrongVersionCount++;
-				}
-			}
-			return new VersionValidateResultModel()
-			{
-				Id = Guid.NewGuid().ToString("D"),
-				ValidationDate = DateTime.Now,
-				CorrectVersionDtoCount = correctVersionCount,
-				TotalItemsInCosmosDb = totalObjectsCount,
-				WrongObjectsCount = wrongObjectsCount,
-				WrongVersionDtoCount = wrongVersionCount,
-				WasValidationCanceled = cancellationToken.IsCancellationRequested
-			};
-		}
-
 	}
 }

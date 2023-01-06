@@ -4,6 +4,12 @@
 	ViewData["Title"] = "WPD - Versions";
 }
 <div class="container">
+	@if (Model.Message is not null)
+	{
+		<div class="row bg-warning text-center mb-4 border border-1 border-dark">
+			<p class="text-center align-middle mb-0">@Html.DisplayFor(s => Model.Message)</p>
+		</div>
+	}
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-8">
@@ -13,7 +19,7 @@
 			<div class="row">
 				<div class="container">
 					<div class="row">
-						<div class="col-6">
+						<div class="col-12">
 							<div class="container">
 								<div class="row">
 									<p>
@@ -23,13 +29,19 @@
 								<div class="row">
 									<small>Last data version check: XXX</small>
 								</div>
+								<a class="btn btn-sm btn-success" asp-action="RequestValidationProcess">Validate data</a>
+								@if (Model.IsCancellationEnabled ?? false)
+								{
+									<a class="btn btn-sm btn-danger" asp-action="CancelValidationProcess">Cancel validation</a>
+								}
+								else
+								{
+									<a class="btn btn-sm btn-danger disabled" asp-action="CancelValidationProcess">Cancel validation</a>
+								}
+								<a class="btn btn-sm btn-info" asp-action="RequestValidationProcess">Check results</a>
 							</div>
 						</div>
-						<form method="get" asp-action="RequestValidationProcess">
-						<div class="col-6">
-							<input type="submit" class="btn btn-dark" value="check ver"/>
-						</div>
-						</form>
+
 					</div>
 				</div>
 			</div>

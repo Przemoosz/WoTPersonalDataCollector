@@ -40,7 +40,7 @@
 			int wrongObjectsCount = 0;
 			await foreach (var data in wotData)
 			{
-				////Thread.Sleep(3000);
+				Thread.Sleep(3000);
 				totalObjectsCount++;
 				if (data.ClassProperties is null || !data.ClassProperties.Type.Equals(DtoType) || data.ClassProperties.DtoVersion is null)
 				{

@@ -4,13 +4,8 @@ using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollectorWebApp.Exceptions;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-using WotPersonalDataCollectorWebApp.UnitTests.TestUtilities;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 {
@@ -18,24 +13,18 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 	public class VersionControllerTests
 	{
 		private ICosmosDatabaseContext _cosmosDatabaseContext = null!;
-		private IDtoVersionValidator _dtoVersionValidator = null!;
 		private IValidationCancellationService _validationCancellationService = null!;
 		private IVersionController _uut = null!;
-		private readonly CancellationToken _nonCancelledCancellationToken = new CancellationToken(false);
-		private IValidationService _validationService;
-		private const string ValidDataLabel = "ValidData";
-		private const string ClassPropertiesWrongDataLabel = "ClassPropertiesWrongData";
-		private const string WrongDataLabel = "WrongData";
-		private const string WrongVersionDataLabel = "WrongVersion";
+		private IValidationService _validationService = null!;
+
 
 		[SetUp]
 		public void SetUp()
 		{
 			_cosmosDatabaseContext = Substitute.For<ICosmosDatabaseContext>();
-			_dtoVersionValidator = Substitute.For<IDtoVersionValidator>();
 			_validationCancellationService = Substitute.For<IValidationCancellationService>();
 			_validationService = Substitute.For<IValidationService>();
-			_uut = new VersionController(_cosmosDatabaseContext,_dtoVersionValidator,_validationCancellationService, _validationService);
+			_uut = new VersionController(_cosmosDatabaseContext,_validationCancellationService, _validationService);
 		}
 
 		[Test]
@@ -105,7 +94,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction.Should().NotBeNull();
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["Message"].Should().Be("Operation cancellation is already started");
+			routeValueDictionary!["Message"].Should().Be("Operation cancellation has already started");
 		}
 	}
 }
