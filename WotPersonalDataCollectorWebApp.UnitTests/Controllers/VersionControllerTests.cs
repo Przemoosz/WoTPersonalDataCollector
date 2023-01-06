@@ -22,6 +22,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		private IValidationCancellationService _validationCancellationService = null!;
 		private IVersionController _uut = null!;
 		private readonly CancellationToken _nonCancelledCancellationToken = new CancellationToken(false);
+		private IValidationService _validationService;
 		private const string ValidDataLabel = "ValidData";
 		private const string ClassPropertiesWrongDataLabel = "ClassPropertiesWrongData";
 		private const string WrongDataLabel = "WrongData";
@@ -33,7 +34,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_cosmosDatabaseContext = Substitute.For<ICosmosDatabaseContext>();
 			_dtoVersionValidator = Substitute.For<IDtoVersionValidator>();
 			_validationCancellationService = Substitute.For<IValidationCancellationService>();
-			_uut = new VersionController(_cosmosDatabaseContext,_dtoVersionValidator,_validationCancellationService);
+			_validationService = Substitute.For<IValidationService>();
+			_uut = new VersionController(_cosmosDatabaseContext,_dtoVersionValidator,_validationCancellationService, _validationService);
 		}
 
 		[Test]
@@ -84,8 +86,6 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
 			routeValueDictionary!["Message"].Should().Be("Can not cancel operation that was not started!");
-
-
 		}
 
 		[Test]
@@ -107,177 +107,5 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			routeValueDictionary.Should().NotBeNull();
 			routeValueDictionary!["Message"].Should().Be("Operation cancellation is already started");
 		}
-
-		[TestCase(5)]
-		[TestCase(0)]
-		public async Task ShouldCorrectlyCountValidObjects(int itemsCount)
-		{
-			// Arrange
-			var databaseCollection = new AsyncEnumerable<WotDataCosmosDbDto>(CreateValidData(itemsCount));
-			SetUpMocksForRequestValidateProcess(databaseCollection);
-
-			// Act
-			var actual = await _uut.RequestValidationProcess(_nonCancelledCancellationToken);
-			var actualAsRedirectToAction = actual as RedirectToActionResult;
-			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
-
-			// Assert
-			actual.Should().BeOfType<RedirectToActionResult>();
-			actualAsRedirectToAction.Should().NotBeNull();
-			actualAsRedirectToAction?.ActionName?.Should().Be("ValidationResult");
-			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["TotalItemsInCosmosDb"].Should().Be(itemsCount);
-			routeValueDictionary!["CorrectVersionDtoCount"].Should().Be(itemsCount);
-			routeValueDictionary!["WasValidationCanceled"].Should().Be(false);
-		}
-
-		[Test]
-		public async Task ShouldCorrectlyRecognizeObjectAsWrongForAllConditions()
-		{
-			// Arrange
-			var databaseCollection = new AsyncEnumerable<WotDataCosmosDbDto>(CreateDataWithWrongClassProperties());
-			SetUpMocksForRequestValidateProcess(databaseCollection);
-
-			// Act
-			var actual = await _uut.RequestValidationProcess(_nonCancelledCancellationToken);
-			var actualAsRedirectToAction = actual as RedirectToActionResult;
-			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
-
-			// Assert
-			actual.Should().BeOfType<RedirectToActionResult>();
-			actualAsRedirectToAction.Should().NotBeNull();
-			actualAsRedirectToAction?.ActionName?.Should().Be("ValidationResult");
-			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["TotalItemsInCosmosDb"].Should().Be(3);
-			routeValueDictionary!["CorrectVersionDtoCount"].Should().Be(0);
-			routeValueDictionary!["WrongObjectsCount"].Should().Be(3);
-			routeValueDictionary!["WasValidationCanceled"].Should().Be(false);
-		}
-
-		[TestCase(3)]
-		[TestCase(0)]
-		[TestCase(7)]
-		public async Task ShouldCorrectlyCountWrongObjectsWhenDtoVersionComponentsExceptionIsThrown( int wrongObjectsCount)
-		{
-			// Arrange
-			var databaseCollection = new AsyncEnumerable<WotDataCosmosDbDto>(CreateWrongData(wrongObjectsCount));
-			SetUpMocksForRequestValidateProcess(databaseCollection);
-
-			// Act
-			var actual = await _uut.RequestValidationProcess(_nonCancelledCancellationToken);
-			var actualAsRedirectToAction = actual as RedirectToActionResult;
-			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
-
-			// Assert
-			actual.Should().BeOfType<RedirectToActionResult>();
-			actualAsRedirectToAction.Should().NotBeNull();
-			actualAsRedirectToAction?.ActionName?.Should().Be("ValidationResult");
-			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["TotalItemsInCosmosDb"].Should().Be(wrongObjectsCount);
-			routeValueDictionary!["WrongObjectsCount"].Should().Be(wrongObjectsCount);
-			routeValueDictionary!["WasValidationCanceled"].Should().Be(false);
-		}
-
-		[TestCase(3)]
-		[TestCase(0)]
-		[TestCase(7)]
-		public async Task ShouldCorrectlyCountWrongVersionObjectsWhenDtoVersionExceptionIsThrown(int wrongObjectsCount)
-		{
-			// Arrange
-			var databaseCollection = new AsyncEnumerable<WotDataCosmosDbDto>(CreateWrongVersionData(wrongObjectsCount));
-			SetUpMocksForRequestValidateProcess(databaseCollection);
-
-			// Act
-			var actual = await _uut.RequestValidationProcess(_nonCancelledCancellationToken);
-			var actualAsRedirectToAction = actual as RedirectToActionResult;
-			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
-
-			// Assert
-			actual.Should().BeOfType<RedirectToActionResult>();
-			actualAsRedirectToAction.Should().NotBeNull();
-			actualAsRedirectToAction?.ActionName?.Should().Be("ValidationResult");
-			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["TotalItemsInCosmosDb"].Should().Be(wrongObjectsCount);
-			routeValueDictionary!["WrongVersionDtoCount"].Should().Be(wrongObjectsCount);
-			routeValueDictionary!["WasValidationCanceled"].Should().Be(false);
-		}
-
-		[TestCase(3,7,9)]
-		[TestCase(10, 2, 4)]
-
-		[TestCase(6, 7, 2)]
-
-		public async Task ShouldCorrectlyCountAllData(int validItems, int wrongItems, int versionInvalidItems)
-		{
-			// Arrange
-			var databaseCollection = new AsyncEnumerable<WotDataCosmosDbDto>(CreateWrongData(wrongItems), CreateValidData(validItems), CreateWrongVersionData(versionInvalidItems));
-			SetUpMocksForRequestValidateProcess(databaseCollection);
-
-			// Act
-			var actual = await _uut.RequestValidationProcess(_nonCancelledCancellationToken);
-			var actualAsRedirectToAction = actual as RedirectToActionResult;
-			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
-
-			// Assert
-			actual.Should().BeOfType<RedirectToActionResult>();
-			actualAsRedirectToAction.Should().NotBeNull();
-			actualAsRedirectToAction?.ActionName?.Should().Be("ValidationResult");
-			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["TotalItemsInCosmosDb"].Should().Be(validItems+wrongItems+versionInvalidItems);
-			routeValueDictionary!["WrongObjectsCount"].Should().Be(wrongItems);
-			routeValueDictionary!["WrongVersionDtoCount"].Should().Be(versionInvalidItems);
-			routeValueDictionary!["CorrectVersionDtoCount"].Should().Be(validItems);
-			routeValueDictionary!["WasValidationCanceled"].Should().Be(false);
-		}
-
-		private void SetUpMocksForRequestValidateProcess(IAsyncEnumerable<WotDataCosmosDbDto> dataCollection)
-		{
-			_validationCancellationService.GetValidationCancellationToken(_nonCancelledCancellationToken)
-				.ReturnsForAnyArgs(_nonCancelledCancellationToken);
-			_cosmosDatabaseContext.PersonalData.AsAsyncEnumerable().Returns(dataCollection);
-			_dtoVersionValidator.When(v => v.EnsureVersionCorrectness(Arg
-				.Is<WotDataCosmosDbDto>(s => s.AccountId.Equals(WrongDataLabel)))).Do(t => throw new DtoVersionComponentsException());
-			_dtoVersionValidator.When(v => v.EnsureVersionCorrectness(Arg.Is<WotDataCosmosDbDto>(s => s.AccountId.Equals(WrongVersionDataLabel)))).Do(t => throw new DtoVersionException());
-		}
-
-		private IEnumerable<WotDataCosmosDbDto> CreateValidData(int itemsCount)
-		{
-			var collection = new List<WotDataCosmosDbDto>(itemsCount);
-			for (int i = 0; i < itemsCount; i++)
-			{
-				collection.Add(new WotDataCosmosDbDto(){ClassProperties = new ClassProperties(){Type = "WotAccount" , DtoVersion = "1.0.0"}, AccountId = ValidDataLabel});
-			}
-			return collection;
-		}
-
-		private IEnumerable<WotDataCosmosDbDto> CreateDataWithWrongClassProperties()
-		{
-			return new List<WotDataCosmosDbDto>(3)
-			{
-				new WotDataCosmosDbDto() { ClassProperties = null, AccountId = ClassPropertiesWrongDataLabel},
-				new WotDataCosmosDbDto() { ClassProperties = new ClassProperties() { Type = "WrongType" }, AccountId = ClassPropertiesWrongDataLabel},
-				new WotDataCosmosDbDto() { ClassProperties = new ClassProperties() { Type = "WotAccount", DtoVersion = null }, AccountId = ClassPropertiesWrongDataLabel }
-			};
-		}
-		private IEnumerable<WotDataCosmosDbDto> CreateWrongData(int itemsCount)
-		{
-			var collection = new List<WotDataCosmosDbDto>(itemsCount);
-			for (int i = 0; i < itemsCount; i++)
-			{
-				collection.Add(new WotDataCosmosDbDto() { ClassProperties = new ClassProperties() { Type = "WotAccount", DtoVersion = "1.0.0" }, AccountId = WrongDataLabel });
-			}
-			return collection;
-		}
-
-		private IEnumerable<WotDataCosmosDbDto> CreateWrongVersionData(int itemsCount)
-		{
-			var collection = new List<WotDataCosmosDbDto>(itemsCount);
-			for (int i = 0; i < itemsCount; i++)
-			{
-				collection.Add(new WotDataCosmosDbDto() { ClassProperties = new ClassProperties() { Type = "WotAccount", DtoVersion = "1.0.0" }, AccountId = WrongVersionDataLabel });
-			}
-			return collection;
-		}
-
 	}
 }

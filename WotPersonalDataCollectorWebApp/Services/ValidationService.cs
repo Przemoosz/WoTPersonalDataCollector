@@ -1,11 +1,10 @@
-﻿using WotPersonalDataCollectorWebApp.CosmosDb.Context;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollectorWebApp.Exceptions;
-using WotPersonalDataCollectorWebApp.Models;
-
-namespace WotPersonalDataCollectorWebApp.Services
+﻿namespace WotPersonalDataCollectorWebApp.Services
 {
+	using CosmosDb.Context;
+	using CosmosDb.Dto;
+	using CosmosDb.Dto.Version;
+	using Exceptions;
+	using Models;
 	internal sealed class ValidationService: IValidationService
 	{
 		private readonly IDtoVersionValidator _dtoVersionValidator;
@@ -29,7 +28,7 @@ namespace WotPersonalDataCollectorWebApp.Services
 
 		private async Task SaveValidationResult(VersionValidateResultModel validationResult)
 		{
-			_cosmosContext.VersionValidateResult.Add(validationResult);
+			await _cosmosContext.VersionValidateResult.AddAsync(validationResult);
 			await _cosmosContext.SaveChangesAsync();
 		}
 
@@ -41,14 +40,13 @@ namespace WotPersonalDataCollectorWebApp.Services
 			int wrongObjectsCount = 0;
 			await foreach (var data in wotData)
 			{
-				Thread.Sleep(3000);
+				////Thread.Sleep(3000);
 				totalObjectsCount++;
 				if (data.ClassProperties is null || !data.ClassProperties.Type.Equals(DtoType) || data.ClassProperties.DtoVersion is null)
 				{
 					wrongObjectsCount++;
 					continue;
 				}
-
 				try
 				{
 					_dtoVersionValidator.EnsureVersionCorrectness(data);
@@ -62,12 +60,10 @@ namespace WotPersonalDataCollectorWebApp.Services
 				{
 					wrongVersionCount++;
 				}
-				
 				if (_validationCancellationService.IsCancellationRequested)
 				{ 
 					break;
 				}
-				
 			}
 			return new VersionValidateResultModel()
 			{

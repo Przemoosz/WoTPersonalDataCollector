@@ -11,7 +11,6 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 	using Models;
 	using Models.ViewModels;
 	using Services;
-	using System.ComponentModel.DataAnnotations;
 	using System.Threading;
 
 	public sealed class VersionController: Controller, IVersionController
@@ -23,14 +22,12 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
 
-		//public event EventHandler ValidateRequested;
 		public VersionController(ICosmosDatabaseContext context, IDtoVersionValidator dtoVersionValidator, IValidationCancellationService validationCancellationService, IValidationService validationService)
 		{
 			_context = context;
 			_dtoVersionValidator = dtoVersionValidator;
 			_validationCancellationService = validationCancellationService;
 			_validationService = validationService;
-			//ValidateRequested += OnValidateRequested;
 		}
 
 		private async void OnValidateRequested()
@@ -49,13 +46,8 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		[HttpGet]
 		public async Task<IActionResult> RequestValidationProcess(CancellationToken token)
 		{
-			CancellationToken cancellationToken = _validationCancellationService.GetValidationCancellationToken(token);
-			//ValidateRequested.Invoke(this, EventArgs.Empty);
+			_validationCancellationService.GetValidationCancellationToken(token);
 			ThreadPool.QueueUserWorkItem(s => _validationService.RequestValidationProcess());
-			//Thread.Sleep(10000);
-			// var wotUserData = _context.PersonalData.AsAsyncEnumerable();
-			// var validationResult = await ValidateDto(wotUserData,cancellationToken);
-			// SaveValidationResult(validationResult);
 			return RedirectToAction(nameof(Index));
 		}
 		
