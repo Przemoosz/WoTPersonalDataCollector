@@ -9,7 +9,7 @@ using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 {
-	[TestFixture, Parallelizable, ControllerTests]
+	[TestFixture, ControllerTests, Parallelizable]
 	public class VersionControllerTests
 	{
 		private ICosmosDatabaseContext _cosmosDatabaseContext = null!;
@@ -61,8 +61,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		{
 			// Arrange
 			_validationCancellationService.IsCancellationAvailable.Returns(false);
-			KeyValuePair<string, object?> expected =
-				new KeyValuePair<string, object?>("Message", "Can not cancel operation that was not started!");
+
 			// Act
 			var actual = await _uut.CancelValidationProcess();
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
@@ -73,11 +72,11 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction.Should().NotBeNull();
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["Message"].Should().Be("Can not cancel operation that was not started!");
+			routeValueDictionary!["Message"].Should().Be("Can not cancel operation that was not started or is finished!");
 		}
 
 		[Test]
-		public async Task ShouldRedirectToIndexWithMessageWhenCancellationWasRequested()
+		public async Task ShouldRedirectToIndexWithMessageWhenCancellationWasRequestedAgain()
 		{
 			// Arrange
 			_validationCancellationService.IsCancellationAvailable.Returns(true);
@@ -115,6 +114,49 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
 			routeValueDictionary!["Message"].Should().Be("Cancellation token was disposed, that means validation operation is finished.");
+		}
+
+		[Test]
+		public async Task ShouldRunValidationProcess()
+		{
+			// Arrange
+			_validationService.IsValidationFinished.Returns(true);
+
+			// Act
+			var actual = await _uut.RequestValidationProcess(CancellationToken.None);
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
+
+			// Assert
+			await _validationService.Received(1).RunValidationProcessAsync();
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
+			routeValueDictionary!["IsCancellationEnabled"].Should().NotBeNull();
+			((bool)routeValueDictionary["IsCancellationEnabled"]!).Should().BeTrue();
+		}
+
+		[Test]
+		public async Task ShouldReturnIndexWithMessageIfValidationIsAlreadyRunning()
+		{
+			// Arrange
+			_validationService.IsValidationFinished.Returns(false);
+
+			// Act
+			var actual = await _uut.RequestValidationProcess(CancellationToken.None);
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
+
+			// Assert
+			await _validationService.DidNotReceiveWithAnyArgs().RunValidationProcessAsync();
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
+			routeValueDictionary!["IsCancellationEnabled"].Should().NotBeNull();
+			routeValueDictionary["Message"].Should().NotBeNull();
+			((bool)routeValueDictionary["IsCancellationEnabled"]!).Should().BeTrue();
+			routeValueDictionary["Message"].Should()
+				.Be("Validation Operation has already started, can't start another one. Please wait.");
 		}
 	}
 }

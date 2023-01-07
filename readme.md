@@ -13,7 +13,7 @@ Solution include also 142 unit tests written in the NUnit testing framework
 For more information go to section called: Versions 
 ## About Solution
 
-Solution is build in .Net 6.0 with C# 10, used azure function version is 4, and everything was created using Visual Studio Enterprise 2022 
+Solution is build in .Net 6.0 with C# 10, using azure function version is 4, ASP.NET. Everything was created using Visual Studio Enterprise 2022 
 
 Used NuGet packages:
 
@@ -45,11 +45,14 @@ Version name - Description - Status
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
-- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - In development
-- WPD-7-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
-- WPD-8-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
-- WPD-9-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-10-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
+- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, soritng and grouping- Planned
+- WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting single or all validation results - Planned
+- WPD-9-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
+- WPD-10-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-11-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-12-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-13-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
 ## CosmosDbs
 

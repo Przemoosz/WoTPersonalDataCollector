@@ -3,7 +3,6 @@
 	using Microsoft.AspNetCore.Mvc;
 	using CosmosDb.Context;
 	using System.Threading.Tasks;
-	using Models;
 	using Models.ViewModels;
 	using Services;
 	using System.Threading;
@@ -46,13 +45,10 @@
 		}
 		
 		[HttpGet]
-		public async Task<IActionResult> ValidationResult(VersionValidateResultModel validationResult = null)
+		public async Task<IActionResult> LastValidationResult()
 		{
-			if (validationResult is null || validationResult.Id is null)
-			{
-				validationResult = await _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).FirstAsync();
-			}
-			return View(validationResult);
+			var result = await _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).FirstOrDefaultAsync();
+			return View(result);
 		}
 
 		[HttpGet]
@@ -60,7 +56,7 @@
 		{
 			if (!_validationCancellationService.IsCancellationAvailable)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Can not cancel operation that was not started!"});
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Can not cancel operation that was not started or is finished!"});
 			}
 			if(_validationCancellationService.IsCancellationRequested)
 			{
@@ -72,6 +68,13 @@
 			}
 			_validationCancellationService.CancelValidation();
 			return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Canceling validation", IsCancellationEnabled = false});
+		}
+
+		[HttpGet, Route("Results")]
+		public async Task<IActionResult> ValidationResults()
+		{
+			var result = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
+			return View(result);
 		}
 	}
 }
