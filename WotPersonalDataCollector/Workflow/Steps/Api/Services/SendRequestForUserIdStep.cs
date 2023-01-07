@@ -22,7 +22,7 @@ namespace WotPersonalDataCollector.Workflow.Steps.Api.Services
                 context.UserIdResponseMessage =
                     await _wotService.GetUserApiResponseAsync(context.UserInfoRequestMessage);
             }
-            catch (HttpRequestException exception)
+            catch (HttpRequestException)
             {
                 context.Logger.LogError("Error occurred during WOT API connection, do not received 200 OK from API, aborting further processing");
                 _getCurrentResponse = false;

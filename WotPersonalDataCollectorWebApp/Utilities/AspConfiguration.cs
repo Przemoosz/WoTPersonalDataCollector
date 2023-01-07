@@ -14,12 +14,12 @@ namespace WotPersonalDataCollectorWebApp.Utilities
             }
         }
 
-        public string ContainerName
+        public string WotDtoContainerName
         {
             get
             {
-                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("ContainerName"), "ContainerName local variable is not set!");
-                return Environment.GetEnvironmentVariable("ContainerName")!;
+                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("WotDtoContainerName"), "WotDtoContainerName local variable is not set!");
+                return Environment.GetEnvironmentVariable("WotDtoContainerName")!;
             }
         }
 
@@ -46,5 +46,14 @@ namespace WotPersonalDataCollectorWebApp.Utilities
                 return Environment.GetEnvironmentVariable("WotDtoVersion")!;
             }
         }
-    }
+
+        public string VersionModelContainerName
+        {
+	        get
+	        {
+		        Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("VersionModelContainerName"), "VersionModelContainerName local variable is not set!");
+		        return Environment.GetEnvironmentVariable("VersionModelContainerName")!;
+	        }
+        }
+	}
 }

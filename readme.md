@@ -13,24 +13,30 @@ Solution include also 142 unit tests written in the NUnit testing framework
 For more information go to section called: Versions 
 ## About Solution
 
-Solution is build in .Net 6.0 with C# 10, used azure function version is 4, and everything was created using Visual Studio Enterprise 2022 
+Solution is build in .Net 6.0 with C# 10, using azure function version is 4, ASP.NET. Everything was created using Visual Studio Enterprise 2022 
 
 Used NuGet packages:
 
-- Microsoft.Azure.Functions.Extensions ver. 1.1.0
-- Microsoft.Extensions.DependencyInjection ver. 6.0.0
-- Microsoft.NET.Sdk.Functions ver. 4.1.1
+- Any ver. 8.2.0
+- Coverlet.collector ver. 3.2.0
+- FluentAssertions ver. 6.8.0
 - Guard.Net ver. 3.0.0
-- Any ver. 7.0.0
-- FluentAssertions ver. 6.7.0
-- Microsoft.NET.Test.Sdk ver. 16.11.0
+- Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore ver. 6.0.11
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore ver. 6.0.11
+- Microsoft.AspNetCore.Identity.UI ver. 6.0.11
+- Microsoft.Azure.Cosmos ver. 3.31.2
+- Microsoft.Azure.Functions.Extensions ver. 1.1.0
+- Microsoft.Extensions.DependencyInjection ver. 6.0.1
+- Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.11
+- Microsoft.EntityFrameworkCore.Tools ver. 6.0.11
+- Microsoft.NET.Sdk.Functions ver. 4.1.3
+- Microsoft.NET.Test.Sdk ver. 17.4.0
 - NSubstitute ver. 4.4.0
-- NUnit ver. 3.13.2
-- NUnit3TestAdapter ver. 4.0.0
-- coverlet.collector ver. 3.1.0
+- NUnit ver. 3.13.3
+- NUnit.Analyzers ver. 3.5.0
+- NUnit3TestAdapter ver. 4.3.1
 - TddXt.Any.Extensibility ver. 6.7.0
-- Microsoft.Azure.Cosmos ver. 3.30.1
-- Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.8
+ 
 
 ## Versions
 Version name - Description - Status
@@ -39,11 +45,16 @@ Version name - Description - Status
 - WPD-3-CrawlSpecificUserData - Crawling specific data from WOT REST API about given user - Finished and merged
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
-- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Planned
-- WPD-7-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-8-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
+- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, soritng and grouping- Planned
+- WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting single or all validation results - Planned
+- WPD-9-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
+- WPD-10-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-11-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-12-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-13-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
-## CosmosDb
+## CosmosDbs
 
 To run application you have to provide CosmosDb Primary Connection String. You can use 
 Cosmos database from [Azure Portal](https://azure.microsoft.com/en-us/products/cosmos-db/) or 

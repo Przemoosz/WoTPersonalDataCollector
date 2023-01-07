@@ -1,31 +1,51 @@
-﻿@{
+﻿@using VersionValidateViewModel = WotPersonalDataCollectorWebApp.Models.ViewModels.VersionValidateViewModel
+@model VersionValidateViewModel
+@{
 	ViewData["Title"] = "WPD - Versions";
 }
 <div class="container">
+	@if (Model.Message is not null)
+	{
+		<div class="row bg-warning text-center mb-4 border border-1 border-dark">
+			<p class="text-center align-middle mb-0">@Html.DisplayFor(s => Model.Message)</p>
+		</div>
+	}
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-8">
 			<div class="row text-center border-bottom border-2 border-dark mb-2">
-				<h4>Settings</h4>
+				<h4>Data validation center</h4>
 			</div>
 			<div class="row">
 				<div class="container">
 					<div class="row">
-						<div class="col-6">
+						<div class="col-12">
 							<div class="container">
-								<div class="row">
+								<div class="row text-center mt-3">
 									<p>
 										<b>Validate Cosmos DB and ASP.NET dto versions</b>
 									</p>
 								</div>
 								<div class="row">
-									<small>Last data version check: XXX</small>
+									<small>Check if versions of dto in cosmos database matches version in ASP.NET. This process may take a while, but you can cancel it in any time</small>
 								</div>
+								<div class="row align-middle">
+									<a class="btn btn-sm btn-success m-1" asp-action="RequestValidationProcess">Validate data</a>
+									@if (Model.IsCancellationEnabled ?? false)
+									{
+										<a class="btn btn-sm btn-danger m-1" asp-action="CancelValidationProcess">Cancel validation</a>
+									}
+									else
+									{
+										<a class="btn btn-sm btn-danger disabled m-1" asp-action="CancelValidationProcess">Cancel validation</a>
+									}
+									<a class="btn btn-sm btn-info m-1" asp-action="ValidationResults">Check results</a>
+									<a class="btn btn-sm btn-info m-1" asp-action="LastValidationResult">View latest result</a>
+								</div>
+
 							</div>
 						</div>
-						<div class="col-6">
-							<button class="btn btn-dark">Check Versions</button>
-						</div>
+
 					</div>
 				</div>
 			</div>
