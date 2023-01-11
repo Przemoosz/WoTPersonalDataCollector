@@ -170,18 +170,20 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		{
 			// Arrange
 			List<VersionValidateResultModel> validationResultModels = Any.Instance<List<VersionValidateResultModel>>();
-			var validationResultModelQueryable = validationResultModels.AsQueryable();
 			var d = validationResultModels.AsDbSet();
 			_cosmosDatabaseContext.VersionValidateResult.Returns(d);
 
 			// Act
-			var actual = await _uut.RequestValidationProcess(CancellationToken.None);
-			var actualAsRedirectToAction = actual as RedirectToActionResult;
-			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
-
+			var actual = await _uut.ValidationResults();
+			var viewResult = actual as ViewResult;
+			
 			// Assert
-
-
+			viewResult.Should().NotBeNull();
+			viewResult!.Model.Should().BeAssignableTo<IEnumerable<VersionValidateResultModel>>();
+			var result = viewResult.Model as IEnumerable<VersionValidateResultModel>;
+			var resultList = result!.ToList();
+			resultList.Should().NotBeNull();
+			resultList.Count.Should().Be(validationResultModels.Count);
 		}
 	}
 }
