@@ -1,11 +1,17 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
+using WotPersonalDataCollectorWebApp.Models;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
+using WotPersonalDataCollectorWebApp.UnitTests.TestHelpers;
+using static TddXt.AnyRoot.Root;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 {
@@ -157,6 +163,25 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			((bool)routeValueDictionary["IsCancellationEnabled"]!).Should().BeTrue();
 			routeValueDictionary["Message"].Should()
 				.Be("Validation Operation has already started, can't start another one. Please wait.");
+		}
+
+		[Test]
+		public async Task ShouldReturnsAllValidationResults()
+		{
+			// Arrange
+			List<VersionValidateResultModel> validationResultModels = Any.Instance<List<VersionValidateResultModel>>();
+			var validationResultModelQueryable = validationResultModels.AsQueryable();
+			var d = validationResultModels.AsDbSet();
+			_cosmosDatabaseContext.VersionValidateResult.Returns(d);
+
+			// Act
+			var actual = await _uut.RequestValidationProcess(CancellationToken.None);
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
+
+			// Assert
+
+
 		}
 	}
 }
