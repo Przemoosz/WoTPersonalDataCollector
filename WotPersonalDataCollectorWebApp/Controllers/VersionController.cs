@@ -7,12 +7,17 @@
 	using Services;
 	using System.Threading;
 	using Microsoft.EntityFrameworkCore;
+	using Models;
 
 	public sealed class VersionController: Controller, IVersionController
 	{
+		private const string Ascending = "Ascending";
+		private const string Descending = "Descending";
+
 		private readonly ICosmosDatabaseContext _context;
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
+		
 
 		public VersionController(ICosmosDatabaseContext context, IValidationCancellationService validationCancellationService, IValidationService validationService)
 		{
@@ -27,7 +32,7 @@
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> RequestValidationProcess(CancellationToken token)
+		public IActionResult RequestValidationProcess(CancellationToken token)
 		{
 			if (!_validationService.IsValidationFinished)
 			{
@@ -45,14 +50,14 @@
 		}
 		
 		[HttpGet]
-		public async Task<IActionResult> LastValidationResult()
+		public async Task<IActionResult> LatestValidationResult()
 		{
 			var result = await _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).FirstOrDefaultAsync();
 			return View(result);
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> CancelValidationProcess()
+		public IActionResult CancelValidationProcess()
 		{
 			if (!_validationCancellationService.IsCancellationAvailable)
 			{
@@ -71,10 +76,20 @@
 		}
 
 		[HttpGet, Route("Results")]
-		public async Task<IActionResult> ValidationResults()
+		public IActionResult ValidationResults(int page = 1, string dateOrder = null)
 		{
-			var result = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
-			return View(result);
+			IEnumerable<VersionValidateResultModel> results;
+			if (dateOrder is not null && dateOrder.Equals(Ascending))
+			{
+				results = _context.VersionValidateResult.OrderBy(s => s.ValidationDate).AsEnumerable();
+				ViewData["dateOrder"] = dateOrder;
+			}
+			else
+			{
+				results = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
+				ViewData["dateOrder"] = Descending;
+			}
+			return View(results);
 		}
 	}
 }

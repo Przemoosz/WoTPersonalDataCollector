@@ -19,7 +19,7 @@ Used NuGet packages:
 
 - Any ver. 8.2.0
 - Coverlet.collector ver. 3.2.0
-- FluentAssertions ver. 6.8.0
+- FluentAssertions ver. 6.9.0
 - Guard.Net ver. 3.0.0
 - Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore ver. 6.0.11
 - Microsoft.AspNetCore.Identity.EntityFrameworkCore ver. 6.0.11
@@ -31,6 +31,7 @@ Used NuGet packages:
 - Microsoft.EntityFrameworkCore.Tools ver. 6.0.11
 - Microsoft.NET.Sdk.Functions ver. 4.1.3
 - Microsoft.NET.Test.Sdk ver. 17.4.0
+- MockQueryable.NSubstitute ver. 7.0.0
 - NSubstitute ver. 4.4.0
 - NUnit ver. 3.13.3
 - NUnit.Analyzers ver. 3.5.0
@@ -46,7 +47,7 @@ Version name - Description - Status
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
 - WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
-- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, soritng and grouping- Planned
+- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, soritng and grouping- In development
 - WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting single or all validation results - Planned
 - WPD-9-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
 - WPD-10-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned

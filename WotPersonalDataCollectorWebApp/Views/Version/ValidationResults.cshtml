@@ -6,8 +6,8 @@
 }
 <div class="container">
 	<div class="row">
-		<div class="col-2"></div>
-		<div class="col-8">
+		<div class="col-1"></div>
+		<div class="col-10">
 			<div class="row text-center border-bottom border-2 border-dark mb-2">
 				<h4>Validation result</h4>
 			</div>
@@ -72,14 +72,40 @@
 								}
 							</div>
 						</div>
+						<div class="col-2">
+							<div class="container">
+								<div class="row mt-4">
+									<p class="m-0 p-0">Order date:</p>
+								</div>
+								<form method="get">
+									<div class="row mt-1">
+										<select name="dateOrder">
+											<option value="@ViewData["dateOrder"]">@ViewData["dateOrder"]</option>
+											@if (ViewData["dateOrder"]!.Equals("Ascending"))
+											{
+												<option value="Descending">Descending</option>
+											}
+											else
+											{
+												<option value="Ascending">Ascending</option>
+											}
+										</select>
+									</div>
+									<div class="row mt-1">
+										<input type="submit" class="btn btn-sm btn-success" value="Apply"/> 
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-					<div class="col-2"></div>
+					<div class="col-1"></div>
+					</div>
 				</div>
 			</div>
-			<div class="row text-center border-top border-2 border-dark mb-2">
+			<div class="row text-center border-top border-2 border-dark mb-2 mt-2">
 				<a class="btn btn-sm btn-secondary align-middle" asp-action="Index">Return to validation page</a>
 			</div>
 		</div>
 	</div>
-	<div class="col-2"></div>
-</div>
+	<div class="col-2">
+	</div>
