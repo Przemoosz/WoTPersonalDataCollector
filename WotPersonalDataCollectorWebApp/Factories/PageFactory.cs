@@ -18,7 +18,35 @@
 
 	    public DetailedPage<T> CreateDetailedPage(IEnumerable<T> dataSource, int pageNumber, int pageSize)
 	    {
-		    throw new NotImplementedException();
+			List<T> data = new List<T>();
+			int totalItems = 0;
+			int itemsOnPage = 0;
+		    using (IEnumerator<T> enumerator = dataSource.GetEnumerator())
+		    {
+			    for (int i = 0; i < (pageNumber - PageConstant) * pageSize; i++)
+			    {
+				    if (!enumerator.MoveNext())
+				    {
+						break;
+				    }
+				    totalItems++;
+				}
+			    for (int i = 0; i < pageSize; i++)
+			    {
+				    if (!enumerator.MoveNext())
+				    {
+					   break;
+					}
+				    data.Add(enumerator.Current);
+				    totalItems++;
+				    itemsOnPage++;
+			    }
+			    while (enumerator.MoveNext())
+			    {
+					totalItems++;
+				}
+		    }
+		    return new DetailedPage<T>(data, itemsOnPage, totalItems);
 	    }
     }
 }

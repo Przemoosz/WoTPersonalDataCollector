@@ -172,7 +172,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
 
 			// Act
-			var actual = _uut.ValidationResults();
+			// TODO FIX TEST
+			var actual = _uut.ValidationResults(1,"d");
 			var viewResult = actual as ViewResult;
 			
 			// Assert
