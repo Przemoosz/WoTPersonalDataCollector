@@ -55,7 +55,7 @@ Version name - Description - Status
 - WPD-12-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
 - WPD-13-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
-## CosmosDbs
+## CosmosDb
 
 To run application you have to provide CosmosDb Primary Connection String. You can use 
 Cosmos database from [Azure Portal](https://azure.microsoft.com/en-us/products/cosmos-db/) or 

@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics;
-
-namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto
 {
-    public sealed class WotDataCosmosDbDto
+	using Newtonsoft.Json;
+	using Metrics;
+
+	public sealed class WotDataCosmosDbDto
     {
         private const string DtoType = "WotAccount";
 

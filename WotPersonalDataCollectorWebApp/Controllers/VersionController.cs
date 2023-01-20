@@ -82,12 +82,12 @@
 			if (dateOrder is not null && dateOrder.Equals(Ascending))
 			{
 				results = _context.VersionValidateResult.OrderBy(s => s.ValidationDate).AsEnumerable();
-				ViewData["dateOrder"] = dateOrder;
+				ViewData[nameof(dateOrder)] = dateOrder;
 			}
 			else
 			{
 				results = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
-				ViewData["dateOrder"] = Descending;
+				ViewData[nameof(dateOrder)] = Descending;
 			}
 			return View(results);
 		}

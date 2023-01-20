@@ -9,5 +9,5 @@ public interface IVersionController
 	IActionResult RequestValidationProcess(CancellationToken token);
 	IActionResult CancelValidationProcess();
 	Task<IActionResult> LatestValidationResult();
-	IActionResult ValidationResults(string dateOrder);
+	IActionResult ValidationResults(int page, string dateOrder);
 }
