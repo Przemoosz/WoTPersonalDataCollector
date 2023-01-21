@@ -84,10 +84,10 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			CreateDummyData(dataSet, totalItems);
 			
 			// Act
-			var Page = _uut.CreatePage(dataSet, pageNumber, pageSize);
+			var page = _uut.CreatePage(dataSet, pageNumber, pageSize);
 
 			// Assert
-			Page.Items.Should().HaveCount(0);
+			page.Items.Should().HaveCount(0);
 		}
 
 		[Test]
@@ -119,6 +119,123 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			// Assert
 			page.Items.Should().HaveCount(correctAmountOfItems);
 			page.Items.Last().CorrectVersionDtoCount.Should().Be(correctAmountOfItems);
+		}
+
+		[TestCase(3)]
+		[TestCase(7)]
+		public void ShouldCreateDetailedPageWithAccurateAmountOfItems(int pageSize)
+		{
+			// Arrange
+			const int pageNumber = 1;
+			const int additionalItemsAmount = 3;
+			int totalItems = pageSize + additionalItemsAmount;
+			List<VersionValidateResultModel> data = new List<VersionValidateResultModel>(totalItems);
+			CreateDummyData(data, totalItems);
+
+			// Act
+			var detailedPage = _uut.CreateDetailedPage(data, pageNumber, pageSize);
+
+			// Assert
+			detailedPage.Items.Should().HaveCount(pageSize);
+			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(pageSize);
+			detailedPage.TotalItemsNumber.Should().Be(totalItems);
+			detailedPage.ItemsNumber.Should().Be(pageSize);
+		}
+
+
+		[TestCase(3)]
+		[TestCase(5)]
+		public void ShouldCreateDetailedPageAndSkipCorrectAmountOfElements(int pageNumber)
+		{
+			// Arrange
+			const int pageSize = 3;
+			const int additionalItemsAmount = 6;
+			int totalItems = pageSize * pageNumber + additionalItemsAmount;
+			List<VersionValidateResultModel> dataSet = new List<VersionValidateResultModel>(totalItems);
+			CreateDummyData(dataSet, totalItems);
+
+			// Act
+			var detailedPage = _uut.CreateDetailedPage(dataSet, pageNumber, pageSize);
+
+			// Assert
+			detailedPage.Items.Should().HaveCount(pageSize);
+			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(pageSize * pageNumber);
+			detailedPage.TotalItemsNumber.Should().Be(totalItems);
+			detailedPage.ItemsNumber.Should().Be(pageSize);
+		}
+
+		[TestCase(4, 7)]
+		[TestCase(2, 5)]
+		public void ShouldCreateDetailedPageAndSkipCorrectAmountOfElements(int itemsCount, int pageSize)
+		{
+			// Arrange
+			const int pageNumber = 2;
+			int totalItems = pageSize * (pageNumber - 1) + itemsCount;
+			List<VersionValidateResultModel> dataSet = new List<VersionValidateResultModel>(totalItems);
+			CreateDummyData(dataSet, totalItems);
+
+			// Act
+			var detailedPage = _uut.CreateDetailedPage(dataSet, pageNumber, pageSize);
+
+			// Assert
+			detailedPage.Items.Should().HaveCount(itemsCount);
+			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(totalItems);
+			detailedPage.TotalItemsNumber.Should().Be(totalItems);
+			detailedPage.ItemsNumber.Should().Be(itemsCount);
+		}
+
+		[TestCase(3)]
+		[TestCase(7)]
+		public void ShouldReturnBlankDetailedPageIfPageNumberIsBiggerThanMaxPageNumber(int pageNumber)
+		{
+			// Arrange
+			const int pageSize = 2;
+			int totalItems = (pageSize - 1) * pageNumber;
+			List<VersionValidateResultModel> dataSet = new List<VersionValidateResultModel>(totalItems);
+			CreateDummyData(dataSet, totalItems);
+
+			// Act
+			var detailedPage = _uut.CreateDetailedPage(dataSet, pageNumber, pageSize);
+
+			// Assert
+			detailedPage.Items.Should().HaveCount(0);
+			detailedPage.ItemsNumber.Should().Be(0);
+			detailedPage.TotalItemsNumber.Should().Be(totalItems);
+		}
+
+		[Test]
+		public void ShouldReturnBlankDetailedPageIfDataSetIsEmpty()
+		{
+			// Arrange
+			const int pageNumber = 1;
+			const int pageSize = 7;
+			List<VersionValidateResultModel> emptyDataSet = new List<VersionValidateResultModel>(0);
+
+			// Act
+			var detailedPage = _uut.CreateDetailedPage(emptyDataSet, pageNumber, pageSize);
+
+			// Assert
+			detailedPage.Items.Should().HaveCount(0);
+			detailedPage.ItemsNumber.Should().Be(0);
+			detailedPage.TotalItemsNumber.Should().Be(0);
+		}
+
+		[TestCase(7, 5, 5)]
+		[TestCase(2, 8, 2)]
+		public void ShouldReturnFirstDetailedPageIfPageNumberIsZero(int totalItems, int pageSize, int correctAmountOfItems)
+		{
+			// Arrange
+			List<VersionValidateResultModel> dataSet = new List<VersionValidateResultModel>(totalItems);
+			CreateDummyData(dataSet, totalItems);
+
+			// Act
+			var detailedPage = _uut.CreateDetailedPage(dataSet, 0, pageSize);
+
+			// Assert
+			detailedPage.Items.Should().HaveCount(correctAmountOfItems);
+			detailedPage.ItemsNumber.Should().Be(correctAmountOfItems);
+			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(correctAmountOfItems);
+			detailedPage.TotalItemsNumber.Should().Be(totalItems);
 		}
 
 		private void CreateDummyData(List<VersionValidateResultModel> dataStorage, int amount)

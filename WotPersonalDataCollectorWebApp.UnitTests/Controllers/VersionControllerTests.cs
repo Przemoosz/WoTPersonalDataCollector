@@ -195,8 +195,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 				new VersionValidateResultModel() { ValidationDate = dt },
 				new VersionValidateResultModel() { ValidationDate = DateTime.MinValue }
 			};
-			var d = validationResultModels.AsQueryable().BuildMockDbSet();
-			_cosmosDatabaseContext.VersionValidateResult.Returns(d);
+			var dbSet = validationResultModels.AsQueryable().BuildMockDbSet();
+			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
 
 			// Act
 			var actual = await _uut.LatestValidationResult();
