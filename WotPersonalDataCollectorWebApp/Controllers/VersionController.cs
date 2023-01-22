@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp.Controllers
+﻿using WotPersonalDataCollectorWebApp.Factories;
+
+namespace WotPersonalDataCollectorWebApp.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
 	using CosmosDb.Context;
@@ -17,13 +19,17 @@
 		private readonly ICosmosDatabaseContext _context;
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
-		
+		private readonly IPageFactory<VersionValidateResultModel> _pageFactory;
 
-		public VersionController(ICosmosDatabaseContext context, IValidationCancellationService validationCancellationService, IValidationService validationService)
+
+		public VersionController(ICosmosDatabaseContext context,
+			IValidationCancellationService validationCancellationService, IValidationService validationService,
+			IPageFactory<VersionValidateResultModel> pageFactory)
 		{
 			_context = context;
 			_validationCancellationService = validationCancellationService;
 			_validationService = validationService;
+			_pageFactory = pageFactory;
 		}
 
 		public IActionResult Index(VersionValidateViewModel viewModel = null)
@@ -89,6 +95,8 @@
 				results = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
 				ViewData[nameof(dateOrder)] = Descending;
 			}
+
+			var a = _pageFactory.CreateDetailedPage(results, page, 3);
 			return View(results);
 		}
 	}
