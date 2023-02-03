@@ -1,86 +1,91 @@
 ﻿@using VersionValidateResultModel = WotPersonalDataCollectorWebApp.Models.VersionValidateResultModel
-@model IEnumerable<VersionValidateResultModel>
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using WotPersonalDataCollectorWebApp.Dto
+@model DetailedPage<VersionValidateResultModel>
 @{
 	ViewData["Title"] = "WPD - Versions validation";
-	int validationNumber = 1;
+	int validationNumber = Model.ItemsNumber * (Model.PageNumber - 1) + 1;
+	int previousPageNumber = Model.PageNumber - 1;
+	int nextPageNumber = Model.PageNumber + 1;
 }
-<div class="container">
-	<div class="row">
-		<div class="col-1"></div>
-		<div class="col-10">
-			<div class="row text-center border-bottom border-2 border-dark mb-2">
-				<h4>Validation result</h4>
-			</div>
-			<div class="row">
-				<div class="container">
-					<div class="row">
-						<div class="col-2"></div>
-						<div class="col-8">
-							<div class="container">
-								@if (Model.Any() == false)
-								{
-									<div class="row align-content-center mt-4 text-center">
-										<p>No validation result available. Go to validation page and request data validation</p>
-									</div>
-								}
-								else
-								{
-									@foreach (var validationResult in Model)
+<form method="get">
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<div class="row text-center border-bottom border-2 border-dark mb-2">
+					<h4>Validation result</h4>
+				</div>
+				<div class="row">
+					<div class="container">
+						<div class="row">
+							<div class="col-2"></div>
+							<div class="col-8">
+								<div class="container">
+									@if (Model.Items.Any() == false)
 									{
-										<div class="row align-content-center mt-4">
-											<table class="table align-content-center">
-												<tr class="bg-info bg-gradient">
-													<td class="text-center" colspan="2">Validation Number @validationNumber</td>
-												</tr>
-												<tr>
-													<td>Validation Date</td>
-													<td class="text-end">@validationResult.ValidationDate</td>
-												</tr>
-												<tr>
-													<td>Status</td>
-													@{
-														if (validationResult.WasValidationCanceled)
-														{
-															<td class="text-end">Cancelled</td>
-														}
-														else
-														{
-															<td class="text-end">Completed</td>
-														}
-													}
-												</tr>
-												<tr>
-													<td>Total Objects</td>
-													<td class="text-end">@Html.DisplayFor(m => validationResult.TotalItemsInCosmosDb)</td>
-												</tr>
-												<tr>
-													<td>Valid</td>
-													<td class="text-end">@Html.DisplayFor(m => validationResult.CorrectVersionDtoCount)</td>
-												</tr>
-												<tr>
-													<td>Invalid</td>
-													<td class="text-end">@Html.DisplayFor(m => validationResult.WrongVersionDtoCount)</td>
-												</tr>
-												<tr>
-													<td>Unrecognizable Objects</td>
-													<td class="text-end">@Html.DisplayFor(m => validationResult.WrongObjectsCount)</td>
-												</tr>
-											</table>
+										<div class="row align-content-center mt-4 text-center">
+											<p>No validation result available. Go to validation page and request data validation</p>
 										</div>
-										validationNumber++;
 									}
-								}
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="container">
-								<div class="row mt-4">
-									<p class="m-0 p-0">Order date:</p>
+									else
+									{
+										@foreach (var validationResult in Model.Items)
+										{
+											<div class="row align-content-center mt-4">
+												<table class="table align-content-center">
+													<tr class="bg-info bg-gradient">
+														<td class="text-center" colspan="2">Validation No. @validationNumber</td>
+													</tr>
+													<tr>
+														<td>Validation Date</td>
+														<td class="text-end">@validationResult.ValidationDate</td>
+													</tr>
+													<tr>
+														<td>Status</td>
+														@{
+															if (validationResult.WasValidationCanceled)
+															{
+																<td class="text-end">Cancelled</td>
+															}
+															else
+															{
+																<td class="text-end">Completed</td>
+															}
+														}
+													</tr>
+													<tr>
+														<td>Total Objects</td>
+														<td class="text-end">@Html.DisplayFor(m => validationResult.TotalItemsInCosmosDb)</td>
+													</tr>
+													<tr>
+														<td>Valid</td>
+														<td class="text-end">@Html.DisplayFor(m => validationResult.CorrectVersionDtoCount)</td>
+													</tr>
+													<tr>
+														<td>Invalid</td>
+														<td class="text-end">@Html.DisplayFor(m => validationResult.WrongVersionDtoCount)</td>
+													</tr>
+													<tr>
+														<td>Unrecognizable Objects</td>
+														<td class="text-end">@Html.DisplayFor(m => validationResult.WrongObjectsCount)</td>
+													</tr>
+												</table>
+											</div>
+											validationNumber++;
+										}
+									}
 								</div>
-								<form method="get">
+							</div>
+							<div class="col-2">
+								<div class="container">
+									<div class="row mt-4">
+										<p class="m-0 p-0">Order date:</p>
+									</div>
 									<div class="row mt-1">
 										<select name="dateOrder">
 											<option value="@ViewData["dateOrder"]">@ViewData["dateOrder"]</option>
+												
 											@if (ViewData["dateOrder"]!.Equals("Ascending"))
 											{
 												<option value="Descending">Descending</option>
@@ -94,18 +99,29 @@
 									<div class="row mt-1">
 										<input type="submit" class="btn btn-sm btn-success" value="Apply"/> 
 									</div>
-								</form>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-1"></div>
+						<div class="col-1"></div>
 					</div>
 				</div>
 			</div>
-			<div class="row text-center border-top border-2 border-dark mb-2 mt-2">
-				<a class="btn btn-sm btn-secondary align-middle" asp-action="Index">Return to validation page</a>
+			<div class="row text-center text-end mb-0">
+				<p class="text-end mb-0">Current Page: @Html.DisplayFor(s => s.PageNumber)</p>
+			</div>
+			<div class="row text-center border-top border-2 border-dark mb-2">
+				@if (Model.PageNumber > 1)
+				{
+					<input type="submit" class="btn btn-sm btn-secondary align-middle mb-2 mt-2" value="@previousPageNumber" name="page"/>
+				}
+				<input type="submit" class="btn btn-sm btn-secondary align-middle mb-2" value="@Model.PageNumber" name="page" disabled="disabled"/>
+				@if (Model.Items.Any())
+				{
+					<input type="submit" class="btn btn-sm btn-secondary align-middle mb-2" value="@nextPageNumber" name="page"/>
+				}
+				<button type="submit" class="btn btn-sm btn-secondary align-middle" asp-action="Index">Return to validation page</button>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-2">
-	</div>
+	<div class="col-2"></div>
+</form>

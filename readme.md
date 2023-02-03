@@ -47,9 +47,19 @@ Version name - Description - Status
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
 - WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
-- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, soritng and grouping- In development
-- WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting single or all validation results - Planned
+- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - In development
+- WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Planned
 - WPD-9-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
+
+Application Architecture Change is planned after WPD-9 version
+
+- WPD-10-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - **Architecture improvement** - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check
+- WPD-11-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - **Architecture improvement** - HTTP Triggered Azure Function
+- WPD-12-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - **Architecture improvement** - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF
+- WPD-13-ImplementEndpointForCosmosDbSetUp - **Architecture improvement** - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers
+- WPD-14-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - **Architecture improvement** - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup
+
+- WPD-12-CreateAzureDataFactory - **Architecture improvement** - 
 - WPD-10-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
 - WPD-11-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
 - WPD-12-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
@@ -66,7 +76,7 @@ All crawled data will be stored in database named *WotUserData* and in container
 ## ASP.NET App
 
 Follow Local Installation to install your app correctly. After you run application go to _"https://localhost:7097/Wot/All"_ to see if result
-are displayed correctly from Cosmos DB. You should see multiple times your account create date. If you dont see anything probably cosmos db is empty.
+are displayed correctly from Cosmos DB. You should see multiple times your account create date. If you don't see anything probably cosmos db is empty.
 Null fixes and protection will be available from next versions.
 
 ### Note

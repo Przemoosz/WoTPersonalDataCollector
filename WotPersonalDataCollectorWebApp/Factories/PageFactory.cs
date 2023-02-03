@@ -11,9 +11,9 @@
 	    {
 		    if (pageNumber == 0)
 		    {
-				return new Page<T>(dataSource.Take(pageSize));
+				return new Page<T>(dataSource.Take(pageSize), pageNumber);
 		    }
-		    return new Page<T>(dataSource.Skip((pageNumber-PageConstant)*pageSize).Take(pageSize));
+		    return new Page<T>(dataSource.Skip((pageNumber-PageConstant)*pageSize).Take(pageSize), pageNumber);
 	    }
 
 	    public DetailedPage<T> CreateDetailedPage(IEnumerable<T> dataSource, int pageNumber, int pageSize)
@@ -46,7 +46,7 @@
 					totalItems++;
 				}
 		    }
-		    return new DetailedPage<T>(data, itemsOnPage, totalItems);
+		    return new DetailedPage<T>(data, itemsOnPage, totalItems, pageNumber);
 	    }
     }
 }

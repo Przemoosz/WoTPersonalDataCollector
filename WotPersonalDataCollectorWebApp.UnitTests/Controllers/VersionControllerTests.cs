@@ -5,6 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
+using WotPersonalDataCollectorWebApp.Factories;
 using WotPersonalDataCollectorWebApp.Models;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
@@ -20,6 +21,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		private IValidationCancellationService _validationCancellationService = null!;
 		private IVersionController _uut = null!;
 		private IValidationService _validationService = null!;
+		private IPageFactory<VersionValidateResultModel> _pageFactory;
 
 
 		[SetUp]
@@ -28,7 +30,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_cosmosDatabaseContext = Substitute.For<ICosmosDatabaseContext>();
 			_validationCancellationService = Substitute.For<IValidationCancellationService>();
 			_validationService = Substitute.For<IValidationService>();
-			_uut = new VersionController(_cosmosDatabaseContext,_validationCancellationService, _validationService);
+			_pageFactory = Substitute.For<IPageFactory<VersionValidateResultModel>>();
+			_uut = new VersionController(_cosmosDatabaseContext,_validationCancellationService, _validationService, _pageFactory);
 		}
 
 		[Test]

@@ -19,7 +19,7 @@ public sealed class DetailedPage<T> : Page<T> where T : class
 	/// <value><see cref="int"/> value contains  number of total items from data source.</value>
 	public int TotalItemsNumber { get; init; }
 
-	public DetailedPage(IEnumerable<T> data, int itemsNumber, int totalItemsNumber) : base(data)
+	public DetailedPage(IEnumerable<T> data, int itemsNumber, int totalItemsNumber, int pageNumber) : base(data, pageNumber)
 	{
 		ItemsNumber = itemsNumber;
 		TotalItemsNumber = totalItemsNumber;

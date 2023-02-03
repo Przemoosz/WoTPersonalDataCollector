@@ -34,6 +34,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			// Assert
 			page.Items.Should().HaveCount(pageSize);
 			page.Items.Last().CorrectVersionDtoCount.Should().Be(pageSize);
+			page.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(3)]
@@ -53,6 +54,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			// Assert
 			page.Items.Should().HaveCount(pageSize);
 			page.Items.Last().CorrectVersionDtoCount.Should().Be(pageSize * pageNumber);
+			page.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(4,7)]
@@ -71,6 +73,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			// Assert
 			page.Items.Should().HaveCount(itemsCount);
 			page.Items.Last().CorrectVersionDtoCount.Should().Be(totalItems);
+			page.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(3)]
@@ -88,6 +91,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 
 			// Assert
 			page.Items.Should().HaveCount(0);
+			page.PageNumber.Should().Be(pageNumber);
 		}
 
 		[Test]
@@ -103,6 +107,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 
 			// Assert
 			page.Items.Should().HaveCount(0);
+			page.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(7,5,5)]
@@ -140,6 +145,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(pageSize);
 			detailedPage.TotalItemsNumber.Should().Be(totalItems);
 			detailedPage.ItemsNumber.Should().Be(pageSize);
+			detailedPage.PageNumber.Should().Be(pageNumber);
 		}
 
 
@@ -162,6 +168,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(pageSize * pageNumber);
 			detailedPage.TotalItemsNumber.Should().Be(totalItems);
 			detailedPage.ItemsNumber.Should().Be(pageSize);
+			detailedPage.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(4, 7)]
@@ -182,6 +189,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			detailedPage.Items.Last().CorrectVersionDtoCount.Should().Be(totalItems);
 			detailedPage.TotalItemsNumber.Should().Be(totalItems);
 			detailedPage.ItemsNumber.Should().Be(itemsCount);
+			detailedPage.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(3)]
@@ -201,6 +209,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			detailedPage.Items.Should().HaveCount(0);
 			detailedPage.ItemsNumber.Should().Be(0);
 			detailedPage.TotalItemsNumber.Should().Be(totalItems);
+			detailedPage.PageNumber.Should().Be(pageNumber);
 		}
 
 		[Test]
@@ -218,6 +227,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
 			detailedPage.Items.Should().HaveCount(0);
 			detailedPage.ItemsNumber.Should().Be(0);
 			detailedPage.TotalItemsNumber.Should().Be(0);
+			detailedPage.PageNumber.Should().Be(pageNumber);
 		}
 
 		[TestCase(7, 5, 5)]

@@ -15,7 +15,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 	{
 		private const string Ascending = "Ascending";
 		private const string Descending = "Descending";
-
+		private const int PageSize = 5;
 		private readonly ICosmosDatabaseContext _context;
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
@@ -81,7 +81,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 			return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Canceling validation", IsCancellationEnabled = false});
 		}
 
-		[HttpGet, Route("Results")]
+		[HttpGet]
 		public IActionResult ValidationResults(int page = 1, string dateOrder = null)
 		{
 			IEnumerable<VersionValidateResultModel> results;
@@ -95,9 +95,8 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 				results = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
 				ViewData[nameof(dateOrder)] = Descending;
 			}
-
-			var a = _pageFactory.CreateDetailedPage(results, page, 3);
-			return View(results);
+			var a = _pageFactory.CreateDetailedPage(results, page, PageSize);
+			return View(a);
 		}
 	}
 }

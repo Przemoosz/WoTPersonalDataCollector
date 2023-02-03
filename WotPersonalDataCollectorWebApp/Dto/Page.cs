@@ -7,13 +7,20 @@
 public class Page<T> where T : class
 {
 	/// <summary>
+	/// Gets current page number.
+	/// </summary>
+	/// <value><see cref="int"/> number that indicates current page number.</value>
+	public int PageNumber { get; init; }
+
+	/// <summary>
 	/// Gets items associated with page.
 	/// </summary>
 	/// <value><see cref="IEnumerable{T}"/> that contains data associated with page.</value>
 	public IEnumerable<T> Items { get; init; }
 
-	public Page(IEnumerable<T> data)
+	public Page(IEnumerable<T> data, int pageNumber)
 	{
+		PageNumber = pageNumber;
 		Items = data;
 	}
 }
