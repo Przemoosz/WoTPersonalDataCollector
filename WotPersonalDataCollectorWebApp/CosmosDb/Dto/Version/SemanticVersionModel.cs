@@ -1,5 +1,8 @@
 ﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 {
+	using System.Diagnostics.CodeAnalysis;
+
+	[ExcludeFromCodeCoverage]
     internal class SemanticVersionModel : IEquatable<SemanticVersionModel>
     {
         public int Major { get; init; }
@@ -40,7 +43,7 @@
 
         public static bool operator ==(SemanticVersionModel first, SemanticVersionModel other)
         {
-            return first.Equals(other);
+	        return first.Equals(other);
         }
 
         public static bool operator !=(SemanticVersionModel first, SemanticVersionModel other)

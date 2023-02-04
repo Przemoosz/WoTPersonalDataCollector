@@ -9,6 +9,7 @@
 		private readonly object _ctsCancelLock = new object();
 		private readonly object _ctsDisposeLock = new object();
 		private CancellationTokenSource _validationCts;
+		private CancellationTokenRegistration _cancellationTokenRegistration;
 
 		public bool IsCancellationRequested
 		{
@@ -120,6 +121,7 @@
 			{
 				if (_validationCts is not null)
 				{
+					_cancellationTokenRegistration.Dispose();
 					_validationCts.Dispose();
 				}
 			}
@@ -133,13 +135,13 @@
 		private void RegisterCancellationToken()
 		{
 			_validationCts = new CancellationTokenSource();
-			_validationCts.Token.Register(CancellationMessage);
+			_cancellationTokenRegistration = _validationCts.Token.Register(CancellationMessage);
 		}
 
 		private void RegisterCancellationToken(CancellationToken cancellationToken)
 		{
 			_validationCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-			_validationCts.Token.Register(CancellationMessage);
+			_cancellationTokenRegistration = _validationCts.Token.Register(CancellationMessage);
 		}
 	}
 }

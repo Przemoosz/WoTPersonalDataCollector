@@ -8,7 +8,7 @@ a user to collect the latest data about account like battles, average damage, et
 At this time function crawl data about user id after providing username as a local variable.
 In the future, this program will also crawl data about a given user, Ex. battles, average damage, etc.
 and it will store this data in CosmosDB. The project is ready to deploy as an azure app, but you can run it locally. 
-Solution include also 142 unit tests written in the NUnit testing framework
+Solution include also 225 unit tests written in the NUnit testing framework
 
 For more information go to section called: Versions 
 ## About Solution
@@ -19,7 +19,7 @@ Used NuGet packages:
 
 - Any ver. 8.2.0
 - Coverlet.collector ver. 3.2.0
-- FluentAssertions ver. 6.8.0
+- FluentAssertions ver. 6.9.0
 - Guard.Net ver. 3.0.0
 - Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore ver. 6.0.11
 - Microsoft.AspNetCore.Identity.EntityFrameworkCore ver. 6.0.11
@@ -31,6 +31,7 @@ Used NuGet packages:
 - Microsoft.EntityFrameworkCore.Tools ver. 6.0.11
 - Microsoft.NET.Sdk.Functions ver. 4.1.3
 - Microsoft.NET.Test.Sdk ver. 17.4.0
+- MockQueryable.NSubstitute ver. 7.0.0
 - NSubstitute ver. 4.4.0
 - NUnit ver. 3.13.3
 - NUnit.Analyzers ver. 3.5.0
@@ -46,15 +47,28 @@ Version name - Description - Status
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
 - WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
-- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, soritng and grouping- Planned
-- WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting single or all validation results - Planned
-- WPD-9-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
-- WPD-10-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
-- WPD-11-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-12-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
-- WPD-13-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
+- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - Finished and merged
+- WPD-8-CreateResourceFiles - Create resource file for strings etc. - Planned
+- WPD-9-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Planned
+- WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
 
-## CosmosDbs
+Application Architecture Change is planned after WPD-10 version
+
+- WPD-11-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
+- WPD-12-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - HTTP Triggered Azure Function - Planned
+- WPD-13-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
+- WPD-14-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
+- WPD-15-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
+- WPD-16-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
+- WPD-17-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-18-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-19-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-20-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-21-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-22-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-23-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
+
+## CosmosDb
 
 To run application you have to provide CosmosDb Primary Connection String. You can use 
 Cosmos database from [Azure Portal](https://azure.microsoft.com/en-us/products/cosmos-db/) or 
@@ -65,7 +79,7 @@ All crawled data will be stored in database named *WotUserData* and in container
 ## ASP.NET App
 
 Follow Local Installation to install your app correctly. After you run application go to _"https://localhost:7097/Wot/All"_ to see if result
-are displayed correctly from Cosmos DB. You should see multiple times your account create date. If you dont see anything probably cosmos db is empty.
+are displayed correctly from Cosmos DB. You should see multiple times your account create date. If you don't see anything probably cosmos db is empty.
 Null fixes and protection will be available from next versions.
 
 ### Note

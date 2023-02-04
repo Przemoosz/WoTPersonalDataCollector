@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp.Controllers
+﻿using WotPersonalDataCollectorWebApp.Factories;
+
+namespace WotPersonalDataCollectorWebApp.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
 	using CosmosDb.Context;
@@ -7,18 +9,27 @@
 	using Services;
 	using System.Threading;
 	using Microsoft.EntityFrameworkCore;
+	using Models;
 
 	public sealed class VersionController: Controller, IVersionController
 	{
+		private const string Ascending = "Ascending";
+		private const string Descending = "Descending";
+		private const int PageSize = 5;
 		private readonly ICosmosDatabaseContext _context;
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
+		private readonly IPageFactory<VersionValidateResultModel> _pageFactory;
 
-		public VersionController(ICosmosDatabaseContext context, IValidationCancellationService validationCancellationService, IValidationService validationService)
+
+		public VersionController(ICosmosDatabaseContext context,
+			IValidationCancellationService validationCancellationService, IValidationService validationService,
+			IPageFactory<VersionValidateResultModel> pageFactory)
 		{
 			_context = context;
 			_validationCancellationService = validationCancellationService;
 			_validationService = validationService;
+			_pageFactory = pageFactory;
 		}
 
 		public IActionResult Index(VersionValidateViewModel viewModel = null)
@@ -27,7 +38,7 @@
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> RequestValidationProcess(CancellationToken token)
+		public IActionResult RequestValidationProcess(CancellationToken token)
 		{
 			if (!_validationService.IsValidationFinished)
 			{
@@ -45,14 +56,14 @@
 		}
 		
 		[HttpGet]
-		public async Task<IActionResult> LastValidationResult()
+		public async Task<IActionResult> LatestValidationResult()
 		{
 			var result = await _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).FirstOrDefaultAsync();
 			return View(result);
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> CancelValidationProcess()
+		public IActionResult CancelValidationProcess()
 		{
 			if (!_validationCancellationService.IsCancellationAvailable)
 			{
@@ -70,11 +81,22 @@
 			return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Canceling validation", IsCancellationEnabled = false});
 		}
 
-		[HttpGet, Route("Results")]
-		public async Task<IActionResult> ValidationResults()
+		[HttpGet]
+		public IActionResult ValidationResults(int page = 1, string dateOrder = null)
 		{
-			var result = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
-			return View(result);
+			IEnumerable<VersionValidateResultModel> results;
+			if (dateOrder is not null && dateOrder.Equals(Ascending))
+			{
+				results = _context.VersionValidateResult.OrderBy(s => s.ValidationDate).AsEnumerable();
+				ViewData[nameof(dateOrder)] = dateOrder;
+			}
+			else
+			{
+				results = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
+				ViewData[nameof(dateOrder)] = Descending;
+			}
+			var detailedPage = _pageFactory.CreateDetailedPage(results, page, PageSize);
+			return View(detailedPage);
 		}
 	}
 }

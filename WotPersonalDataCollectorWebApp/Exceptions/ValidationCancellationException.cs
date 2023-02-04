@@ -1,5 +1,8 @@
 ﻿namespace WotPersonalDataCollectorWebApp.Exceptions
 {
+	using System.Diagnostics.CodeAnalysis;
+
+	[ExcludeFromCodeCoverage]
 	public class ValidationCancellationException: Exception
 	{
 		public ValidationCancellationException(): base()

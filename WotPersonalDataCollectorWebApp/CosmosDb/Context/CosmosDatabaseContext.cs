@@ -1,14 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto;
-using WotPersonalDataCollectorWebApp.Data;
-using WotPersonalDataCollectorWebApp.Models;
-using WotPersonalDataCollectorWebApp.Utilities;
-
-namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
 {
-    public class CosmosDatabaseContext: DbContext, ICosmosDatabaseContext
+	using Microsoft.EntityFrameworkCore;
+	using Dto;
+	using Data;
+	using Models;
+	using Utilities;
+
+	public class CosmosDatabaseContext: DbContext, ICosmosDatabaseContext
     {
         private const string IdJson = "id";
+        private const string BooleanTrue = "True";
         private readonly IAspConfiguration _configuration = new AspConfiguration();
         public DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
         public DbSet<VersionValidateResultModel> VersionValidateResult { get; set; }
@@ -33,9 +34,7 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        // TODO
-        // Remove hardcoded value
-        private bool ConvertToString(string s) => s.ToLower().Equals("true");
+        private bool ConvertToString(string s) => s.ToLower().Equals(BooleanTrue);
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,11 +44,6 @@ namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
         public Task<int> SaveChangesAsync()
         {
 	        return base.SaveChangesAsync();
-        }
-
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -6,8 +6,8 @@ namespace WotPersonalDataCollectorWebApp.Controllers;
 public interface IVersionController
 {
 	IActionResult Index(VersionValidateViewModel viewModel = null);
-	Task<IActionResult> RequestValidationProcess(CancellationToken token);
-	Task<IActionResult> CancelValidationProcess();
-	Task<IActionResult> LastValidationResult();
-	Task<IActionResult> ValidationResults();
+	IActionResult RequestValidationProcess(CancellationToken token);
+	IActionResult CancelValidationProcess();
+	Task<IActionResult> LatestValidationResult();
+	IActionResult ValidationResults(int page, string dateOrder);
 }

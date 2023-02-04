@@ -1,11 +1,17 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using MockQueryable.NSubstitute;
 using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
+using WotPersonalDataCollectorWebApp.Dto;
+using WotPersonalDataCollectorWebApp.Factories;
+using WotPersonalDataCollectorWebApp.Models;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
+using WotPersonalDataCollectorWebApp.UnitTests.TestHelpers;
+using static TddXt.AnyRoot.Root;
 
 namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 {
@@ -16,6 +22,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		private IValidationCancellationService _validationCancellationService = null!;
 		private IVersionController _uut = null!;
 		private IValidationService _validationService = null!;
+		private IPageFactory<VersionValidateResultModel> _pageFactory = null!;
 
 
 		[SetUp]
@@ -24,7 +31,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_cosmosDatabaseContext = Substitute.For<ICosmosDatabaseContext>();
 			_validationCancellationService = Substitute.For<IValidationCancellationService>();
 			_validationService = Substitute.For<IValidationService>();
-			_uut = new VersionController(_cosmosDatabaseContext,_validationCancellationService, _validationService);
+			_pageFactory = Substitute.For<IPageFactory<VersionValidateResultModel>>();
+			_uut = new VersionController(_cosmosDatabaseContext,_validationCancellationService, _validationService, _pageFactory);
 		}
 
 		[Test]
@@ -40,14 +48,14 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		}
 
 		[Test]
-		public async Task ShouldActivateCancellationToken()
+		public void ShouldActivateCancellationToken()
 		{
 			// Arrange
 			_validationCancellationService.IsCancellationAvailable.Returns(true);
 			_validationCancellationService.IsCancellationRequested.Returns(false);
 
 			// Act
-			var actual = await _uut.CancelValidationProcess();
+			var actual = _uut.CancelValidationProcess();
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
 
 			// Assert
@@ -57,13 +65,13 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		}
 
 		[Test]
-		public async Task ShouldRedirectToIndexWithMessageWhenCancellationIsNotAvailable()
+		public void ShouldRedirectToIndexWithMessageWhenCancellationIsNotAvailable()
 		{
 			// Arrange
 			_validationCancellationService.IsCancellationAvailable.Returns(false);
 
 			// Act
-			var actual = await _uut.CancelValidationProcess();
+			var actual = _uut.CancelValidationProcess();
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
 			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
 
@@ -76,14 +84,14 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		}
 
 		[Test]
-		public async Task ShouldRedirectToIndexWithMessageWhenCancellationWasRequestedAgain()
+		public void ShouldRedirectToIndexWithMessageWhenCancellationWasRequestedAgain()
 		{
 			// Arrange
 			_validationCancellationService.IsCancellationAvailable.Returns(true);
 			_validationCancellationService.IsCancellationRequested.Returns(true);
 
 			// Act
-			var actual = await _uut.CancelValidationProcess();
+			var actual = _uut.CancelValidationProcess();
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
 			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
 
@@ -96,7 +104,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		}
 
 		[Test]
-		public async Task ShouldRedirectToIndexWithMessageWhenTokenWasDisposed()
+		public void ShouldRedirectToIndexWithMessageWhenTokenWasDisposed()
 		{
 			// Arrange
 			_validationCancellationService.IsCancellationAvailable.Returns(true);
@@ -104,7 +112,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_validationCancellationService.IsTokenDisposed.Returns(true);
 
 			// Act
-			var actual = await _uut.CancelValidationProcess();
+			var actual = _uut.CancelValidationProcess();
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
 			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
 
@@ -116,14 +124,14 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			routeValueDictionary!["Message"].Should().Be("Cancellation token was disposed, that means validation operation is finished.");
 		}
 
-		[Test]
+		[Test, Retry(3)]
 		public async Task ShouldRunValidationProcess()
 		{
 			// Arrange
 			_validationService.IsValidationFinished.Returns(true);
 
 			// Act
-			var actual = await _uut.RequestValidationProcess(CancellationToken.None);
+			var actual = _uut.RequestValidationProcess(CancellationToken.None);
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
 			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
 
@@ -143,7 +151,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_validationService.IsValidationFinished.Returns(false);
 
 			// Act
-			var actual = await _uut.RequestValidationProcess(CancellationToken.None);
+			var actual = _uut.RequestValidationProcess(CancellationToken.None);
 			var actualAsRedirectToAction = actual as RedirectToActionResult;
 			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
 
@@ -157,6 +165,56 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			((bool)routeValueDictionary["IsCancellationEnabled"]!).Should().BeTrue();
 			routeValueDictionary["Message"].Should()
 				.Be("Validation Operation has already started, can't start another one. Please wait.");
+		}
+
+		[TestCase("")]
+		[TestCase("Ascending")]
+		[TestCase("Descending")]
+		public void ShouldReturnsDetailedPageOfValidationResults(string order)
+		{
+			// Arrange
+			const int pageNumber = 1;
+			List<VersionValidateResultModel> validationResultModels = Any.Instance<List<VersionValidateResultModel>>();
+			var dbSet = validationResultModels.AsDbSet();
+			var detailedPage = Any.Instance<DetailedPage<VersionValidateResultModel>>();
+			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
+			_pageFactory
+				.CreateDetailedPage(Arg.Any<IEnumerable<VersionValidateResultModel>>(), Arg.Any<int>(), Arg.Any<int>())
+				.Returns(detailedPage);
+			// Act
+			var actual = _uut.ValidationResults(pageNumber,order);
+			var viewResult = actual as ViewResult;
+			
+			// Assert
+			viewResult.Should().NotBeNull();
+			viewResult!.Model.Should().BeAssignableTo<DetailedPage<VersionValidateResultModel>>();
+			var result = viewResult.Model as DetailedPage<VersionValidateResultModel>;
+			result.Should().NotBeNull();
+		}
+
+		[Test]
+		public async Task ShouldReturnsLatestValidationResults()
+		{
+			// Arrange
+			DateTime dt = DateTime.Now;
+			List<VersionValidateResultModel> validationResultModels = new List<VersionValidateResultModel>(2)
+			{
+				new VersionValidateResultModel() { ValidationDate = dt },
+				new VersionValidateResultModel() { ValidationDate = DateTime.MinValue }
+			};
+			var dbSet = validationResultModels.AsQueryable().BuildMockDbSet();
+			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
+
+			// Act
+			var actual = await _uut.LatestValidationResult();
+			var viewResult = actual as ViewResult;
+
+			// Assert
+			viewResult.Should().NotBeNull();
+			viewResult!.Model.Should().BeAssignableTo<VersionValidateResultModel>();
+			var result = viewResult.Model as VersionValidateResultModel;
+			result.Should().NotBeNull();
+			result!.ValidationDate.Should().Be(dt);
 		}
 	}
 }

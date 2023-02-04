@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollectorWebApp
+﻿using WotPersonalDataCollectorWebApp.Factories;
+
+namespace WotPersonalDataCollectorWebApp
 {
 	using CosmosDb.Dto.Version;
 	using CosmosDb.Dto.Version.RuleEngine;
@@ -47,6 +49,7 @@
 		{
 			builder.Services.AddSingleton<ISemanticVersionModelFactory, SemanticVersionModelFactory>();
 			builder.Services.AddSingleton<IRulesFactory, RulesFactory>();
+			builder.Services.AddScoped(typeof(IPageFactory<>), typeof(PageFactory<>));
 		}
 
 		private void InstallOtherModules(WebApplicationBuilder builder)
