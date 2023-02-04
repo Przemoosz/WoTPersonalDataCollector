@@ -95,8 +95,8 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 				results = _context.VersionValidateResult.OrderByDescending(s => s.ValidationDate).AsEnumerable();
 				ViewData[nameof(dateOrder)] = Descending;
 			}
-			var a = _pageFactory.CreateDetailedPage(results, page, PageSize);
-			return View(a);
+			var detailedPage = _pageFactory.CreateDetailedPage(results, page, PageSize);
+			return View(detailedPage);
 		}
 	}
 }

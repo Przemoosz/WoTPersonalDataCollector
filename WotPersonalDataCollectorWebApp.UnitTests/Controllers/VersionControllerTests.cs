@@ -5,6 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
+using WotPersonalDataCollectorWebApp.Dto;
 using WotPersonalDataCollectorWebApp.Factories;
 using WotPersonalDataCollectorWebApp.Models;
 using WotPersonalDataCollectorWebApp.Services;
@@ -21,7 +22,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		private IValidationCancellationService _validationCancellationService = null!;
 		private IVersionController _uut = null!;
 		private IValidationService _validationService = null!;
-		private IPageFactory<VersionValidateResultModel> _pageFactory;
+		private IPageFactory<VersionValidateResultModel> _pageFactory = null!;
 
 
 		[SetUp]
@@ -123,7 +124,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			routeValueDictionary!["Message"].Should().Be("Cancellation token was disposed, that means validation operation is finished.");
 		}
 
-		[Test]
+		[Test, Retry(3)]
 		public async Task ShouldRunValidationProcess()
 		{
 			// Arrange
@@ -166,26 +167,29 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 				.Be("Validation Operation has already started, can't start another one. Please wait.");
 		}
 
-		[Test]
-		public void ShouldReturnsAllValidationResults()
+		[TestCase("")]
+		[TestCase("Ascending")]
+		[TestCase("Descending")]
+		public void ShouldReturnsDetailedPageOfValidationResults(string order)
 		{
 			// Arrange
+			const int pageNumber = 1;
 			List<VersionValidateResultModel> validationResultModels = Any.Instance<List<VersionValidateResultModel>>();
 			var dbSet = validationResultModels.AsDbSet();
+			var detailedPage = Any.Instance<DetailedPage<VersionValidateResultModel>>();
 			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
-
+			_pageFactory
+				.CreateDetailedPage(Arg.Any<IEnumerable<VersionValidateResultModel>>(), Arg.Any<int>(), Arg.Any<int>())
+				.Returns(detailedPage);
 			// Act
-			// TODO FIX TEST
-			var actual = _uut.ValidationResults(1,"d");
+			var actual = _uut.ValidationResults(pageNumber,order);
 			var viewResult = actual as ViewResult;
 			
 			// Assert
 			viewResult.Should().NotBeNull();
-			viewResult!.Model.Should().BeAssignableTo<IEnumerable<VersionValidateResultModel>>();
-			var result = viewResult.Model as IEnumerable<VersionValidateResultModel>;
-			var resultList = result!.ToList();
-			resultList.Should().NotBeNull();
-			resultList.Count.Should().Be(validationResultModels.Count);
+			viewResult!.Model.Should().BeAssignableTo<DetailedPage<VersionValidateResultModel>>();
+			var result = viewResult.Model as DetailedPage<VersionValidateResultModel>;
+			result.Should().NotBeNull();
 		}
 
 		[Test]

@@ -8,7 +8,7 @@ a user to collect the latest data about account like battles, average damage, et
 At this time function crawl data about user id after providing username as a local variable.
 In the future, this program will also crawl data about a given user, Ex. battles, average damage, etc.
 and it will store this data in CosmosDB. The project is ready to deploy as an azure app, but you can run it locally. 
-Solution include also 142 unit tests written in the NUnit testing framework
+Solution include also 225 unit tests written in the NUnit testing framework
 
 For more information go to section called: Versions 
 ## About Solution
@@ -47,25 +47,26 @@ Version name - Description - Status
 - WPD-4-SaveDataToCosmosDB - Reorganize data and save data to CosmosDB - Finished and merged
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
 - WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
-- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - In development
-- WPD-8-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Planned
-- WPD-9-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
+- WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - Finished and merged
+- WPD-8-CreateResourceFiles - Create resource file for strings etc. - Planned
+- WPD-9-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Planned
+- WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
 
-Application Architecture Change is planned after WPD-9 version
+Application Architecture Change is planned after WPD-10 version
 
-- WPD-10-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
-- WPD-11-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - HTTP Triggered Azure Function - Planned
-- WPD-12-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
-- WPD-13-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
-- WPD-14-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
-- WPD-15-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
-- WPD-16-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-17-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-16-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-16-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
-- WPD-17-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-18-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
-- WPD-19-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
+- WPD-11-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
+- WPD-12-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - HTTP Triggered Azure Function - Planned
+- WPD-13-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
+- WPD-14-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
+- WPD-15-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
+- WPD-16-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
+- WPD-17-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-18-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-19-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-20-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-21-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-22-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-23-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
 ## CosmosDb
 

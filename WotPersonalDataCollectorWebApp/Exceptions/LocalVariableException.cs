@@ -1,6 +1,9 @@
 ﻿namespace WotPersonalDataCollectorWebApp.Exceptions
 {
-    internal class LocalVariableException : Exception
+	using System.Diagnostics.CodeAnalysis;
+
+	[ExcludeFromCodeCoverage]
+	internal class LocalVariableException : Exception
     {
         public LocalVariableException()
         {

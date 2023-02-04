@@ -1,6 +1,9 @@
 ﻿namespace WotPersonalDataCollectorWebApp.Exceptions
 {
-    public class DtoVersionException: Exception
+	using System.Diagnostics.CodeAnalysis;
+
+	[ExcludeFromCodeCoverage]
+	public class DtoVersionException: Exception
     {
         public DtoVersionException()
         {
