@@ -1,6 +1,4 @@
-﻿using WotPersonalDataCollectorWebApp.Factories;
-
-namespace WotPersonalDataCollectorWebApp.Controllers
+﻿namespace WotPersonalDataCollectorWebApp.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
 	using CosmosDb.Context;
@@ -10,6 +8,9 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 	using System.Threading;
 	using Microsoft.EntityFrameworkCore;
 	using Models;
+	using Factories;
+	using Properties;
+
 
 	public sealed class VersionController: Controller, IVersionController
 	{
@@ -20,16 +21,18 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		private readonly IValidationCancellationService _validationCancellationService;
 		private readonly IValidationService _validationService;
 		private readonly IPageFactory<VersionValidateResultModel> _pageFactory;
+		private readonly IResourcesWrapper _resourcesWrapper;
 
 
 		public VersionController(ICosmosDatabaseContext context,
 			IValidationCancellationService validationCancellationService, IValidationService validationService,
-			IPageFactory<VersionValidateResultModel> pageFactory)
+			IPageFactory<VersionValidateResultModel> pageFactory, IResourcesWrapper resourcesWrapper)
 		{
 			_context = context;
 			_validationCancellationService = validationCancellationService;
 			_validationService = validationService;
 			_pageFactory = pageFactory;
+			_resourcesWrapper = resourcesWrapper;
 		}
 
 		public IActionResult Index(VersionValidateViewModel viewModel = null)
@@ -46,7 +49,7 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 					new VersionValidateViewModel()
 					{
 						IsCancellationEnabled = true,
-						Message = "Validation Operation has already started, can't start another one. Please wait."
+						Message = _resourcesWrapper.ValidationOperationIsAlreadyStartedMessage
 					});
 			}
 
@@ -67,18 +70,18 @@ namespace WotPersonalDataCollectorWebApp.Controllers
 		{
 			if (!_validationCancellationService.IsCancellationAvailable)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Can not cancel operation that was not started or is finished!"});
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = _resourcesWrapper.CancelingCancelledOperationMessage});
 			}
 			if(_validationCancellationService.IsCancellationRequested)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Operation cancellation has already started."});
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = _resourcesWrapper.CancellationOperationHasAlreadyStaredMessage});
 			}
 			if (_validationCancellationService.IsTokenDisposed)
 			{
-				return RedirectToAction(nameof(Index), new VersionValidateViewModel() { Message = "Cancellation token was disposed, that means validation operation is finished." });
+				return RedirectToAction(nameof(Index), new VersionValidateViewModel() { Message = _resourcesWrapper.CancellationTokenDisposedMessage});
 			}
 			_validationCancellationService.CancelValidation();
-			return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = "Canceling validation", IsCancellationEnabled = false});
+			return RedirectToAction(nameof(Index), new VersionValidateViewModel(){ Message = _resourcesWrapper.CancelingValidation, IsCancellationEnabled = false});
 		}
 
 		[HttpGet]
