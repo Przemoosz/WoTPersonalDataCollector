@@ -1,6 +1,10 @@
 ﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
-{
-	public interface ICosmosDatabaseContext:ICosmosContext
+{   
+	/// <summary>
+	/// Cosmos database context wrapper for controller classes
+	/// </summary>
+	/// <inheritdoc />
+	public interface ICosmosDatabaseContext: ICosmosContext
     {
     }
 }
