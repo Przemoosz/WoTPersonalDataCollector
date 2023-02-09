@@ -6,6 +6,7 @@
 	using Models;
 	using Utilities;
 
+	/// <inheritdoc cref="T:WotPersonalDataCollectorWebApp.CosmosDb.Context.ICosmosContext"/>
 	public class CosmosDatabaseContext: DbContext, ICosmosDatabaseContext
     {
         private const string IdJson = "id";

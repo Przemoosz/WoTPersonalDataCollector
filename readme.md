@@ -68,6 +68,10 @@ Application Architecture Change is planned after WPD-10 version
 - WPD-22-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
 - WPD-23-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
+## Architecture
+Current architecture with future architecture elements
+![](WPDArchitecture.png)
+
 ## CosmosDb
 
 To run application you have to provide CosmosDb Primary Connection String. You can use 

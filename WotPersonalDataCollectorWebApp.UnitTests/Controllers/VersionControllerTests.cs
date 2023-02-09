@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MockQueryable.NSubstitute;
 using NSubstitute;
 using NUnit.Framework;
+using TddXt.AnyRoot.Strings;
 using WotPersonalDataCollectorWebApp.Controllers;
 using WotPersonalDataCollectorWebApp.CosmosDb.Context;
 using WotPersonalDataCollectorWebApp.Dto;
 using WotPersonalDataCollectorWebApp.Factories;
 using WotPersonalDataCollectorWebApp.Models;
+using WotPersonalDataCollectorWebApp.Properties;
 using WotPersonalDataCollectorWebApp.Services;
 using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 using WotPersonalDataCollectorWebApp.UnitTests.TestHelpers;
@@ -23,6 +25,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		private IVersionController _uut = null!;
 		private IValidationService _validationService = null!;
 		private IPageFactory<VersionValidateResultModel> _pageFactory = null!;
+		private IResourcesWrapper _resourcesWrapper;
 
 
 		[SetUp]
@@ -32,7 +35,9 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			_validationCancellationService = Substitute.For<IValidationCancellationService>();
 			_validationService = Substitute.For<IValidationService>();
 			_pageFactory = Substitute.For<IPageFactory<VersionValidateResultModel>>();
-			_uut = new VersionController(_cosmosDatabaseContext,_validationCancellationService, _validationService, _pageFactory);
+			_resourcesWrapper = Substitute.For<IResourcesWrapper>();
+			_uut = new VersionController(_cosmosDatabaseContext, _validationCancellationService, _validationService,
+				_pageFactory, _resourcesWrapper);
 		}
 
 		[Test]
@@ -68,6 +73,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		public void ShouldRedirectToIndexWithMessageWhenCancellationIsNotAvailable()
 		{
 			// Arrange
+			var message = Any.String();
+			_resourcesWrapper.CancelingCancelledOperationMessage.Returns(message);
 			_validationCancellationService.IsCancellationAvailable.Returns(false);
 
 			// Act
@@ -80,13 +87,15 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction.Should().NotBeNull();
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["Message"].Should().Be("Can not cancel operation that was not started or is finished!");
+			routeValueDictionary!["Message"].Should().Be(message);
 		}
 
 		[Test]
 		public void ShouldRedirectToIndexWithMessageWhenCancellationWasRequestedAgain()
 		{
 			// Arrange
+			var message = Any.String();
+			_resourcesWrapper.CancellationOperationHasAlreadyStaredMessage.Returns(message);
 			_validationCancellationService.IsCancellationAvailable.Returns(true);
 			_validationCancellationService.IsCancellationRequested.Returns(true);
 
@@ -100,13 +109,15 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction.Should().NotBeNull();
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["Message"].Should().Be("Operation cancellation has already started.");
+			routeValueDictionary!["Message"].Should().Be(message);
 		}
 
 		[Test]
 		public void ShouldRedirectToIndexWithMessageWhenTokenWasDisposed()
 		{
 			// Arrange
+			var message = Any.String();
+			_resourcesWrapper.CancellationTokenDisposedMessage.Returns(message);
 			_validationCancellationService.IsCancellationAvailable.Returns(true);
 			_validationCancellationService.IsCancellationRequested.Returns(false);
 			_validationCancellationService.IsTokenDisposed.Returns(true);
@@ -121,7 +132,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			actualAsRedirectToAction.Should().NotBeNull();
 			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
 			routeValueDictionary.Should().NotBeNull();
-			routeValueDictionary!["Message"].Should().Be("Cancellation token was disposed, that means validation operation is finished.");
+			routeValueDictionary!["Message"].Should().Be(message);
 		}
 
 		[Test, Retry(3)]
@@ -148,6 +159,8 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 		public async Task ShouldReturnIndexWithMessageIfValidationIsAlreadyRunning()
 		{
 			// Arrange
+			var message = Any.String();
+			_resourcesWrapper.ValidationOperationIsAlreadyStartedMessage.Returns(message);
 			_validationService.IsValidationFinished.Returns(false);
 
 			// Act
@@ -164,7 +177,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			routeValueDictionary["Message"].Should().NotBeNull();
 			((bool)routeValueDictionary["IsCancellationEnabled"]!).Should().BeTrue();
 			routeValueDictionary["Message"].Should()
-				.Be("Validation Operation has already started, can't start another one. Please wait.");
+				.Be(message);
 		}
 
 		[TestCase("")]

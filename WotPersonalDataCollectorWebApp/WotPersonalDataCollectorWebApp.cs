@@ -1,5 +1,8 @@
 namespace WotPersonalDataCollectorWebApp
 {
+	using System.Diagnostics.CodeAnalysis;
+
+	[ExcludeFromCodeCoverage]
     internal static class WotPersonalDataCollectorWebApp
     {
         public static async Task Main(string[] args)

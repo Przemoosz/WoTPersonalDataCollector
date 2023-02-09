@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics;
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics;
 
 public class AccountStatistics
 {
