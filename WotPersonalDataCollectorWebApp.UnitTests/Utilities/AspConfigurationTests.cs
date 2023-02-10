@@ -23,7 +23,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
         public void ShouldReturnCosmosConnectionString()
         {
             // Arrange
-            var connectionString = Any.String(139);
+            var connectionString = Any.String();
             Environment.SetEnvironmentVariable("CosmosConnectionString", connectionString);
 
             // Act
@@ -37,7 +37,7 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
         public void ShouldReturnContainerName()
         {
             // Arrange
-            var containerName = Any.String(139);
+            var containerName = Any.String();
             Environment.SetEnvironmentVariable("WotDtoContainerName", containerName);
 
             // Act
@@ -129,21 +129,6 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
 
             // Assert
             act.Should().Throw<LocalVariableException>().WithMessage("WotDtoContainerName local variable is not set!");
-        }
-
-        [TestCase(180)]
-        [TestCase(4)]
-        public void ShouldThrowLocalVariableExceptionWhenConnectionStringLengthIsNotValid(int length)
-        {
-            // Arrange
-            var connectionString = Any.String(length);
-            Environment.SetEnvironmentVariable("CosmosConnectionString", connectionString);
-
-            // Act
-            Func<string> act = () => _uut.CosmosConnectionString;
-
-            // Assert
-            act.Should().Throw<LocalVariableException>().WithMessage("Connection string length is not valid. 139 chars connection string is required!");
         }
 
         [TestCase(null)]

@@ -10,7 +10,7 @@
 	public class CosmosDatabaseContext: DbContext, ICosmosDatabaseContext
     {
         private const string IdJson = "id";
-        private const string BooleanTrue = "True";
+        private const string BooleanTrue = "true";
         private readonly IAspConfiguration _configuration = new AspConfiguration();
         public DbSet<WotDataCosmosDbDto> PersonalData { get; set; }
         public DbSet<VersionValidateResultModel> VersionValidateResult { get; set; }
@@ -28,14 +28,15 @@
             modelBuilder.Entity<WotDataCosmosDbDto>().ToContainer(_configuration.WotDtoContainerName);
             modelBuilder.Entity<WotDataCosmosDbDto>().HasPartitionKey(d => d.AccountId);
             modelBuilder.Entity<WotDataCosmosDbDto>().Property(d => d.Id).ToJsonProperty(IdJson);
-            modelBuilder.Entity<VersionValidateResultModel>().ToContainer(_configuration.VersionModelContainerName);
+            modelBuilder.Entity<VersionValidateResultModel>().Property(d => d.Id).ToJsonProperty(IdJson);
+			modelBuilder.Entity<VersionValidateResultModel>().ToContainer(_configuration.VersionModelContainerName);
             modelBuilder.Entity<VersionValidateResultModel>().HasPartitionKey(d => d.WasValidationCanceled);
             modelBuilder.Entity<VersionValidateResultModel>().Property(s => s.WasValidationCanceled)
-	            .HasConversion(v => v.ToString(), v => ConvertToString(v));
+	            .HasConversion(v => v.ToString(), v => ConvertStringToBoolean(v));
             base.OnModelCreating(modelBuilder);
         }
 
-        private bool ConvertToString(string s) => s.ToLower().Equals(BooleanTrue);
+        private bool ConvertStringToBoolean(string textToConvert) => textToConvert.ToLower().Equals(BooleanTrue);
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -1,17 +1,16 @@
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Extensions.Logging;
-using WotPersonalDataCollector.CosmosDb;
-using WotPersonalDataCollector.CosmosDb.Services;
-using WotPersonalDataCollector.Utilities;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Builder;
-using WotPersonalDataCollector.Workflow.Factory;
-
-
 namespace WotPersonalDataCollector
 {
-    internal class WotPersonalDataCrawler
+	using System.Threading.Tasks;
+	using Microsoft.Azure.WebJobs;
+	using Microsoft.Extensions.Logging;
+	using CosmosDb;
+	using CosmosDb.Services;
+	using Utilities;
+	using Workflow;
+	using Workflow.Builder;
+	using Workflow.Factory;
+
+	internal class WotPersonalDataCrawler
     {
         private readonly IWorkflowStepsFactory _workflowStepsFactory;
         private readonly IConfiguration _configuration;
@@ -31,6 +30,7 @@ namespace WotPersonalDataCollector
         [FunctionName("WotPersonalDataCrawler")]
         public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
+
             if (!_cosmosDbSetUpFinished)
             {
                 log.LogInformation("Creating database");

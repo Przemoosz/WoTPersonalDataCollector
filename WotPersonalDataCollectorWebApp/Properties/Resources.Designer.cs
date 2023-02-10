@@ -97,6 +97,15 @@ namespace WotPersonalDataCollectorWebApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} delete process started.
+        /// </summary>
+        internal static string DataDeleteProcessStarted {
+            get {
+                return ResourceManager.GetString("DataDeleteProcessStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Validation Operation has already started, can&apos;t start another one. Please wait..
         /// </summary>
         internal static string ValidationOperationIsAlreadyStartedMessage {

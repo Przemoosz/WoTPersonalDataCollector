@@ -133,6 +133,9 @@
     <value>Cancellation token was disposed, that means validation operation is finished.</value>
     <comment>VersionController</comment>
   </data>
+  <data name="DataDeleteProcessStarted" xml:space="preserve">
+    <value>{0} delete process started</value>
+  </data>
   <data name="ValidationOperationIsAlreadyStartedMessage" xml:space="preserve">
     <value>Validation Operation has already started, can't start another one. Please wait.</value>
     <comment>VersionController</comment>

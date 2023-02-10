@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos;
-using WotPersonalDataCollector.Utilities;
-
-namespace WotPersonalDataCollector.CosmosDb
+﻿namespace WotPersonalDataCollector.CosmosDb
 {
-    internal sealed class WpdCosmosClientWrapper: IWpdCosmosClientWrapper
+	using System.Threading.Tasks;
+	using Microsoft.Azure.Cosmos;
+	using Utilities;
+
+	internal sealed class WpdCosmosClientWrapper: IWpdCosmosClientWrapper
     {
         private readonly IConfiguration _configuration;
         private static CosmosClient _cosmosClient;
@@ -25,7 +25,7 @@ namespace WotPersonalDataCollector.CosmosDb
 
         public async Task<Database> CreateDatabaseIfNotExistsAsync()
         {
-            ThroughputProperties throughputProperties = ThroughputProperties.CreateManualThroughput(400);
+            ThroughputProperties throughputProperties = ThroughputProperties.CreateManualThroughput(_configuration.DatabaseThroughput);
             return await _cosmosClient.CreateDatabaseIfNotExistsAsync(_configuration.CosmosDbName, throughputProperties);
         }
     }

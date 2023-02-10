@@ -10,4 +10,5 @@ public interface IVersionController
 	IActionResult CancelValidationProcess();
 	Task<IActionResult> LatestValidationResult();
 	IActionResult ValidationResults(int page, string dateOrder);
+	Task<IActionResult> DeleteValidationData();
 }

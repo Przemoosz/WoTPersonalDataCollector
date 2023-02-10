@@ -229,5 +229,29 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			result.Should().NotBeNull();
 			result!.ValidationDate.Should().Be(dt);
 		}
+
+		[Test]
+		public async Task ShouldRemoveAllValidationResults()
+		{
+			// Arrange
+			string message = Any.String();
+			List<VersionValidateResultModel> validationResultModels = Any.Instance<List<VersionValidateResultModel>>();
+			var dbSet = validationResultModels.AsDbSet();
+			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
+			_resourcesWrapper.DataDeleteProcessStarted.Returns(message);
+			// Act
+			var actual = await _uut.DeleteValidationData();
+			var actualAsRedirectToAction = actual as RedirectToActionResult;
+			var routeValueDictionary = actualAsRedirectToAction?.RouteValues;
+
+			// Assert
+			_cosmosDatabaseContext.VersionValidateResult.Received(validationResultModels.Count);
+			await _cosmosDatabaseContext.Received(1).SaveChangesAsync();
+			actual.Should().BeOfType<RedirectToActionResult>();
+			actualAsRedirectToAction.Should().NotBeNull();
+			actualAsRedirectToAction?.ActionName?.Should().Be("Index");
+			routeValueDictionary.Should().NotBeNull();
+			routeValueDictionary!["Message"].Should().Be(message);
+		}
 	}
 }

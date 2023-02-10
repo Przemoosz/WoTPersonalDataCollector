@@ -11,5 +11,6 @@
 		public string CancellationOperationHasAlreadyStaredMessage => Resources.CancellationOperationHasAlreadyStaredMessage;
 		public string CancellationTokenDisposedMessage => Resources.CancellationTokenDisposedMessage;
 		public string CancelingValidation => Resources.CancelingValidation;
+		public string DataDeleteProcessStarted => Resources.DataDeleteProcessStarted;
 	}
 }

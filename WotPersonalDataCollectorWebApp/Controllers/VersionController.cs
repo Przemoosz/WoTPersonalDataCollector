@@ -10,6 +10,7 @@
 	using Models;
 	using Factories;
 	using Properties;
+	using Extensions;
 
 
 	public sealed class VersionController: Controller, IVersionController
@@ -100,6 +101,14 @@
 			}
 			var detailedPage = _pageFactory.CreateDetailedPage(results, page, PageSize);
 			return View(detailedPage);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> DeleteValidationData()
+		{
+			await _context.VersionValidateResult.RemoveAllData();
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index), new VersionValidateViewModel() { Message = string.Format(_resourcesWrapper.DataDeleteProcessStarted, "Validate Result Model")});
 		}
 	}
 }

@@ -1,8 +1,11 @@
-﻿namespace WotPersonalDataCollectorWebApp.Models;
+﻿using Newtonsoft.Json;
+
+namespace WotPersonalDataCollectorWebApp.Models;
 
 public sealed class VersionValidateResultModel: IEquatable<VersionValidateResultModel>
 {
-    public string Id { get; init; }
+	[JsonProperty("id")]
+	public string Id { get; init; }
     public int TotalItemsInCosmosDb { get; init; }
     public int CorrectVersionDtoCount { get; init; }
     public int WrongObjectsCount { get; init; }
