@@ -44,4 +44,12 @@ public interface IResourcesWrapper
 	/// <see cref="string"/> value: "Canceling validation"
 	/// </value>
 	string CancelingValidation { get; }
+
+	/// <summary>
+	/// Gets <see cref="string"/> value of DataDeleteProcessStarted local resource. 
+	/// </summary>
+	/// <value>
+	/// <see cref="string"/> value: "{0} delete process started"
+	/// </value>
+	string DataDeleteProcessStarted { get; }
 }

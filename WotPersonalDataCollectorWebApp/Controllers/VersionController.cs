@@ -108,7 +108,7 @@
 		{
 			await _context.VersionValidateResult.RemoveAllData();
 			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
+			return RedirectToAction(nameof(Index), new VersionValidateViewModel() { Message = string.Format(_resourcesWrapper.DataDeleteProcessStarted, "Validate Result Model")});
 		}
 	}
 }
