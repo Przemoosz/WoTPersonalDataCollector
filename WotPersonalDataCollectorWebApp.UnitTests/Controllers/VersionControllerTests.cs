@@ -229,5 +229,22 @@ namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
 			result.Should().NotBeNull();
 			result!.ValidationDate.Should().Be(dt);
 		}
+
+		[Test]
+		public async Task ShouldRemoveAllValidationResults()
+		{
+			// Arrange
+
+			List<VersionValidateResultModel> validationResultModels = Any.Instance<List<VersionValidateResultModel>>();
+			var dbSet = validationResultModels.AsDbSet();
+			_cosmosDatabaseContext.VersionValidateResult.Returns(dbSet);
+
+			// Act
+			var actual = await _uut.DeleteValidationData();
+
+			// Assert
+			_cosmosDatabaseContext.VersionValidateResult.Received(validationResultModels.Count);
+			await _cosmosDatabaseContext.Received(1).SaveChangesAsync();
+		}
 	}
 }

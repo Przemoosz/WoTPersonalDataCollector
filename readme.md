@@ -48,8 +48,8 @@ Version name - Description - Status
 - WPD-5-DisplayCollectedDataInAspNetApp - Prototype version - Displaying saved data from CosmosDb in ASP.NET app also include prototype versioning check classes - Finished and merged
 - WPD-6-ImplementVersionCheckForAspNetApp - Implement controller for version check - Finished and merged
 - WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - Finished and merged
-- WPD-8-CreateResourceFiles - Create resource file for strings etc. - Planned
-- WPD-9-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Planned
+- WPD-8-CreateResourceFiles - Create resource file for strings etc. - Finished and merged
+- WPD-9-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Finished and merged
 - WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
 
 Application Architecture Change is planned after WPD-10 version
@@ -58,15 +58,16 @@ Application Architecture Change is planned after WPD-10 version
 - WPD-12-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - HTTP Triggered Azure Function - Planned
 - WPD-13-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
 - WPD-14-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
-- WPD-15-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
-- WPD-16-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
-- WPD-17-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-18-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-19-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-20-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
-- WPD-21-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-22-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
-- WPD-23-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
+- WPD-15-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-16-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
+- WPD-17-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
+- WPD-18-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-19-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-20-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-21-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-22-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-23-CreateAccountStatisticsBasedOnPersonalData - Create and display account statistics based on personal data - Planned
+- WPD-24-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
 ## Architecture
 Current architecture with future architecture elements

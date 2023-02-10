@@ -29,11 +29,6 @@ namespace WotPersonalDataCollectorWebApp.Utilities
             {
                 Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("CosmosConnectionString"), "CosmosConnectionString local variable is not set!");
                 var connectionString = Environment.GetEnvironmentVariable("CosmosConnectionString")!;
-                if (connectionString.Length != 139)
-                {
-                    throw new LocalVariableException(
-                        "Connection string length is not valid. 139 chars connection string is required!");
-                }
                 return connectionString;
             }
         }

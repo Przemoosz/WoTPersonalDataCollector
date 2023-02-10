@@ -7,7 +7,6 @@
 	using Models;
 
 	/// <inheritdoc />>
-
 	internal sealed class ValidationService: IValidationService
 	{
 		private readonly IDtoVersionValidator _dtoVersionValidator;
