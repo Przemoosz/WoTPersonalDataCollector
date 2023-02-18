@@ -1,18 +1,15 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollector.WebApp.CosmosDb.Context;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Metrics;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollector.WebApp.Exceptions;
-using WotPersonalDataCollector.WebApp.Models;
-using WotPersonalDataCollector.WebApp.Services;
-using WotPersonalDataCollector.WebApp.UnitTests.Categories;
-using WotPersonalDataCollector.WebApp.UnitTests.TestHelpers;
-
-namespace WotPersonalDataCollector.WebApp.UnitTests.Services
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.Services
 {
+	using WotPersonalDataCollector.WebApp.CosmosDb.Context;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Metrics;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
+	using Exceptions;
+	using Models;
+	using WotPersonalDataCollector.WebApp.Services;
+	using Categories;
+	using TestHelpers;
+
 	[TestFixture, Parallelizable, ServiceTest]
 	public sealed class ValidationServiceTests
 	{

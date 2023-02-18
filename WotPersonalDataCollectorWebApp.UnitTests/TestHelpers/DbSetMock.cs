@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NSubstitute;
-
-namespace WotPersonalDataCollector.WebApp.UnitTests.TestHelpers
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.TestHelpers
 {
+	using Microsoft.EntityFrameworkCore;
+
 	internal static class DbSetMock
 	{
 		/// <summary>

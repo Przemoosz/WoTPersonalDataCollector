@@ -1,8 +1,8 @@
-﻿using TddXt.AnyExtensibility;
-
-namespace WotPersonalDataCollector.Tests
+﻿namespace WotPersonalDataCollector.Tests.TestHelpers
 {
-    internal static class ConnectionString
+    using TddXt.AnyExtensibility;
+
+    internal static class AnyExtension
     {
         public static string CosmosDbConnectionString(this BasicGenerator genRoot)
         {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api.Http;
-
-namespace WotPersonalDataCollector.Tests.Api.Http
+﻿namespace WotPersonalDataCollector.Tests.Api.Http
 {
-    [TestFixture]
+	using System;
+	using System.Threading.Tasks;
+	using WotPersonalDataCollector.Api.Http;
+
+	[TestFixture]
     public class HttpClientWrapperTests
     {
         private IHttpClientWrapper _uut;

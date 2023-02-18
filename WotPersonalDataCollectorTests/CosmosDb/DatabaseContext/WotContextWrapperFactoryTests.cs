@@ -1,13 +1,10 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollector.CosmosDb.DatabaseContext;
-using WotPersonalDataCollector.Utilities;
-
-namespace WotPersonalDataCollector.Tests.CosmosDb.DatabaseContext
+﻿namespace WotPersonalDataCollector.Tests.CosmosDb.DatabaseContext
 {
-    [TestFixture]
+	using System.Threading.Tasks;
+	using WotPersonalDataCollector.CosmosDb.DatabaseContext;
+	using WotPersonalDataCollector.Utilities;
+
+	[TestFixture]
     public class WotContextWrapperFactoryTests
     {
         private IConfiguration _configuration;

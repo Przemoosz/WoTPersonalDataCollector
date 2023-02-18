@@ -1,19 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api.PersonalData;
-using WotPersonalDataCollector.Api.PersonalData.Dto;
-using WotPersonalDataCollector.Exceptions;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.PersonalData
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.PersonalData
 {
-    [TestFixture]
+	using System;
+	using System.Threading.Tasks;
+	using NSubstitute.ExceptionExtensions;
+	using WotPersonalDataCollector.Api.PersonalData;
+	using WotPersonalDataCollector.Api.PersonalData.Dto;
+	using Exceptions;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class DeserializePersonalDataHttpResponseStepTests
     {
         private IDeserializePersonalDataHttpResponse _deserializePersonalDataHttpResponse;

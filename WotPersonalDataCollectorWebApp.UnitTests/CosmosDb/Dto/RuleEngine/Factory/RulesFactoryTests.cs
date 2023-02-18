@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NUnit.Framework;
+﻿using Microsoft.Extensions.Logging;
 using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
 using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
 using WotPersonalDataCollector.WebApp.UnitTests.Categories;

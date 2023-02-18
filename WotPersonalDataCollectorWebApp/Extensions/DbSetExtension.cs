@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace WotPersonalDataCollector.WebApp.Extensions
+﻿namespace WotPersonalDataCollector.WebApp.Extensions
 {
+	using Microsoft.EntityFrameworkCore;
+
 	/// <summary>
 	/// Extension methods for <see cref="DbSet{TEntity}"/>.
 	/// </summary>

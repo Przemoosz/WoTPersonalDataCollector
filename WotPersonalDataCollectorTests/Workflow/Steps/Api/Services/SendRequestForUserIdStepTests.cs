@@ -1,18 +1,15 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api.Services;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api.Services;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Services
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Services
 {
-    [TestFixture]
+	using System;
+	using System.Net.Http;
+	using System.Threading.Tasks;
+	using NSubstitute.ExceptionExtensions;
+	using WotPersonalDataCollector.Api.Services;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.Api.Services;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class SendRequestForUserIdStepTests
     {
         private IWotService _wotService;

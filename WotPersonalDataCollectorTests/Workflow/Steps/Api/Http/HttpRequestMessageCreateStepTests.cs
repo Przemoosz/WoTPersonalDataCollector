@@ -1,18 +1,15 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Http
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Http
 {
-    [TestFixture]
+	using System;
+	using System.Net.Http;
+	using System.Threading.Tasks;
+	using NSubstitute.ExceptionExtensions;
+	using WotPersonalDataCollector.Api.Http;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.Api.Http;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class HttpRequestMessageCreateStepTests
     {
         private IUserRequestMessageFactory _userRequestMessageFactory;

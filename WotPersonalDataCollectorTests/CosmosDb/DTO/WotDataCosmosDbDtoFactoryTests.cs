@@ -1,16 +1,13 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api.PersonalData.Dto;
-using WotPersonalDataCollector.Api.User.DTO;
-using WotPersonalDataCollector.CosmosDb.DTO;
-using WotPersonalDataCollector.Utilities;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.CosmosDb.DTO
+﻿namespace WotPersonalDataCollector.Tests.CosmosDb.DTO
 {
-    [TestFixture]
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.Api.PersonalData.Dto;
+	using WotPersonalDataCollector.Api.User.DTO;
+	using WotPersonalDataCollector.CosmosDb.DTO;
+	using WotPersonalDataCollector.Utilities;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class WotDataCosmosDbDtoFactoryTests
     {
         private IConfiguration _configuration;

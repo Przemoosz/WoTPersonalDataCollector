@@ -1,18 +1,15 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Api.Services;
-using WotPersonalDataCollector.Workflow;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Api.Services
+﻿namespace WotPersonalDataCollector.Tests.Api.Services
 {
-    [TestFixture]
+	using System;
+	using System.Net;
+	using System.Net.Http;
+	using System.Threading.Tasks;
+	using WotPersonalDataCollector.Api.Http;
+	using WotPersonalDataCollector.Api.Services;
+	using WotPersonalDataCollector.Workflow;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class WotServiceTests
     {
         private IHttpClientWrapperFactory _httpClientWrapperFactory;

@@ -1,14 +1,11 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
-using WotPersonalDataCollector.Utilities;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Api.Http.RequestObjects
+﻿namespace WotPersonalDataCollector.Tests.Api.Http.RequestObjects
 {
-    [TestFixture]
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.Api.Http.RequestObjects;
+	using WotPersonalDataCollector.Utilities;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class UserInfoRequestObjectFactoryTests
     {
         private IConfiguration _configuration;

@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using TddXt.AnyRoot.Numbers;
-using WotPersonalDataCollector.Api.User;
-using WotPersonalDataCollector.Api.User.DTO;
-using WotPersonalDataCollector.Exceptions;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Api.User
+﻿namespace WotPersonalDataCollector.Tests.Api.User
 {
-    [TestFixture]
+	using System;
+	using System.Collections.Generic;
+	using System.Net;
+	using System.Net.Http;
+	using System.Text;
+	using System.Threading.Tasks;
+	using Newtonsoft.Json;
+	using TddXt.AnyRoot.Numbers;
+	using WotPersonalDataCollector.Api.User;
+	using WotPersonalDataCollector.Api.User.DTO;
+	using Exceptions;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class DeserializeHttpResponseTests
     {
         private IDeserializeUserIdHttpResponse _uut;

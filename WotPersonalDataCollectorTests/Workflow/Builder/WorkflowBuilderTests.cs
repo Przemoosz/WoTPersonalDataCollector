@@ -1,11 +1,10 @@
-﻿using NUnit.Framework;
-using WotPersonalDataCollector.Workflow.Builder;
-using WotPersonalDataCollector.Workflow.Steps;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.Tests.Workflow.Builder
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Builder
 {
-    [TestFixture]
+	using WotPersonalDataCollector.Workflow.Builder;
+	using WotPersonalDataCollector.Workflow.Steps;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class WorkflowBuilderTests
     {
         private IWorkflowBuilder _uut;
