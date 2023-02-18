@@ -10,7 +10,7 @@ using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.Services;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Services
+namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Services
 {
     [TestFixture]
     public class SendRequestForUserIdStepTests

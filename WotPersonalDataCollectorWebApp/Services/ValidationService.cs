@@ -1,11 +1,11 @@
-﻿namespace WotPersonalDataCollectorWebApp.Services
-{
-	using CosmosDb.Context;
-	using CosmosDb.Dto;
-	using CosmosDb.Dto.Version;
-	using Exceptions;
-	using Models;
+﻿using WotPersonalDataCollector.WebApp.CosmosDb.Context;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
+using WotPersonalDataCollector.WebApp.Exceptions;
+using WotPersonalDataCollector.WebApp.Models;
 
+namespace WotPersonalDataCollector.WebApp.Services
+{
 	/// <inheritdoc />>
 	internal sealed class ValidationService: IValidationService
 	{

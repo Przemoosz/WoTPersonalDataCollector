@@ -54,20 +54,21 @@ Version name - Description - Status
 
 Application Architecture Change is planned after WPD-10 version
 
-- WPD-11-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
-- WPD-12-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - HTTP Triggered Azure Function - Planned
-- WPD-13-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
-- WPD-14-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
-- WPD-15-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
-- WPD-16-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
-- WPD-17-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
-- WPD-18-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-19-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-20-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-21-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
-- WPD-22-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-23-CreateAccountStatisticsBasedOnPersonalData - Create and display account statistics based on personal data - Planned
-- WPD-24-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
+- WPD-11-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
+- WPD-12-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
+- WPD-13-ImplementDatabaseCreateUsingCosmosDbApi - Implement Database Create Using Cosmos Db Api in DataCrwaler - Planned
+- WPD-14-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
+- WPD-15-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - Remove Version Check From Asp .Net App And Implement Connection With WpdDtoValidationApp - Planned
+- WPD-16-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-17-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
+- WPD-18-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
+- WPD-19-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-20-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-21-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-22-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-23-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-24-CreateAccountStatisticsBasedOnPersonalData - Create and display account statistics based on personal data - Planned
+- WPD-25-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
 ## Architecture
 Current architecture with future architecture elements

@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WotPersonalDataCollectorWebApp\WotPersonalDataCollectorWebApp.csproj" />
+    <ProjectReference Include="..\WotPersonalDataCollectorWebApp\WotPersonalDataCollector.WebApp.csproj" />
   </ItemGroup>
 
 </Project>

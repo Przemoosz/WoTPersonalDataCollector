@@ -1,18 +1,15 @@
-﻿namespace WotPersonalDataCollectorWebApp.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WotPersonalDataCollector.WebApp.CosmosDb.Context;
+using WotPersonalDataCollector.WebApp.Extensions;
+using WotPersonalDataCollector.WebApp.Factories;
+using WotPersonalDataCollector.WebApp.Models;
+using WotPersonalDataCollector.WebApp.Models.ViewModels;
+using WotPersonalDataCollector.WebApp.Properties;
+using WotPersonalDataCollector.WebApp.Services;
+
+namespace WotPersonalDataCollector.WebApp.Controllers
 {
-	using Microsoft.AspNetCore.Mvc;
-	using CosmosDb.Context;
-	using System.Threading.Tasks;
-	using Models.ViewModels;
-	using Services;
-	using System.Threading;
-	using Microsoft.EntityFrameworkCore;
-	using Models;
-	using Factories;
-	using Properties;
-	using Extensions;
-
-
 	public sealed class VersionController: Controller, IVersionController
 	{
 		private const string Ascending = "Ascending";

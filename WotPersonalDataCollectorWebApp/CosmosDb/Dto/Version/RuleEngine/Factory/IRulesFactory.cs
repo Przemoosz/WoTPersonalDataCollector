@@ -1,6 +1,6 @@
-﻿using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+﻿using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
 
-namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
+namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
 
 internal interface IRulesFactory
 {

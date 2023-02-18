@@ -1,7 +1,7 @@
 ﻿using GuardNet;
-using WotPersonalDataCollectorWebApp.Exceptions;
+using WotPersonalDataCollector.WebApp.Exceptions;
 
-namespace WotPersonalDataCollectorWebApp.Utilities
+namespace WotPersonalDataCollector.WebApp.Utilities
 {
     internal sealed class AspConfiguration : IAspConfiguration
     {

@@ -1,4 +1,4 @@
-namespace WotPersonalDataCollectorWebApp.Models;
+namespace WotPersonalDataCollector.WebApp.Models;
 
 public class ErrorViewModel
 {

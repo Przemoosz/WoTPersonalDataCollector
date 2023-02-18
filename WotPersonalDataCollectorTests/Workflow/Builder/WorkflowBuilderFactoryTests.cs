@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using WotPersonalDataCollector.Workflow.Builder;
 
-namespace WotPersonalDataCollectorTests.Workflow.Builder
+namespace WotPersonalDataCollector.Tests.Workflow.Builder
 {
     [TestFixture]
     public class WorkflowBuilderFactoryTests

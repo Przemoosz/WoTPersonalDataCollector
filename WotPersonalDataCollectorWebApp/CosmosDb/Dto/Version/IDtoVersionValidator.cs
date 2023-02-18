@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
+﻿namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
 
 public interface IDtoVersionValidator
 {

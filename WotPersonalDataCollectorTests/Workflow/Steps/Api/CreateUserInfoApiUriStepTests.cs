@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -11,7 +10,7 @@ using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Workflow.Steps.Api
+namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api
 {
     [TestFixture]
     public class CreateUserInfoApiUriStepTests

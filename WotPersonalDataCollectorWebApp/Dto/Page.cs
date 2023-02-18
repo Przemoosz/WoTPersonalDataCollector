@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollectorWebApp.Dto;
+﻿namespace WotPersonalDataCollector.WebApp.Dto;
 
 /// <summary>
 /// Class that represents page, contains only fixed amount of data.

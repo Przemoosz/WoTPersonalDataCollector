@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Metrics
+﻿namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Metrics
 {
     public class Data
     {

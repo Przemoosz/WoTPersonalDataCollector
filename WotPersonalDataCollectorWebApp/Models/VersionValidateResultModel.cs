@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WotPersonalDataCollectorWebApp.Models;
+namespace WotPersonalDataCollector.WebApp.Models;
 
 public sealed class VersionValidateResultModel: IEquatable<VersionValidateResultModel>
 {
