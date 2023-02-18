@@ -13,7 +13,7 @@ using WotPersonalDataCollector.Api.User.DTO;
 using WotPersonalDataCollector.Exceptions;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Api.User
+namespace WotPersonalDataCollector.Tests.Api.User
 {
     [TestFixture]
     public class DeserializeHttpResponseTests

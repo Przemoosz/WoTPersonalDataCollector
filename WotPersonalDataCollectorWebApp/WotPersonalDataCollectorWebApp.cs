@@ -1,7 +1,7 @@
-namespace WotPersonalDataCollectorWebApp
-{
-	using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
+namespace WotPersonalDataCollector.WebApp
+{
 	[ExcludeFromCodeCoverage]
     internal static class WotPersonalDataCollectorWebApp
     {

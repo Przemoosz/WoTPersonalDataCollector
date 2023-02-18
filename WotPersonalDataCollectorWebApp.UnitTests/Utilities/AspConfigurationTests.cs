@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollectorWebApp.Exceptions;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-using WotPersonalDataCollectorWebApp.Utilities;
+using WotPersonalDataCollector.WebApp.Exceptions;
+using WotPersonalDataCollector.WebApp.UnitTests.Categories;
+using WotPersonalDataCollector.WebApp.Utilities;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorWebApp.UnitTests.Utilities
+namespace WotPersonalDataCollector.WebApp.UnitTests.Utilities
 {
     [TestFixture, ConfigurationTests, Parallelizable]
     public class AspConfigurationTests

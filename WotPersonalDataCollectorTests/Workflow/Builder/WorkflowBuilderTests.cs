@@ -3,7 +3,7 @@ using WotPersonalDataCollector.Workflow.Builder;
 using WotPersonalDataCollector.Workflow.Steps;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Workflow.Builder
+namespace WotPersonalDataCollector.Tests.Workflow.Builder
 {
     [TestFixture]
     public class WorkflowBuilderTests

@@ -9,7 +9,7 @@ using WotPersonalDataCollector.Api.PersonalData.Dto;
 using WotPersonalDataCollector.Exceptions;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Api.PersonalData
+namespace WotPersonalDataCollector.Tests.Api.PersonalData
 {
     [TestFixture]
     public class DeserializePersonalDataHttpResponseTests

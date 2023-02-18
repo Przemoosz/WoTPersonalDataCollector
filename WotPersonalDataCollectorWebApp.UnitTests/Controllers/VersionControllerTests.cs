@@ -4,18 +4,18 @@ using MockQueryable.NSubstitute;
 using NSubstitute;
 using NUnit.Framework;
 using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollectorWebApp.Controllers;
-using WotPersonalDataCollectorWebApp.CosmosDb.Context;
-using WotPersonalDataCollectorWebApp.Dto;
-using WotPersonalDataCollectorWebApp.Factories;
-using WotPersonalDataCollectorWebApp.Models;
-using WotPersonalDataCollectorWebApp.Properties;
-using WotPersonalDataCollectorWebApp.Services;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-using WotPersonalDataCollectorWebApp.UnitTests.TestHelpers;
+using WotPersonalDataCollector.WebApp.Controllers;
+using WotPersonalDataCollector.WebApp.CosmosDb.Context;
+using WotPersonalDataCollector.WebApp.Dto;
+using WotPersonalDataCollector.WebApp.Factories;
+using WotPersonalDataCollector.WebApp.Models;
+using WotPersonalDataCollector.WebApp.Properties;
+using WotPersonalDataCollector.WebApp.Services;
+using WotPersonalDataCollector.WebApp.UnitTests.Categories;
+using WotPersonalDataCollector.WebApp.UnitTests.TestHelpers;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
+namespace WotPersonalDataCollector.WebApp.UnitTests.Controllers
 {
 	[TestFixture, ControllerTests, Parallelizable]
 	public class VersionControllerTests

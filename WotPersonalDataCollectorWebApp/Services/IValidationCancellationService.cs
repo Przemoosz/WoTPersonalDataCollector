@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollectorWebApp.Services
+﻿namespace WotPersonalDataCollector.WebApp.Services
 {
 	/// <summary>
 	/// Service responsible for creating, maintaining and canceling <see cref="CancellationToken"/> for cosmos dto validation process.

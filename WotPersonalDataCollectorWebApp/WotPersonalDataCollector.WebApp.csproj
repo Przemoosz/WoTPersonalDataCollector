@@ -27,7 +27,7 @@
     </ItemGroup>
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>WotPersonalDataCollectorWebApp.UnitTests</_Parameter1>
+			<_Parameter1>WotPersonalDataCollector.WebApp.UnitTests</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
 	<ItemGroup>

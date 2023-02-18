@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollectorWebApp.Utilities;
+﻿namespace WotPersonalDataCollector.WebApp.Utilities;
 
 internal interface IAspConfiguration
 {

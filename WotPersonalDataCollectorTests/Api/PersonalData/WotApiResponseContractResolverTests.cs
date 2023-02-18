@@ -4,7 +4,7 @@ using TddXt.AnyRoot.Strings;
 using WotPersonalDataCollector.Api.PersonalData;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Api.Http.PersonalData
+namespace WotPersonalDataCollector.Tests.Api.PersonalData
 {
     [TestFixture]
     public class WotApiResponseContractResolverTests

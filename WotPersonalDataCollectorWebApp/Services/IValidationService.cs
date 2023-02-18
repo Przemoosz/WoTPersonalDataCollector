@@ -1,7 +1,7 @@
-﻿namespace WotPersonalDataCollectorWebApp.Services;
+﻿namespace WotPersonalDataCollector.WebApp.Services;
 
 /// <summary>
-/// Service responsible for validation versions of objects <see cref="T:WotPersonalDataCollectorWebApp.CosmosDb.Dto.WotDataCosmosDbDto"/> in asp.net and cosmos db.
+/// Service responsible for validation versions of objects <see cref="T:WotPersonalDataCollector.WebApp.CosmosDb.Dto.WotDataCosmosDbDto"/> in asp.net and cosmos db.
 /// </summary>
 public interface IValidationService
 {

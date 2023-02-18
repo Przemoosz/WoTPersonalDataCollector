@@ -5,7 +5,7 @@ using WotPersonalDataCollector.CosmosDb;
 using WotPersonalDataCollector.Utilities;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.CosmosDb
+namespace WotPersonalDataCollector.Tests.CosmosDb
 {
     [TestFixture]
     public class WpdCosmosClientWrapperFactoryTests

@@ -5,7 +5,7 @@ using NUnit.Framework;
 using WotPersonalDataCollector.CosmosDb.DatabaseContext;
 using WotPersonalDataCollector.Utilities;
 
-namespace WotPersonalDataCollectorTests.CosmosDb.DatabaseContext
+namespace WotPersonalDataCollector.Tests.CosmosDb.DatabaseContext
 {
     [TestFixture]
     public class WotContextWrapperFactoryTests

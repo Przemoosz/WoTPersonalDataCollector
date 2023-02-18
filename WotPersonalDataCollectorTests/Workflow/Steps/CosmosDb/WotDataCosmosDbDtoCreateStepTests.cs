@@ -7,7 +7,7 @@ using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollectorTests.Workflow.Steps.CosmosDb
+namespace WotPersonalDataCollector.Tests.Workflow.Steps.CosmosDb
 {
     [TestFixture]
     public class WotDataCosmosDbDtoCreateStepTests

@@ -1,6 +1,7 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules
+﻿using WotPersonalDataCollector.WebApp.Exceptions;
+
+namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules
 {
-	using Exceptions;
 	internal sealed class HigherAspMajorVersionRule: IVersionRule
 	{
 		private readonly ILogger _logger;

@@ -3,7 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using WotPersonalDataCollector.Api.Http;
 
-namespace WotPersonalDataCollectorTests.Api.Http
+namespace WotPersonalDataCollector.Tests.Api.Http
 {
     [TestFixture]
    public class HttpClientWrapperFactoryTests

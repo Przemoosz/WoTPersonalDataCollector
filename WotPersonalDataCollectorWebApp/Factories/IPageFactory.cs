@@ -1,7 +1,8 @@
-﻿namespace WotPersonalDataCollectorWebApp.Factories
+﻿using WotPersonalDataCollector.WebApp.Dto;
+
+namespace WotPersonalDataCollector.WebApp.Factories
 {
-    using Dto;
-    /// <summary>
+	/// <summary>
     /// Factory responsible for creating <see cref="Page{T}"/> or <see cref="DetailedPage{T}"/> that pages input data.
     /// </summary>
     /// <typeparam name="T">Type of dto.</typeparam>
