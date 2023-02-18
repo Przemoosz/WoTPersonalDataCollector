@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
+using WotPersonalDataCollector.Exceptions;
 using NUnit.Framework;
 using WotPersonalDataCollector.Api.User;
 using WotPersonalDataCollector.Api.User.DTO;
-using WotPersonalDataCollector.Exceptions;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.User;
 using static TddXt.AnyRoot.Root;
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.User
+namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.User
 {
     [TestFixture]
     public class DeserializeUserIdHttpResponseStepTests

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WotPersonalDataCollector.WebApp.Models.ViewModels;
+using WotPersonalDataCollectorWebApp.Models.ViewModels;
 
-namespace WotPersonalDataCollector.WebApp.Controllers;
+namespace WotPersonalDataCollectorWebApp.Controllers;
 
 public interface IVersionController
 {

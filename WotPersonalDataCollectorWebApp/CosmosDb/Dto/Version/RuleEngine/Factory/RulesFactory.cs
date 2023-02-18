@@ -1,7 +1,6 @@
-﻿using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
-
-namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Factory
 {
+	using Rules;
 	internal class RulesFactory: IRulesFactory
 	{
 		private readonly ILogger _logger;

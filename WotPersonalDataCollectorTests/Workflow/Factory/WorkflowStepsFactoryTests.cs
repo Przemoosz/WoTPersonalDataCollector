@@ -19,7 +19,7 @@ using WotPersonalDataCollector.Workflow.Steps.Api.Services;
 using WotPersonalDataCollector.Workflow.Steps.Api.User;
 using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
 
-namespace WotPersonalDataCollector.Tests.Workflow.Factory
+namespace WotPersonalDataCollectorTests.Workflow.Factory
 {
     [TestFixture]
     public class WorkflowStepsFactoryTests

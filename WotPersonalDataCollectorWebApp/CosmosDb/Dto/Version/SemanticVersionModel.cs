@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 {
+	using System.Diagnostics.CodeAnalysis;
+
 	[ExcludeFromCodeCoverage]
     internal class SemanticVersionModel : IEquatable<SemanticVersionModel>
     {

@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollector.WebApp.CosmosDb.Context
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
 {   
 	/// <summary>
 	/// Cosmos database context wrapper for controller classes

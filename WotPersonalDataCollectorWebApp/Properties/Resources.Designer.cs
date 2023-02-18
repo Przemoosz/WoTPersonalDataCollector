@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WotPersonalDataCollector.WebApp.Properties {
+namespace WotPersonalDataCollectorWebApp.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WotPersonalDataCollector.WebApp.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WotPersonalDataCollector.WebApp.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WotPersonalDataCollectorWebApp.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

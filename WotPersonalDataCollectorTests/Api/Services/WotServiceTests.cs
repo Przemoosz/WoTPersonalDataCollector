@@ -1,5 +1,5 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -10,7 +10,7 @@ using WotPersonalDataCollector.Api.Services;
 using WotPersonalDataCollector.Workflow;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.Api.Services
+namespace WotPersonalDataCollectorTests.Api.Services
 {
     [TestFixture]
     public class WotServiceTests

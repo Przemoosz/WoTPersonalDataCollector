@@ -1,13 +1,13 @@
-﻿using FluentAssertions;
-using NSubstitute;
+﻿using NSubstitute;
 using NUnit.Framework;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
-using WotPersonalDataCollector.Api.User.DTO;
 using WotPersonalDataCollector.Utilities;
+using WotPersonalDataCollector.Api.Http.RequestObjects;
+using FluentAssertions;
+using TddXt.AnyRoot.Strings;
+using WotPersonalDataCollector.Api.User.DTO;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.Api.Http.RequestObjects
+namespace WotPersonalDataCollectorTests.Api.Http.RequestObjects
 {
     [TestFixture]
     public class UserPersonalDataRequestObjectFactoryTests

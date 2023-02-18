@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
-using WotPersonalDataCollector.WebApp.UnitTests.Categories;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
+using WotPersonalDataCollectorWebApp.UnitTests.Categories;
 
-namespace WotPersonalDataCollector.WebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
+namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
 {
 	[TestFixture, RuleTests]
 	public class LowerAspPatchVersionRuleTests

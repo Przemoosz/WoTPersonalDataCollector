@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollector.WebApp.Models.ViewModels
+﻿namespace WotPersonalDataCollectorWebApp.Models.ViewModels
 {
 	public class VersionValidateViewModel
 	{

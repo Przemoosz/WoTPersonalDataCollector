@@ -1,13 +1,14 @@
 using System;
 using FluentAssertions;
+using WotPersonalDataCollector.Utilities;
 using NUnit.Framework;
 using TddXt.AnyRoot.Math;
+using TddXt.AnyRoot.Numbers;
+using static TddXt.AnyRoot.Root;
 using TddXt.AnyRoot.Strings;
 using WotPersonalDataCollector.Exceptions;
-using WotPersonalDataCollector.Utilities;
-using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.Utilities
+namespace WotPersonalDataCollectorTests.Utilities
 {
     [TestFixture]
     public class ConfigurationTests

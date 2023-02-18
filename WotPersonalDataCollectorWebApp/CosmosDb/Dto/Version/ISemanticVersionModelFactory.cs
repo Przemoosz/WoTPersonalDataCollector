@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
 
 internal interface ISemanticVersionModelFactory
 {

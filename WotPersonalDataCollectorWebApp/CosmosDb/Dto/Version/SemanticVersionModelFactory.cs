@@ -1,7 +1,7 @@
-﻿using WotPersonalDataCollector.WebApp.Exceptions;
-
-namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
 {
+	using Exceptions;
+
 	internal class SemanticVersionModelFactory : ISemanticVersionModelFactory
     {
         public SemanticVersionModel Create(string version)

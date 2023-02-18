@@ -5,7 +5,7 @@ using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.PersonalData
+namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.PersonalData
 {
     [TestFixture]
     public class CreateWotApiResponseContractResolverStepTests

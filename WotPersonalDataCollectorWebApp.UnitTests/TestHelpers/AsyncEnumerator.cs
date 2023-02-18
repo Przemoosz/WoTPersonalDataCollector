@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollector.WebApp.UnitTests.TestHelpers
+﻿namespace WotPersonalDataCollectorWebApp.UnitTests.TestUtilities
 {
 	internal sealed class AsyncEnumerator<T>: IAsyncEnumerator<T> where T: class
 	{

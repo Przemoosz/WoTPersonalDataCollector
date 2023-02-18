@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollector.WebApp.Exceptions;
+using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
+using WotPersonalDataCollectorWebApp.Exceptions;
 
-namespace WotPersonalDataCollector.WebApp.UnitTests.CosmosDb.Dto
+namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto
 {
     [TestFixture, Parallelizable]
     public class SemanticVersionModelFactoryTests

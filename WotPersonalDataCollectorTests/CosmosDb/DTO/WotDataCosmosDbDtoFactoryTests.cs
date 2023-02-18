@@ -8,7 +8,7 @@ using WotPersonalDataCollector.CosmosDb.DTO;
 using WotPersonalDataCollector.Utilities;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.CosmosDb.DTO
+namespace WotPersonalDataCollectorTests.CosmosDb.DTO
 {
     [TestFixture]
     public class WotDataCosmosDbDtoFactoryTests

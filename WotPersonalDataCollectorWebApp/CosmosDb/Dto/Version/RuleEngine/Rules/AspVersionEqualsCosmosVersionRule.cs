@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules
+﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules
 {
 	internal sealed class AspVersionEqualsCosmosVersionRule: IVersionRule
 	{

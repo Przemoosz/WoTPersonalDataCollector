@@ -1,17 +1,18 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WotPersonalDataCollector.WebApp.CosmosDb.Context;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
-using WotPersonalDataCollector.WebApp.Factories;
-using WotPersonalDataCollector.WebApp.Properties;
-using WotPersonalDataCollector.WebApp.Services;
-using WotPersonalDataCollector.WebApp.Utilities;
-
-namespace WotPersonalDataCollector.WebApp
+﻿namespace WotPersonalDataCollectorWebApp
 {
+	using CosmosDb.Dto.Version;
+	using CosmosDb.Dto.Version.RuleEngine;
+	using CosmosDb.Dto.Version.RuleEngine.Factory;
+	using Utilities;
+	using Microsoft.AspNetCore.Identity;
+	using Microsoft.EntityFrameworkCore;
+	using CosmosDb.Context;
+	using Services;
+	using Factories;
+	using Properties;
+	using System.Diagnostics.CodeAnalysis;
+
+
 	[ExcludeFromCodeCoverage]
 	internal sealed class StartupInstaller
 	{

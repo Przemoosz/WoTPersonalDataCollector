@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollector.WebApp.Properties;
+﻿namespace WotPersonalDataCollectorWebApp.Properties;
 
 /// <summary>
 /// Wrapper for <see cref="Resources"/> class

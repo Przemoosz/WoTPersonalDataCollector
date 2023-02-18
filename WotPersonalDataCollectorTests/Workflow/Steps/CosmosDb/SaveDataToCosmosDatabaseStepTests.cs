@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
+﻿using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using FluentAssertions;
+using NSubstitute.ExceptionExtensions;
 using TddXt.AnyRoot;
 using WotPersonalDataCollector.CosmosDb.Services;
 using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.CosmosDb
+namespace WotPersonalDataCollectorTests.Workflow.Steps.CosmosDb
 {
     [TestFixture]
     public class SaveDataToCosmosDatabaseStepTests

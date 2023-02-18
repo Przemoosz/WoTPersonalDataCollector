@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using WotPersonalDataCollector.WebApp.Models;
-using WotPersonalDataCollector.WebApp.Services;
+using WotPersonalDataCollectorWebApp.Models;
+using WotPersonalDataCollectorWebApp.Services;
 
-namespace WotPersonalDataCollector.WebApp.Controllers;
+namespace WotPersonalDataCollectorWebApp.Controllers;
 
 public class HomeController : Controller
 {

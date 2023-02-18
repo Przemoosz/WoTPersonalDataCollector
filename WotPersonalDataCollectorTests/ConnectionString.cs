@@ -1,6 +1,12 @@
-﻿using TddXt.AnyExtensibility;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TddXt.AnyExtensibility;
+using TddXt.AnyRoot;
 
-namespace WotPersonalDataCollector.Tests
+namespace WotPersonalDataCollectorTests
 {
     internal static class ConnectionString
     {

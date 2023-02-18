@@ -9,7 +9,7 @@ using WotPersonalDataCollector.Workflow;
 using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
 using static TddXt.AnyRoot.Root;
 
-namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Http.RequestObjects
+namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http.RequestObjects
 {
     [TestFixture]
     public class CreateUserInfoRequestObjectStepTests

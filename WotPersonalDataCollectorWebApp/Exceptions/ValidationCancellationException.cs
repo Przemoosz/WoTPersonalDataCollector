@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace WotPersonalDataCollector.WebApp.Exceptions
+﻿namespace WotPersonalDataCollectorWebApp.Exceptions
 {
+	using System.Diagnostics.CodeAnalysis;
+
 	[ExcludeFromCodeCoverage]
 	public class ValidationCancellationException: Exception
 	{
