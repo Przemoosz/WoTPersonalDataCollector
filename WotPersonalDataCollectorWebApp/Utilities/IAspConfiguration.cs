@@ -1,11 +1,9 @@
-﻿namespace WotPersonalDataCollector.WebApp.Utilities;
-
-internal interface IAspConfiguration
+﻿namespace WotPersonalDataCollector.WebApp.Utilities
 {
-    string DatabaseName { get; }
-    string WotDtoContainerName { get; }
-    string VersionModelContainerName { get; }
+	using WotPersonalDataCollector.SharedKernel.Utilities;
 
-	string CosmosConnectionString { get; }
-    string WotDtoVersion { get; }
+	internal interface IAspConfiguration : IConfigurationBase
+	{
+	}
 }
+

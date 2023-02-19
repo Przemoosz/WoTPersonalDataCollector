@@ -16,7 +16,7 @@ namespace WotPersonalDataCollector.CosmosDb.Services
 
         public async Task Create(Database database)
         {
-            ContainerProperties properties = new ContainerProperties(_configuration.ContainerName, PartitionKey);
+            ContainerProperties properties = new ContainerProperties(_configuration.WotDtoContainerName, PartitionKey);
             await database.CreateContainerIfNotExistsAsync(properties);
         }
     }

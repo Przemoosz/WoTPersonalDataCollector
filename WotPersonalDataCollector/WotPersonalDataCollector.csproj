@@ -33,4 +33,7 @@
 			<_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\WotPersonalDataCollector.SharedKernel\WotPersonalDataCollector.SharedKernel.csproj" />
+	</ItemGroup>
 </Project>

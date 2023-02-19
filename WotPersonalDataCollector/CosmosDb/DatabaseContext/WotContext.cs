@@ -16,7 +16,7 @@ namespace WotPersonalDataCollector.CosmosDb.DatabaseContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WotDataCosmosDbDto>().ToContainer(_configuration.ContainerName);
+            modelBuilder.Entity<WotDataCosmosDbDto>().ToContainer(_configuration.WotDtoContainerName);
             modelBuilder.Entity<WotDataCosmosDbDto>().HasPartitionKey(d => d.AccountId);
             modelBuilder.Entity<WotDataCosmosDbDto>().Property(d => d.Id).ToJsonProperty(IdJson);
             base.OnModelCreating(modelBuilder);
@@ -24,7 +24,7 @@ namespace WotPersonalDataCollector.CosmosDb.DatabaseContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseCosmos(_configuration.CosmosConnectionString, _configuration.CosmosDbName);
+            optionsBuilder.UseCosmos(_configuration.CosmosConnectionString, _configuration.DatabaseName);
         }
     }
 }

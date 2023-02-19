@@ -26,7 +26,7 @@
         public async Task<Database> CreateDatabaseIfNotExistsAsync()
         {
             ThroughputProperties throughputProperties = ThroughputProperties.CreateManualThroughput(_configuration.DatabaseThroughput);
-            return await _cosmosClient.CreateDatabaseIfNotExistsAsync(_configuration.CosmosDbName, throughputProperties);
+            return await _cosmosClient.CreateDatabaseIfNotExistsAsync(_configuration.DatabaseName, throughputProperties);
         }
     }
 }

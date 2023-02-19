@@ -1,12 +1,12 @@
-﻿using WotPersonalDataCollector.WebApp.Dto;
-
-namespace WotPersonalDataCollector.WebApp.Factories
+﻿namespace WotPersonalDataCollector.WebApp.Factories
 {
+	using Dto;
+
 	/// <summary>
-    /// Factory responsible for creating <see cref="Page{T}"/> or <see cref="DetailedPage{T}"/> that pages input data.
-    /// </summary>
-    /// <typeparam name="T">Type of dto.</typeparam>
-    public interface IPageFactory<T> where T : class
+	/// Factory responsible for creating <see cref="Page{T}"/> or <see cref="DetailedPage{T}"/> that pages input data.
+	/// </summary>
+	/// <typeparam name="T">Type of dto.</typeparam>
+	public interface IPageFactory<T> where T : class
     {
 		/// <summary>
 		/// Creates <see cref="Page{T}"/> object from part of <paramref name="dataSource"/> items.
