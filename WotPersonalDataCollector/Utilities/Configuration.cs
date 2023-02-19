@@ -9,7 +9,7 @@
 	/// <summary>
 	/// Implementation of <see cref="IConfiguration"/> interface. Provides values of local variables.
 	/// </summary>
-	internal class Configuration: ConfigurationBase, IConfiguration 
+	internal sealed class Configuration: ConfigurationBase, IConfiguration 
     {
 	    /// <inheritdoc />
 	    /// <exception cref="LocalVariableException"/>

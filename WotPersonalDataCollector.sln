@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WotPersonalDataCollector.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WotPersonalDataCollector.WebApp.UnitTests", "WotPersonalDataCollectorWebApp.UnitTests\WotPersonalDataCollector.WebApp.UnitTests.csproj", "{C0699A20-2131-47DF-B6B3-419E3F7439B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WotPersonalDataCollector.SharedKernel", "WotPersonalDataCollector.SharedKernel\WotPersonalDataCollector.SharedKernel.csproj", "{345C2C33-7858-46B7-A9E8-84869172513C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WotPersonalDataCollector.SharedKernel", "WotPersonalDataCollector.SharedKernel\WotPersonalDataCollector.SharedKernel.csproj", "{345C2C33-7858-46B7-A9E8-84869172513C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WotPersonalDataCollector.SharedKernel.Tests", "WotPersonalDataCollector.SharedKernel.Tests\WotPersonalDataCollector.SharedKernel.Tests.csproj", "{ACF2463F-3FAF-4438-A57E-E55B06B9D688}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{345C2C33-7858-46B7-A9E8-84869172513C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{345C2C33-7858-46B7-A9E8-84869172513C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{345C2C33-7858-46B7-A9E8-84869172513C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACF2463F-3FAF-4438-A57E-E55B06B9D688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACF2463F-3FAF-4438-A57E-E55B06B9D688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACF2463F-3FAF-4438-A57E-E55B06B9D688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACF2463F-3FAF-4438-A57E-E55B06B9D688}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

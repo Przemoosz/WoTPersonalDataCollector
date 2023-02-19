@@ -27,7 +27,7 @@
             string dtoVersion = Any.String();
             WotAccountDto wotAccountDto = Any.Instance<WotAccountDto>();
             var userIdData = Any.Instance<UserIdData>();
-            _configuration.DtoVersion.Returns(dtoVersion);
+            _configuration.WotDtoVersion.Returns(dtoVersion);
             
             // Act
             var actual = _uut.Create(wotAccountDto, userIdData);

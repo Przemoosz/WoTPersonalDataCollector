@@ -4,6 +4,8 @@ WotPersonalDataCollectorTests/bin/*
 WotPersonalDataCollectorTests/obj/*
 WotPersonalDataCollector.SharedKernel/bin/*
 WotPersonalDataCollector.SharedKernel/obj/*
+WotPersonalDataCollector.SharedKernel.Tests/bin/*
+WotPersonalDataCollector.SharedKernel.Tests/obj/*
 WotPersonalDataCollectorWebApp.UnitTests/bin/*
 WotPersonalDataCollectorWebApp.UnitTests/obj/*
 WotPersonalDataCollector.sln.DotSettings.user

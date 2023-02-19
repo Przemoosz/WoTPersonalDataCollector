@@ -1,3 +1,5 @@
+using WotPersonalDataCollector.SharedKernel.Exceptions;
+
 namespace WotPersonalDataCollector.Tests.Utilities
 {
 	using System;
@@ -89,34 +91,6 @@ namespace WotPersonalDataCollector.Tests.Utilities
         }
 
         [Test]
-        public void ShouldReturnCosmosConnectionString()
-        {
-            // Arrange
-            var cosmosConnectionString = Any.String();
-            Environment.SetEnvironmentVariable("CosmosConnectionString", cosmosConnectionString);
-
-            // Act 
-            var actual = _uut.CosmosConnectionString;
-
-            // Assert
-            actual.Should().Be(cosmosConnectionString);
-        }
-
-        [Test]
-        public void ShouldReturnCosmosDbName()
-        {
-            // Arrange
-            var cosmosDbName = Any.String();
-            Environment.SetEnvironmentVariable("CosmosDbName", cosmosDbName);
-
-            // Act 
-            var actual = _uut.CosmosDbName;
-
-            // Assert
-            actual.Should().Be(cosmosDbName);
-        }
-
-        [Test]
         public void ShouldReturnDatabaseThroughput()
         {
             // Arrange
@@ -129,35 +103,7 @@ namespace WotPersonalDataCollector.Tests.Utilities
             // Assert
             actual.Should().Be(databaseThroughput);
         }
-
-        [Test]
-        public void ShouldReturnContainerName()
-        {
-            // Arrange
-            var containerName = Any.String();
-            Environment.SetEnvironmentVariable("ContainerName", containerName);
-
-            // Act 
-            var actual = _uut.ContainerName;
-
-            // Assert
-            actual.Should().Be(containerName);
-        }
-
-        [Test]
-        public void ShouldReturnDtoVersion()
-        {
-            // Arrange
-            var dtoVersion = Any.String();
-            Environment.SetEnvironmentVariable("DtoVersion", dtoVersion);
-
-            // Act 
-            var actual = _uut.DtoVersion;
-
-            // Assert
-            actual.Should().Be(dtoVersion);
-        }
-
+        
         [Test]
         public void ShouldThrowExceptionWhenDatabaseThroughputIsLowerThanFourHundred()
         {
@@ -187,21 +133,7 @@ namespace WotPersonalDataCollector.Tests.Utilities
             act.Should().Throw<DatabaseThroughputException>()
                 .WithMessage("Can not parse provided throughput in local variables to Int32!");
         }
-
-        [TestCase(null)]
-        [TestCase("")]
-        public void ShouldThrowExceptionWhenCosmosDbNameIsNullOrEmpty(string cosmosDbName)
-        {
-            // Arrange 
-            Environment.SetEnvironmentVariable("CosmosDbName", cosmosDbName);
-
-            // Act
-            Func<string> func = () => _uut.CosmosDbName;
-
-            // Assert
-            func.Should().Throw<LocalVariableException>().WithMessage("CosmosDbName local variable is not set!");
-        }
-
+        
         [TestCase(null)]
         [TestCase("")]
         public void ShouldThrowExceptionWhenDatabaseThroughputIsNullOrEmpty(string databaseThroughput)
@@ -229,21 +161,7 @@ namespace WotPersonalDataCollector.Tests.Utilities
             // Assert
             func.Should().Throw<LocalVariableException>().WithMessage("ApplicationId local variable is not set!");
         }
-
-        [TestCase(null)]
-        [TestCase("")]
-        public void ShouldThrowExceptionWhenCosmosConnectionStringIsNullOrEmpty(string cosmosConnectionString)
-        {
-            // Arrange 
-            Environment.SetEnvironmentVariable("CosmosConnectionString", cosmosConnectionString);
-
-            // Act
-            Func<string> func = () => _uut.CosmosConnectionString;
-
-            // Assert
-            func.Should().Throw<LocalVariableException>().WithMessage("CosmosConnectionString local variable is not set!");
-        }
-
+        
         [TestCase(null)]
         [TestCase("")]
         public void ShouldThrowExceptionWhenUserNameIsNullOrEmpty(string userName)
@@ -299,35 +217,6 @@ namespace WotPersonalDataCollector.Tests.Utilities
             // Assert
             func.Should().Throw<LocalVariableException>().WithMessage("PlayersUri local variable is not set!");
         }
-
-        [TestCase(null)]
-        [TestCase("")]
-        public void ShouldThrowExceptionWhenContainerNameIsNullOrEmpty(string containerName)
-        {
-            // Arrange 
-            Environment.SetEnvironmentVariable("ContainerName", containerName);
-
-            // Act
-            Func<string> func = () => _uut.ContainerName;
-
-            // Assert
-            func.Should().Throw<LocalVariableException>().WithMessage("ContainerName local variable is not set!");
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        public void ShouldThrowExceptionWhenDtoVersionIsNullOrEmpty(string dtoVersion)
-        {
-            // Arrange 
-            Environment.SetEnvironmentVariable("DtoVersion", dtoVersion);
-
-            // Act
-            Func<string> func = () => _uut.DtoVersion;
-
-            // Assert
-            func.Should().Throw<LocalVariableException>().WithMessage("DtoVersion local variable is not set!");
-        }
-
 
         [Test]
         public void ShouldReturnFalseWhenUserNameIsNull()

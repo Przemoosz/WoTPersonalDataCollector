@@ -1,8 +1,11 @@
 ﻿namespace WotPersonalDataCollector.SharedKernel.Exceptions
 {
+	using System.Diagnostics.CodeAnalysis;
+
 	/// <summary>
-    /// Represents error that occurs during operation with local variables. 
-    /// </summary>
+	/// Represents error that occurs during operation with local variables. 
+	/// </summary>
+	[ExcludeFromCodeCoverage]
     public class LocalVariableException: Exception
     {
         /// <summary>
