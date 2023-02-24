@@ -1,17 +1,17 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WotPersonalDataCollector.WebApp.CosmosDb.Context;
-
-namespace WotPersonalDataCollector.WebApp.Controllers
+﻿namespace WotPersonalDataCollector.WebApp.Controllers
 {
+	using System.Text;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.EntityFrameworkCore;
+	using CosmosDb.Context;
+
 	public class WotController : Controller
     {
         private readonly ICosmosDatabaseContext _context;
 
         public WotController(ICosmosDatabaseContext context)
         {
-            _context = context;
+	        _context = context;
         }
 
         [HttpGet]

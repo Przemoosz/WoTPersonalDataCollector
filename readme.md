@@ -26,13 +26,14 @@ Used NuGet packages:
 - Microsoft.AspNetCore.Identity.UI ver. 6.0.11
 - Microsoft.Azure.Cosmos ver. 3.31.2
 - Microsoft.Azure.Functions.Extensions ver. 1.1.0
-- Microsoft.Extensions.DependencyInjection ver. 6.0.1
 - Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.11
 - Microsoft.EntityFrameworkCore.Tools ver. 6.0.11
+- Microsoft.Extensions.DependencyInjection ver. 7.0.0
 - Microsoft.NET.Sdk.Functions ver. 4.1.3
 - Microsoft.NET.Test.Sdk ver. 17.4.0
+- Microsoft.VisualStudio.Web.CodeGeneration.Design ver. 6.0.10
 - MockQueryable.NSubstitute ver. 7.0.0
-- NSubstitute ver. 4.4.0
+- NSubstitute ver. 5.0.0
 - NUnit ver. 3.13.3
 - NUnit.Analyzers ver. 3.5.0
 - NUnit3TestAdapter ver. 4.3.1
@@ -50,7 +51,7 @@ Version name - Description - Status
 - WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - Finished and merged
 - WPD-8-CreateResourceFiles - Create resource file for strings etc. - Finished and merged
 - WPD-9-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Finished and merged
-- WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
+- WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Finished and merged
 
 Application Architecture Change is planned after WPD-10 version
 
@@ -111,10 +112,10 @@ In this file add and fill missing data. File should look like this:
     "PlayersUri": "https://api.worldoftanks.eu/wot/account/list/",
     "PersonalDataUri": "https://api.worldoftanks.eu/wot/account/info/",
     "CosmosConnectionString": "Find this property in your Cosmos DB in Azure Portal or in Azure Cosmos DB Emulator",
-    "CosmosDbName": "WotUserData",
-    "DatabaseThroughput": "Manual throughput this variable can not be lower than 400!",
-    "ContainerName": "WotAccountData",
-    "DtoVersion": "1.0.0"
+    "DatabaseName": "WotUserData",
+    "DatabaseThroughput": "Manual throughput this variable can not be lower than 1000!",
+    "WotDtoContainerName": "WotAccountData",
+    "WotDtoVersion": "1.0.0"
   }
 }
 ```
@@ -131,7 +132,8 @@ In this file add and fill missing data. File should look like this:
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DatabaseName": "WotUserData",
-        "ContainerName": "WotAccountData",
+        "WotDtoContainerName": "WotAccountData",
+        "VersionModelContainerName": "VersionValidationResult",
         "WotDtoVersion": "1.0.0",
         "CosmosConnectionString": "Find this property in your Cosmos DB in Azure Portal or in Azure Cosmos DB Emulator"
       },

@@ -12,7 +12,7 @@ namespace WotPersonalDataCollector.WebApp
             StartupInstaller startupInstaller = new StartupInstaller();
             startupInstaller.InstallComponents(builder);
             WebApplication app = builder.Build();
-
+            
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
