@@ -26,13 +26,14 @@ Used NuGet packages:
 - Microsoft.AspNetCore.Identity.UI ver. 6.0.11
 - Microsoft.Azure.Cosmos ver. 3.31.2
 - Microsoft.Azure.Functions.Extensions ver. 1.1.0
-- Microsoft.Extensions.DependencyInjection ver. 6.0.1
 - Microsoft.EntityFrameworkCore.Cosmos ver. 6.0.11
 - Microsoft.EntityFrameworkCore.Tools ver. 6.0.11
+- Microsoft.Extensions.DependencyInjection ver. 7.0.0
 - Microsoft.NET.Sdk.Functions ver. 4.1.3
 - Microsoft.NET.Test.Sdk ver. 17.4.0
+- Microsoft.VisualStudio.Web.CodeGeneration.Design ver. 6.0.10
 - MockQueryable.NSubstitute ver. 7.0.0
-- NSubstitute ver. 4.4.0
+- NSubstitute ver. 5.0.0
 - NUnit ver. 3.13.3
 - NUnit.Analyzers ver. 3.5.0
 - NUnit3TestAdapter ver. 4.3.1
@@ -50,24 +51,25 @@ Version name - Description - Status
 - WPD-7-ImproveValidationResultsView - Improve ValidationResults view, so it contains paging, sorting - Finished and merged
 - WPD-8-CreateResourceFiles - Create resource file for strings etc. - Finished and merged
 - WPD-9-ImplementCleaningValidationResult - Implement endpoint for deleting all validation results - Finished and merged
-- WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Planned
+- WPD-10-ImplementSharedKernel - Implement kernel that is shared between projects - Finished and merged
 
 Application Architecture Change is planned after WPD-10 version
 
-- WPD-11-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
-- WPD-12-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - HTTP Triggered Azure Function - Planned
-- WPD-13-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
-- WPD-14-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
-- WPD-15-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
-- WPD-16-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
-- WPD-17-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
-- WPD-18-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-19-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-20-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
-- WPD-21-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
-- WPD-22-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
-- WPD-23-CreateAccountStatisticsBasedOnPersonalData - Create and display account statistics based on personal data - Planned
-- WPD-24-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
+- WPD-11-CreateWpdAzureMicroServicesFactoryAPIBasedOnHttpTriggeredAzureFunction - Create WPD Azure Function (Rest API) that will handle setting up azure components' ex. creating database or ADF - Planned
+- WPD-12-ImplementEndpointForCosmosDbSetUp - Implement endpoint in WPD Azure Micro Services Factory API for setting up database and containers - Planned
+- WPD-13-ImplementDatabaseCreateUsingCosmosDbApi - Implement Database Create Using Cosmos Db Api in DataCrwaler - Planned
+- WPD-14-ImplementHttpTriggeredAzureFunctionForDbDtoVersionCheck - Create HTTP Triggered Azure Function for Cosmos Db and ASP.Net dto version check - Planned
+- WPD-15-RemoveVersionCheckFromAspNetAppAndImplementConnectionWithWpdDtoValidationApp - Remove Version Check From Asp .Net App And Implement Connection With WpdDtoValidationApp - Planned
+- WPD-16-DisplayDataFromCosmosDbInPrettyWay - Displaying saved data from CosmosDb in pretty way - Planned
+- WPD-17-SeparateCosmosDbSetUpFromWotDataCrawlerIntoWpdMicroServicesFactoryAPI - Remove Cosmos Db SetUp from Wot crawler and implement connection with WPD Micro Services Factory API for Cosmos DB setup - Planned
+- WPD-18-ImplementEndpointForAdfCreate - Implement endpoint in WpdMicroServicesFactoryAPI for creating Azure Data Factory - Planned
+- WPD-19-ImplementLinkedServiceFactory - Implement linked service factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-20-ImplementDatasetFactory - Implement dataset factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-21-ImplementPipelineFactory - Implement pipeline factory in WpdMicroServicesFactoryAPI - Planned
+- WPD-22-IncreaseCodeCoverage - Adding/modifying tests to increase code coverage - Planned
+- WPD-23-ImplementIntegrationTestForVersioning - Implement integration tests for various cases with versioning check from Cosmos DB - Planned
+- WPD-24-CreateAccountStatisticsBasedOnPersonalData - Create and display account statistics based on personal data - Planned
+- WPD-25-AddMissingDocumentation - Add missing documentation for classes and interfaces - Planned
 
 ## Architecture
 Current architecture with future architecture elements
@@ -110,10 +112,10 @@ In this file add and fill missing data. File should look like this:
     "PlayersUri": "https://api.worldoftanks.eu/wot/account/list/",
     "PersonalDataUri": "https://api.worldoftanks.eu/wot/account/info/",
     "CosmosConnectionString": "Find this property in your Cosmos DB in Azure Portal or in Azure Cosmos DB Emulator",
-    "CosmosDbName": "WotUserData",
-    "DatabaseThroughput": "Manual throughput this variable can not be lower than 400!",
-    "ContainerName": "WotAccountData",
-    "DtoVersion": "1.0.0"
+    "DatabaseName": "WotUserData",
+    "DatabaseThroughput": "Manual throughput this variable can not be lower than 1000!",
+    "WotDtoContainerName": "WotAccountData",
+    "WotDtoVersion": "1.0.0"
   }
 }
 ```
@@ -130,7 +132,8 @@ In this file add and fill missing data. File should look like this:
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DatabaseName": "WotUserData",
-        "ContainerName": "WotAccountData",
+        "WotDtoContainerName": "WotAccountData",
+        "VersionModelContainerName": "VersionValidationResult",
         "WotDtoVersion": "1.0.0",
         "CosmosConnectionString": "Find this property in your Cosmos DB in Azure Portal or in Azure Cosmos DB Emulator"
       },

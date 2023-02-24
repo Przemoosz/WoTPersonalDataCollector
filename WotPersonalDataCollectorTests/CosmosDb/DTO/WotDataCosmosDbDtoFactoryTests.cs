@@ -1,16 +1,13 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api.PersonalData.Dto;
-using WotPersonalDataCollector.Api.User.DTO;
-using WotPersonalDataCollector.CosmosDb.DTO;
-using WotPersonalDataCollector.Utilities;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.CosmosDb.DTO
+﻿namespace WotPersonalDataCollector.Tests.CosmosDb.DTO
 {
-    [TestFixture]
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.Api.PersonalData.Dto;
+	using WotPersonalDataCollector.Api.User.DTO;
+	using WotPersonalDataCollector.CosmosDb.DTO;
+	using WotPersonalDataCollector.Utilities;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class WotDataCosmosDbDtoFactoryTests
     {
         private IConfiguration _configuration;
@@ -30,7 +27,7 @@ namespace WotPersonalDataCollectorTests.CosmosDb.DTO
             string dtoVersion = Any.String();
             WotAccountDto wotAccountDto = Any.Instance<WotAccountDto>();
             var userIdData = Any.Instance<UserIdData>();
-            _configuration.DtoVersion.Returns(dtoVersion);
+            _configuration.WotDtoVersion.Returns(dtoVersion);
             
             // Act
             var actual = _uut.Create(wotAccountDto, userIdData);

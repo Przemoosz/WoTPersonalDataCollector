@@ -1,10 +1,11 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version
+﻿using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Extensions;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+using WotPersonalDataCollector.WebApp.Utilities;
+
+namespace WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version
 {
-    using Utilities;
-    using RuleEngine;
-    using RuleEngine.Extensions;
-    using RuleEngine.Factory;
-    using RuleEngine.Rules;
 	internal class DtoVersionValidator : IDtoVersionValidator
     {
         private readonly IAspConfiguration _aspConfiguration;

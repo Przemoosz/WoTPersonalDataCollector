@@ -1,12 +1,9 @@
-﻿using FluentAssertions;
-using NuGet.Common;
-using NUnit.Framework;
-using WotPersonalDataCollectorWebApp.Exceptions;
-using WotPersonalDataCollectorWebApp.Services;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-
-namespace WotPersonalDataCollectorWebApp.UnitTests.Services
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.Services
 {
+	using Exceptions;
+	using WotPersonalDataCollector.WebApp.Services;
+	using Categories;
+
 	[TestFixture, ServiceTest, Parallelizable]
 	public class ValidationCancellationServiceTests
 	{

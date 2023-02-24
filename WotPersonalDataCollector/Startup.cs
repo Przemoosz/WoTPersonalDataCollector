@@ -1,22 +1,22 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using WotPersonalDataCollector.Api;
-using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
-using WotPersonalDataCollector.Api.PersonalData;
-using WotPersonalDataCollector.Api.Services;
-using WotPersonalDataCollector.Api.User;
-using WotPersonalDataCollector.CosmosDb;
-using WotPersonalDataCollector.CosmosDb.DatabaseContext;
-using WotPersonalDataCollector.CosmosDb.DTO;
-using WotPersonalDataCollector.CosmosDb.Services;
-using WotPersonalDataCollector.Utilities;
-using WotPersonalDataCollector.Workflow.Factory;
-
-[assembly: FunctionsStartup(typeof(WotPersonalDataCollector.Startup))]
+﻿[assembly: Microsoft.Azure.Functions.Extensions.DependencyInjection.FunctionsStartup(typeof(WotPersonalDataCollector.Startup))]
 namespace WotPersonalDataCollector
 {
-    internal sealed class Startup: FunctionsStartup
+	using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+	using Microsoft.Extensions.DependencyInjection;
+	using Api;
+	using Api.Http;
+	using Api.Http.RequestObjects;
+	using Api.PersonalData;
+	using Api.Services;
+	using Api.User;
+	using CosmosDb;
+	using CosmosDb.DatabaseContext;
+	using CosmosDb.DTO;
+	using CosmosDb.Services;
+	using Utilities;
+	using Workflow.Factory;
+
+	internal sealed class Startup: FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {

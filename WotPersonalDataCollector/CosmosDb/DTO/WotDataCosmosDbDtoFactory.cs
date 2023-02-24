@@ -15,7 +15,7 @@ namespace WotPersonalDataCollector.CosmosDb.DTO
         public WotDataCosmosDbDto Create(WotAccountDto accountDto, UserIdData userIdData)
         {
             WotDataCosmosDbDto dto =
-                new WotDataCosmosDbDto(accountDto, userIdData.AccountId.ToString(), _configuration.DtoVersion);
+                new WotDataCosmosDbDto(accountDto, userIdData.AccountId.ToString(), _configuration.WotDtoVersion);
             return dto;
         }
     }

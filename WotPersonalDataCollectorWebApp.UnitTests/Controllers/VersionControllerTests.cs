@@ -1,22 +1,19 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using MockQueryable.NSubstitute;
-using NSubstitute;
-using NUnit.Framework;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollectorWebApp.Controllers;
-using WotPersonalDataCollectorWebApp.CosmosDb.Context;
-using WotPersonalDataCollectorWebApp.Dto;
-using WotPersonalDataCollectorWebApp.Factories;
-using WotPersonalDataCollectorWebApp.Models;
-using WotPersonalDataCollectorWebApp.Properties;
-using WotPersonalDataCollectorWebApp.Services;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-using WotPersonalDataCollectorWebApp.UnitTests.TestHelpers;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorWebApp.UnitTests.Controllers
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.Controllers
 {
+	using Microsoft.AspNetCore.Mvc;
+	using MockQueryable.NSubstitute;
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.WebApp.Controllers;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Context;
+	using Dto;
+	using WotPersonalDataCollector.WebApp.Factories;
+	using Models;
+	using Properties;
+	using WotPersonalDataCollector.WebApp.Services;
+	using Categories;
+	using TestHelpers;
+	using static TddXt.AnyRoot.Root;
+
 	[TestFixture, ControllerTests, Parallelizable]
 	public class VersionControllerTests
 	{

@@ -1,7 +1,7 @@
-﻿namespace WotPersonalDataCollectorWebApp.Services
-{
-	using Exceptions;
+﻿using WotPersonalDataCollector.WebApp.Exceptions;
 
+namespace WotPersonalDataCollector.WebApp.Services
+{
 	/// <inheritdoc />
 	internal sealed class ValidationCancellationService: IValidationCancellationService
 	{

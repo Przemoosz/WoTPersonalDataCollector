@@ -1,11 +1,9 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using WotPersonalDataCollectorWebApp.Factories;
-using WotPersonalDataCollectorWebApp.Models;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-
-namespace WotPersonalDataCollectorWebApp.UnitTests.Factories
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.Factories
 {
+	using WotPersonalDataCollector.WebApp.Factories;
+	using Models;
+	using Categories;
+
 	[TestFixture, Parallelizable, FactoryTests]
 	public class PageFactoryTests
 	{

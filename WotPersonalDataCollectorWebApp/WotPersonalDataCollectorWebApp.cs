@@ -1,7 +1,7 @@
-namespace WotPersonalDataCollectorWebApp
-{
-	using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
+namespace WotPersonalDataCollector.WebApp
+{
 	[ExcludeFromCodeCoverage]
     internal static class WotPersonalDataCollectorWebApp
     {
@@ -12,7 +12,7 @@ namespace WotPersonalDataCollectorWebApp
             StartupInstaller startupInstaller = new StartupInstaller();
             startupInstaller.InstallComponents(builder);
             WebApplication app = builder.Build();
-
+            
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();

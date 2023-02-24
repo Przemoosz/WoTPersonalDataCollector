@@ -1,12 +1,9 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
+﻿using Microsoft.Extensions.Logging;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+using WotPersonalDataCollector.WebApp.UnitTests.Categories;
 
-namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Factory
+namespace WotPersonalDataCollector.WebApp.UnitTests.CosmosDb.Dto.RuleEngine.Factory
 {
 	[TestFixture, FactoryTests, Parallelizable]
 	public class RulesFactoryTests

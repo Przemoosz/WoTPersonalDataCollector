@@ -1,12 +1,19 @@
-﻿using System;
-using GuardNet;
-using WotPersonalDataCollector.Exceptions;
-
-namespace WotPersonalDataCollector.Utilities
+﻿namespace WotPersonalDataCollector.Utilities
 {
-    internal class Configuration: IConfiguration 
+	using System;
+	using GuardNet;
+	using Exceptions;
+	using WotPersonalDataCollector.SharedKernel.Utilities;
+	using WotPersonalDataCollector.SharedKernel.Exceptions;
+
+	/// <summary>
+	/// Implementation of <see cref="IConfiguration"/> interface. Provides values of local variables.
+	/// </summary>
+	internal sealed class Configuration: ConfigurationBase, IConfiguration 
     {
-        public string ApplicationId
+	    /// <inheritdoc />
+	    /// <exception cref="LocalVariableException"/>
+		public string ApplicationId
         {
             get
             {
@@ -15,7 +22,9 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
-        public string UserName
+	    /// <inheritdoc />
+	    /// <exception cref="LocalVariableException"/>
+		public string UserName
         {
             get
             {
@@ -24,7 +33,9 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
-        public string UserId
+	    /// <inheritdoc />
+	    /// <exception cref="LocalVariableException"/>
+		public string UserId
         {
             get
             {
@@ -38,7 +49,9 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
-        public string PlayersUri
+	    /// <inheritdoc />
+	    /// <exception cref="LocalVariableException"/>
+		public string PlayersUri
         {
             get
             {
@@ -47,7 +60,9 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
-        public string PersonalDataUri
+	    /// <inheritdoc />
+	    /// <exception cref="LocalVariableException"/>
+		public string PersonalDataUri
         {
             get
             {
@@ -56,25 +71,10 @@ namespace WotPersonalDataCollector.Utilities
             }
         }
 
-        public string CosmosConnectionString
-        {
-            get
-            {
-                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("CosmosConnectionString"), "CosmosConnectionString local variable is not set!");
-                return Environment.GetEnvironmentVariable("CosmosConnectionString");
-            }
-        }
-
-        public string CosmosDbName
-        {
-            get
-            {
-                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("CosmosDbName"), "CosmosDbName local variable is not set!");
-                return Environment.GetEnvironmentVariable("CosmosDbName");
-            }
-        }
-
-        public int DatabaseThroughput
+		/// <inheritdoc />
+		/// <exception cref="LocalVariableException"/>
+		/// <exception cref="DatabaseThroughputException"/>
+		public int DatabaseThroughput
         {
             get
             {
@@ -93,25 +93,7 @@ namespace WotPersonalDataCollector.Utilities
                 return throughput;
             }
         }
-
-        public string ContainerName
-        {
-            get
-            {
-                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("ContainerName"), "ContainerName local variable is not set!");
-                return Environment.GetEnvironmentVariable("ContainerName");
-            }
-        }
-
-        public string DtoVersion
-        {
-            get
-            {
-                Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("DtoVersion"), "DtoVersion local variable is not set!");
-                return Environment.GetEnvironmentVariable("DtoVersion");
-            }
-        }
-
+        
         public bool TryGetUserName(out string userName)
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WotUserName")))

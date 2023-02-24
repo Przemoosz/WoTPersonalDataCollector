@@ -1,17 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.Http.RequestObjects
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.Http.RequestObjects
 {
-    [TestFixture]
+	using System;
+	using System.Threading.Tasks;
+	using NSubstitute.ExceptionExtensions;
+	using WotPersonalDataCollector.Api.Http.RequestObjects;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class CreateUserInfoRequestObjectStepTests
     {
         private IUserInfoRequestObjectFactory _userInfoRequestObjectFactory;

@@ -1,12 +1,10 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api.PersonalData;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.Api.Http.PersonalData
+﻿namespace WotPersonalDataCollector.Tests.Api.PersonalData
 {
-    [TestFixture]
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.Api.PersonalData;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class WotApiResponseContractResolverTests
     {
         private string _userId;

@@ -1,7 +1,6 @@
-﻿@using VersionValidateResultModel = WotPersonalDataCollectorWebApp.Models.VersionValidateResultModel
+﻿@using VersionValidateResultModel = WotPersonalDataCollector.WebApp.Models.VersionValidateResultModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using WotPersonalDataCollectorWebApp.Dto
-@model DetailedPage<VersionValidateResultModel>
+@model WotPersonalDataCollector.WebApp.Dto.DetailedPage<VersionValidateResultModel>
 @{
 	ViewData["Title"] = "WPD - Versions validation";
 	int validationNumber = Model.ItemsNumber * (Model.PageNumber - 1) + 1;

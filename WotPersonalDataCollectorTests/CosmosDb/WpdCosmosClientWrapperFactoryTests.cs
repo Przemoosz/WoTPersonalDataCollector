@@ -1,12 +1,10 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollector.CosmosDb;
-using WotPersonalDataCollector.Utilities;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.CosmosDb
+﻿namespace WotPersonalDataCollector.Tests.CosmosDb
 {
+    using WotPersonalDataCollector.CosmosDb;
+    using WotPersonalDataCollector.Tests.TestHelpers;
+    using WotPersonalDataCollector.Utilities;
+    using static TddXt.AnyRoot.Root;
+
     [TestFixture]
     public class WpdCosmosClientWrapperFactoryTests
     {

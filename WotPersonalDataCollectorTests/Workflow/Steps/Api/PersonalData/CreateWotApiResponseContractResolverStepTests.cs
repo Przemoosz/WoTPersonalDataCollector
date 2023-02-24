@@ -1,13 +1,11 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using NUnit.Framework;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.Workflow.Steps.Api.PersonalData
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api.PersonalData
 {
-    [TestFixture]
+	using System.Threading.Tasks;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class CreateWotApiResponseContractResolverStepTests
     {
         private CreateWotApiResponseContractResolverStep _uut;

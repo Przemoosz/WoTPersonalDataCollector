@@ -1,4 +1,4 @@
-﻿namespace WotPersonalDataCollectorWebApp.Extensions
+﻿namespace WotPersonalDataCollector.WebApp.Extensions
 {
 	using Microsoft.EntityFrameworkCore;
 

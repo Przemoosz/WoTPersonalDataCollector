@@ -1,15 +1,13 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using Microsoft.Extensions.Logging;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version.RuleEngine;
-using WotPersonalDataCollectorWebApp.CosmosDb.Dto.Version;
-using WotPersonalDataCollectorWebApp.Exceptions;
-using WotPersonalDataCollectorWebApp.UnitTests.Categories;
-
-namespace WotPersonalDataCollectorWebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.CosmosDb.Dto.RuleEngine.Rules
 {
+	using Microsoft.Extensions.Logging;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+	using Exceptions;
+	using Categories;
+
+
 	[TestFixture, RuleTests]
 	public class HigherAspMinorVersionRuleTests
 	{

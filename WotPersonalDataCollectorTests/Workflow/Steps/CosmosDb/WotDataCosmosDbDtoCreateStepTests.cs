@@ -1,15 +1,12 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollector.CosmosDb.DTO;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.Workflow.Steps.CosmosDb
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.CosmosDb
 {
-    [TestFixture]
+	using System.Threading.Tasks;
+	using WotPersonalDataCollector.CosmosDb.DTO;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class WotDataCosmosDbDtoCreateStepTests
     {
         private IWotDataCosmosDbDtoFactory _wotDataCosmosDbDtoFactory;

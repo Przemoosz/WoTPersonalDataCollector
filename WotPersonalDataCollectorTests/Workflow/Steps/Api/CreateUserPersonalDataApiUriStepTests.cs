@@ -1,19 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentAssertions;
-using NSubstitute;
-using NSubstitute.ExceptionExtensions;
-using NUnit.Framework;
-using TddXt.AnyRoot;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.Api;
-using WotPersonalDataCollector.Workflow;
-using WotPersonalDataCollector.Workflow.Steps.Api;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollectorTests.Workflow.Steps.Api
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Steps.Api
 {
-    [TestFixture]
+	using System.Threading.Tasks;
+	using NSubstitute.ExceptionExtensions;
+	using TddXt.AnyRoot;
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.Api;
+	using WotPersonalDataCollector.Workflow;
+	using WotPersonalDataCollector.Workflow.Steps.Api;
+	using static TddXt.AnyRoot.Root;
+
+	[TestFixture]
     public class CreateUserPersonalDataApiUriStepTests
     {
         private IApiUriFactory _apiUriFactory;

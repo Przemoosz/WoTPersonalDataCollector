@@ -1,7 +1,7 @@
-﻿namespace WotPersonalDataCollectorWebApp.Factories
-{
-	using Dto;
+﻿using WotPersonalDataCollector.WebApp.Dto;
 
+namespace WotPersonalDataCollector.WebApp.Factories
+{
 	/// <inheritdoc/>
 	public sealed class PageFactory<T> : IPageFactory<T> where T: class
 	{

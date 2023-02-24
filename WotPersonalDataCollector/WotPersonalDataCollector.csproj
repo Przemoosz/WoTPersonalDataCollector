@@ -25,12 +25,15 @@
   </ItemGroup>
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>WotPersonalDataCollectorTests</_Parameter1>
+			<_Parameter1>WotPersonalDataCollector.Tests</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
 		</AssemblyAttribute>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\WotPersonalDataCollector.SharedKernel\WotPersonalDataCollector.SharedKernel.csproj" />
 	</ItemGroup>
 </Project>

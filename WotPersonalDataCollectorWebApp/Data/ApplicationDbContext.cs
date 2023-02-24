@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace WotPersonalDataCollectorWebApp.Data;
+namespace WotPersonalDataCollector.WebApp.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {

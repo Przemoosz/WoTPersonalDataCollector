@@ -1,27 +1,24 @@
-﻿using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
-using WotPersonalDataCollector.Api;
-using WotPersonalDataCollector.Api.Http;
-using WotPersonalDataCollector.Api.Http.RequestObjects;
-using WotPersonalDataCollector.Api.PersonalData;
-using WotPersonalDataCollector.Api.Services;
-using WotPersonalDataCollector.Api.User;
-using WotPersonalDataCollector.CosmosDb.DTO;
-using WotPersonalDataCollector.CosmosDb.Services;
-using WotPersonalDataCollector.Workflow.Factory;
-using WotPersonalDataCollector.Workflow.Steps;
-using WotPersonalDataCollector.Workflow.Steps.Api;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http;
-using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
-using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
-using WotPersonalDataCollector.Workflow.Steps.Api.Services;
-using WotPersonalDataCollector.Workflow.Steps.Api.User;
-using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
-
-namespace WotPersonalDataCollectorTests.Workflow.Factory
+﻿namespace WotPersonalDataCollector.Tests.Workflow.Factory
 {
-    [TestFixture]
+	using WotPersonalDataCollector.Api;
+	using WotPersonalDataCollector.Api.Http;
+	using WotPersonalDataCollector.Api.Http.RequestObjects;
+	using WotPersonalDataCollector.Api.PersonalData;
+	using WotPersonalDataCollector.Api.Services;
+	using WotPersonalDataCollector.Api.User;
+	using WotPersonalDataCollector.CosmosDb.DTO;
+	using WotPersonalDataCollector.CosmosDb.Services;
+	using WotPersonalDataCollector.Workflow.Factory;
+	using WotPersonalDataCollector.Workflow.Steps;
+	using WotPersonalDataCollector.Workflow.Steps.Api;
+	using WotPersonalDataCollector.Workflow.Steps.Api.Http;
+	using WotPersonalDataCollector.Workflow.Steps.Api.Http.RequestObjects;
+	using WotPersonalDataCollector.Workflow.Steps.Api.PersonalData;
+	using WotPersonalDataCollector.Workflow.Steps.Api.Services;
+	using WotPersonalDataCollector.Workflow.Steps.Api.User;
+	using WotPersonalDataCollector.Workflow.Steps.CosmosDb;
+
+	[TestFixture]
     public class WorkflowStepsFactoryTests
     {
         private IWorkflowStepsFactory _uut;

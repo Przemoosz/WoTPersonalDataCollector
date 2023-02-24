@@ -1,7 +1,5 @@
-﻿namespace WotPersonalDataCollectorWebApp.UnitTests.Categories
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.Categories
 {
-	using NUnit.Framework;
-
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
 	internal sealed class RuleTestsAttribute: CategoryAttribute
 	{

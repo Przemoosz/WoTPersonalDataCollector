@@ -1,9 +1,9 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
+﻿using Microsoft.EntityFrameworkCore;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto;
+using WotPersonalDataCollector.WebApp.Models;
+
+namespace WotPersonalDataCollector.WebApp.CosmosDb.Context
 {
-	using Dto;
-	using Models;
-	using Microsoft.EntityFrameworkCore;
-	
 	/// <summary>
 	/// Cosmos database context wrapper.
 	/// </summary>

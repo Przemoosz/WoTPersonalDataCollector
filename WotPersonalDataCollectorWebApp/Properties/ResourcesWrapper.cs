@@ -1,7 +1,7 @@
-﻿namespace WotPersonalDataCollectorWebApp.Properties
-{
-	using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace WotPersonalDataCollector.WebApp.Properties
+{
 	/// <inheritdoc />
 	[ExcludeFromCodeCoverage]
 	public sealed class ResourcesWrapper: IResourcesWrapper

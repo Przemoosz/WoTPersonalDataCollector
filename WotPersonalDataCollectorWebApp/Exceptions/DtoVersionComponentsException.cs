@@ -1,7 +1,7 @@
-﻿namespace WotPersonalDataCollectorWebApp.Exceptions
-{
-	using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace WotPersonalDataCollector.WebApp.Exceptions
+{
 	[ExcludeFromCodeCoverage]
     internal class DtoVersionComponentsException: Exception
     {

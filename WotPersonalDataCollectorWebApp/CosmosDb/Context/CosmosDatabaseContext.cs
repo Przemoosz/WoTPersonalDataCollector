@@ -1,12 +1,12 @@
-﻿namespace WotPersonalDataCollectorWebApp.CosmosDb.Context
-{
-	using Microsoft.EntityFrameworkCore;
-	using Dto;
-	using Data;
-	using Models;
-	using Utilities;
+﻿using Microsoft.EntityFrameworkCore;
+using WotPersonalDataCollector.WebApp.CosmosDb.Dto;
+using WotPersonalDataCollector.WebApp.Data;
+using WotPersonalDataCollector.WebApp.Models;
+using WotPersonalDataCollector.WebApp.Utilities;
 
-	/// <inheritdoc cref="T:WotPersonalDataCollectorWebApp.CosmosDb.Context.ICosmosContext"/>
+namespace WotPersonalDataCollector.WebApp.CosmosDb.Context
+{
+	/// <inheritdoc cref="T:WotPersonalDataCollector.WebApp.CosmosDb.Context.ICosmosContext"/>
 	public class CosmosDatabaseContext: DbContext, ICosmosDatabaseContext
     {
         private const string IdJson = "id";

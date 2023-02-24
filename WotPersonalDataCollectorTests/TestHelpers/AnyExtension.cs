@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TddXt.AnyExtensibility;
-using TddXt.AnyRoot;
-
-namespace WotPersonalDataCollectorTests
+﻿namespace WotPersonalDataCollector.Tests.TestHelpers
 {
-    internal static class ConnectionString
+    using TddXt.AnyExtensibility;
+
+    internal static class AnyExtension
     {
         public static string CosmosDbConnectionString(this BasicGenerator genRoot)
         {
