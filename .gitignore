@@ -2,6 +2,10 @@
 .idea/*
 WotPersonalDataCollectorTests/bin/*
 WotPersonalDataCollectorTests/obj/*
+WotPersonalDataCollector.AzureMicroServicesFactory/bin/*
+WotPersonalDataCollector.AzureMicroServicesFactory/obj/*
+WotPersonalDataCollector.AzureMicroServicesFactory.Tests/bin/*
+WotPersonalDataCollector.AzureMicroServicesFactory.Tests/obj/*
 WotPersonalDataCollector.SharedKernel/bin/*
 WotPersonalDataCollector.SharedKernel/obj/*
 WotPersonalDataCollector.SharedKernel.Tests/bin/*
@@ -9,6 +13,7 @@ WotPersonalDataCollector.SharedKernel.Tests/obj/*
 WotPersonalDataCollectorWebApp.UnitTests/bin/*
 WotPersonalDataCollectorWebApp.UnitTests/obj/*
 WotPersonalDataCollector.sln.DotSettings.user
+WotPersonalDataCollector.AzureMicroServicesFactory/Properties/serviceDependencies.local.json
 WotPersonalDataCollectorWebApp/Properties/launchSettings.json
 WotPersonalDataCollectorWebApp/wwwroot/lib/jquery/LICENSE.txt
 WotPersonalDataCollectorWebApp/wwwroot/lib/jquery-validation/LICENSE.md
