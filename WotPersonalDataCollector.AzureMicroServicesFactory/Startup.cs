@@ -1,4 +1,8 @@
-﻿[assembly: Microsoft.Azure.Functions.Extensions.DependencyInjection.FunctionsStartup(typeof(WotPersonalDataCollector.AzureMicroServicesFactory.Startup))]
+﻿using WotPersonalDataCollector.AzureMicroServicesFactory.Authentication.Token;
+using WotPersonalDataCollector.AzureMicroServicesFactory.Authorization;
+using WotPersonalDataCollector.AzureMicroServicesFactory.Security;
+
+[assembly: Microsoft.Azure.Functions.Extensions.DependencyInjection.FunctionsStartup(typeof(WotPersonalDataCollector.AzureMicroServicesFactory.Startup))]
 namespace WotPersonalDataCollector.AzureMicroServicesFactory
 {
 	using Microsoft.Azure.Functions.Extensions.DependencyInjection;
@@ -9,7 +13,7 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory
 	{
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			InstallLoggin(builder);
+			InstallLogging(builder);
 			InstallAzureMicroServicesFactoryDependencies(builder);
 			InstallLocalData(builder);
 			InstallCosmosDbDependencies(builder);
@@ -21,10 +25,12 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory
 
 		private void InstallAzureMicroServicesFactoryDependencies(IFunctionsHostBuilder builder)
 		{
-
+			builder.Services.AddSingleton<ITokenFactory, TokenFactory>();
+			builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
+			builder.Services.AddSingleton<IAuthorizationSecurityService, AuthorizationSecurityService>();
 		}
 
 		private void InstallLocalData(IFunctionsHostBuilder builder) => builder.Services.AddSingleton<IMicroServicesConfiguration, MicroServicesConfiguration>();
-		private void InstallLoggin(IFunctionsHostBuilder builder) => builder.Services.AddLogging();
+		private void InstallLogging(IFunctionsHostBuilder builder) => builder.Services.AddLogging();
 	}
 }

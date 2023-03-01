@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace WotPersonalDataCollector.AzureMicroServicesFactory.Utilities
+﻿namespace WotPersonalDataCollector.AzureMicroServicesFactory.Utilities
 {
 	using GuardNet;
 	using System;
@@ -12,20 +10,12 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory.Utilities
 	/// </summary>
 	internal class MicroServicesConfiguration : ConfigurationBase, IMicroServicesConfiguration
 	{
-		private readonly ILogger<MicroServicesConfiguration> _logger;
-
-		public MicroServicesConfiguration(ILogger<MicroServicesConfiguration> logger)
-		{
-			_logger = logger;
-		}
 		/// <inheritdoc/>
 		/// <exception cref="LocalVariableException"/>
 		public string AdminUsername
 		{
 			get
 			{
-				_logger.LogError("dsdsds");
-				_logger.LogDebug("chuj kurwa i chuj");
 				Guard.NotNullOrEmpty<LocalVariableException>(Environment.GetEnvironmentVariable("AdminUsername"), "AdminUsername local variable is not set!");
 				return Environment.GetEnvironmentVariable("AdminUsername");
 			}
