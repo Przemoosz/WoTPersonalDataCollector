@@ -5,7 +5,7 @@
 	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine;
 	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
 	using Exceptions;
-	using Categories;
+	using WotPersonalDataCollector.TestHelpers.Categories;
 
 
 	[TestFixture, RuleTests]

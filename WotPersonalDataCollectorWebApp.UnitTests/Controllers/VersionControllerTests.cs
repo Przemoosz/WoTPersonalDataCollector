@@ -1,4 +1,6 @@
-﻿namespace WotPersonalDataCollector.WebApp.UnitTests.Controllers
+﻿using WotPersonalDataCollector.WebApp.UnitTests.TestHelpers;
+
+namespace WotPersonalDataCollector.WebApp.UnitTests.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
 	using MockQueryable.NSubstitute;
@@ -10,8 +12,7 @@
 	using Models;
 	using Properties;
 	using WotPersonalDataCollector.WebApp.Services;
-	using Categories;
-	using TestHelpers;
+	using WotPersonalDataCollector.TestHelpers.Categories;
 	using static TddXt.AnyRoot.Root;
 
 	[TestFixture, ControllerTests, Parallelizable]

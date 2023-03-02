@@ -10,13 +10,6 @@
 	internal interface IAuthorizationSecurityService
 	{
 		/// <summary>
-		/// Gets whether authorization is blocked.
-		/// </summary>
-		/// <value>
-		/// Boolean value if authorization is available.</value>
-		public bool IsAuthorizationBlocked { get; }
-
-		/// <summary>
 		/// Gets number of total attempts.
 		/// </summary>
 		/// <value><see cref="int"/> value of total attempts.</value>

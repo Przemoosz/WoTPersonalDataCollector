@@ -1,10 +1,10 @@
 ﻿namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Authentication.Token
 {
-	using Categories;
+	using TestHelpers.Categories;
 	using WotPersonalDataCollector.AzureMicroServicesFactory.Authentication.Token;
 	using WotPersonalDataCollector.AzureMicroServicesFactory.Utilities;
 
-	[TestFixture, FactoryTest, Parallelizable]
+	[TestFixture, FactoryTests, Parallelizable]
 	public class TokenFactoryTests
 	{
 		private IMicroServicesConfiguration _configuration;

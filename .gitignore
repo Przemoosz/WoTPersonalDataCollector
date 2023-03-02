@@ -12,6 +12,8 @@ WotPersonalDataCollector.SharedKernel.Tests/bin/*
 WotPersonalDataCollector.SharedKernel.Tests/obj/*
 WotPersonalDataCollectorWebApp.UnitTests/bin/*
 WotPersonalDataCollectorWebApp.UnitTests/obj/*
+WotPersonalDataCollector.TestHelpers/bin/*
+WotPersonalDataCollector.TestHelpers/obj/*
 WotPersonalDataCollector.sln.DotSettings.user
 WotPersonalDataCollector.AzureMicroServicesFactory/Properties/serviceDependencies.local.json
 WotPersonalDataCollectorWebApp/Properties/launchSettings.json

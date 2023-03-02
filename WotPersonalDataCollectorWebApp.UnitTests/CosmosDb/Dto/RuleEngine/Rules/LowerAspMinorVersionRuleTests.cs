@@ -4,7 +4,7 @@
 	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version;
 	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine;
 	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
-	using Categories;
+	using WotPersonalDataCollector.TestHelpers.Categories;
 
 	[TestFixture, RuleTests]
 	public class LowerAspMinorVersionRuleTests

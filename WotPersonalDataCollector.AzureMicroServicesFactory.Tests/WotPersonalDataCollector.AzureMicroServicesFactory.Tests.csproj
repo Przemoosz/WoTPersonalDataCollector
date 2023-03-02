@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WotPersonalDataCollector.AzureMicroServicesFactory\WotPersonalDataCollector.AzureMicroServicesFactory.csproj" />
+    <ProjectReference Include="..\WotPersonalDataCollector.TestHelpers\WotPersonalDataCollector.TestHelpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

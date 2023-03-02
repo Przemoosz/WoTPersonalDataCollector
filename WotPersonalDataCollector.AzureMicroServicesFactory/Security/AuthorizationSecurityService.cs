@@ -8,9 +8,9 @@
 	{
 		private readonly ILogger<AuthorizationSecurityService> _logger;
 		private readonly object _securityLock = new();
-		public bool IsAuthorizationBlocked { get; private set; }
-		public int TotalAttempts { get; private set; } = 0;
-		public int TotalWrongAttempts { get; private set; } = 0;
+		private bool IsAuthorizationBlocked { get; set; }
+		public int TotalAttempts { get; private set; }
+		public int TotalWrongAttempts { get; private set; }
 		public int MaxWrongAttempts => 5;
 		public DateTime BlockExpireDateTime { get; private set; } = DateTime.MinValue;
 

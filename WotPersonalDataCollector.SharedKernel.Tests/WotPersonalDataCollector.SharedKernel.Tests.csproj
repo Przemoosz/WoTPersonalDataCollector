@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WotPersonalDataCollector.SharedKernel\WotPersonalDataCollector.SharedKernel.csproj" />
+    <ProjectReference Include="..\WotPersonalDataCollector.TestHelpers\WotPersonalDataCollector.TestHelpers.csproj" />
   </ItemGroup>
 
 </Project>
