@@ -28,6 +28,7 @@
 				{
 					return;
 				}
+
 				TotalWrongAttempts++;
 				if (TotalWrongAttempts == 5)
 				{
@@ -45,7 +46,7 @@
 				{
 					return TryReleaseAuthorizationBlock();
 				}
-				return false;
+				return true;
 			}
 		}
 

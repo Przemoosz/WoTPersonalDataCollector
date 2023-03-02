@@ -1,11 +1,10 @@
-﻿using System.Reflection;
-
-namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Security
+﻿namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Security
 {
 	using System;
 	using Microsoft.Extensions.Logging;
 	using WotPersonalDataCollector.AzureMicroServicesFactory.Security;
 	using TestHelpers.Categories;
+	using System.Reflection;
 
 	[TestFixture, ServiceTest, Parallelizable]
 	public class AuthorizationSecurityServiceTests
@@ -39,6 +38,20 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Security
 			// Assert
 			_uut.TotalAttempts.Should().Be(1);
 			_uut.TotalWrongAttempts.Should().Be(0);
+		}
+
+		[TestCase(25)]
+		[TestCase(12)]
+		public void ShouldCountTotalAttempts(int totalAttempts)
+		{
+			// Act
+			for (int i = 0; i < totalAttempts; i++)
+			{
+				_uut.SaveSecurityCheck(true);
+			}
+			
+			// Assert
+			_uut.TotalAttempts.Should().Be(totalAttempts);
 		}
 
 		[Test]
@@ -79,18 +92,17 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Security
 		{
 			// Arrange
 			ForceAuthorizationBlock();
-			EnsureBlockedAuthorization();
-			typeof(AuthorizationSecurityService).GetProperty("BlockExpireDateTime", BindingFlags.Public | BindingFlags.Instance).SetValue(_uut,DateTime.MinValue);
+			EnsureThatAuthorizationIsBlocked();
+			typeof(AuthorizationSecurityService).GetProperty("BlockExpireDateTime", BindingFlags.Public | BindingFlags.Instance)!.SetValue(_uut,DateTime.MinValue);
 
 			// Act
 			var result = _uut.IsAuthorizationAvailable();
 
 			// Assert
 			result.Should().BeTrue();
-
 		}
 
-		private void EnsureBlockedAuthorization()
+		private void EnsureThatAuthorizationIsBlocked()
 		{
 			var result = _uut.IsAuthorizationAvailable();
 			result.Should().BeFalse();
