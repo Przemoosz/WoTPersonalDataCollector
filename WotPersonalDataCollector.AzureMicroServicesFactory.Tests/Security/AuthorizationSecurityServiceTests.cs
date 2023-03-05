@@ -5,6 +5,8 @@
 	using WotPersonalDataCollector.AzureMicroServicesFactory.Security;
 	using TestHelpers.Categories;
 	using System.Reflection;
+	using System.Threading;
+	using System.Threading.Tasks;
 
 	[TestFixture, ServiceTest, Parallelizable]
 	public class AuthorizationSecurityServiceTests
@@ -102,6 +104,50 @@
 			result.Should().BeTrue();
 		}
 
+		[Test]
+		public void ShouldAvoidRaceConditionWhenCheckingIfAuthorizationIsAvailableAndOtherThreadBlockingAuthorization()
+		{
+			// Arrange
+			for (int i = 0; i < 4; i++)
+			{
+				_uut.SaveSecurityCheck(false);
+			}
+
+			Task savingTask = new Task(() => _uut.SaveSecurityCheck(false));
+			Task<bool> checkingTask = new Task<bool>(() => _uut.IsAuthorizationAvailable());
+
+			// Act
+			checkingTask.Start();
+			Thread.Sleep(2); // slowing down second task
+			savingTask.Start();
+			Task.WaitAll(checkingTask, savingTask);
+
+			// Assert
+			checkingTask.Result.Should().BeTrue();
+
+		}
+
+		[Test]
+		public void ShouldAvoidRaceConditionWhenBlockingAuthorizationAndOtherThreadIsCheckingIfAuthorizationIsAvailable()
+		{
+			// Arrange
+			for (int i = 0; i < 4; i++)
+			{
+				_uut.SaveSecurityCheck(false);
+			}
+
+			Task savingTask = new Task(() => _uut.SaveSecurityCheck(false));
+			Task<bool> checkingTask = new Task<bool>(() => _uut.IsAuthorizationAvailable());
+
+			// Act
+			savingTask.Start();
+			Thread.Sleep(2); // slowing down second task
+			checkingTask.Start();
+			Task.WaitAll(checkingTask, savingTask);
+
+			// Assert
+			checkingTask.Result.Should().BeFalse();
+		}
 		private void EnsureThatAuthorizationIsBlocked()
 		{
 			var result = _uut.IsAuthorizationAvailable();

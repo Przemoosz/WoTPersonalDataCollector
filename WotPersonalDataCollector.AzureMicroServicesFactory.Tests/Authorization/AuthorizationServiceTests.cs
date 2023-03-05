@@ -10,7 +10,6 @@
 		[SetUp]
 		public void SetUp()
 		{
-			_uut = new AuthorizationService();
 		}
 
 	}

@@ -30,10 +30,10 @@
 				}
 
 				TotalWrongAttempts++;
-				if (TotalWrongAttempts == 5)
+				if (TotalWrongAttempts == MaxWrongAttempts)
 				{
 					IsAuthorizationBlocked = true;
-					BlockExpireDateTime = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+					BlockExpireDateTime = DateTime.UtcNow + TimeSpan.FromMinutes(1);
 				}
 			}
 		}
@@ -52,6 +52,7 @@
 
 		private bool TryReleaseAuthorizationBlock()
 		{
+			_logger.LogInformation("Trying to release authorization blockade.");
 			if (DateTime.UtcNow > BlockExpireDateTime)
 			{
 				_logger.LogInformation("Authorization via Basic token is now available. Block released.");
@@ -59,7 +60,7 @@
 				TotalWrongAttempts = 0;
 				return true;
 			}
-			_logger.LogWarning("Authorization blockade can not be released!");
+			_logger.LogWarning($"Authorization blockade can not be released! Wait till {BlockExpireDateTime:G}");
 			return false;
 		}
 	}

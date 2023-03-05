@@ -1,13 +1,13 @@
-﻿using WotPersonalDataCollector.AzureMicroServicesFactory.Authentication.Token;
-using WotPersonalDataCollector.AzureMicroServicesFactory.Authorization;
-using WotPersonalDataCollector.AzureMicroServicesFactory.Security;
-
-[assembly: Microsoft.Azure.Functions.Extensions.DependencyInjection.FunctionsStartup(typeof(WotPersonalDataCollector.AzureMicroServicesFactory.Startup))]
+﻿[assembly: Microsoft.Azure.Functions.Extensions.DependencyInjection.FunctionsStartup(typeof(WotPersonalDataCollector.AzureMicroServicesFactory.Startup))]
 namespace WotPersonalDataCollector.AzureMicroServicesFactory
 {
 	using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 	using Microsoft.Extensions.DependencyInjection;
 	using Utilities;
+	using Authentication.Token;
+	using Authorization;
+	using Security;
+	using Security.Validation;
 
 	internal sealed class Startup: FunctionsStartup
 	{
@@ -16,18 +16,19 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory
 			InstallLogging(builder);
 			InstallAzureMicroServicesFactoryDependencies(builder);
 			InstallLocalData(builder);
-			InstallCosmosDbDependencies(builder);
+			InstallAuthorizationDependencies(builder);
 		}
 
-		private void InstallCosmosDbDependencies(IFunctionsHostBuilder builder)
+		private void InstallAuthorizationDependencies(IFunctionsHostBuilder builder)
 		{
+			builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
+			builder.Services.AddSingleton<IAuthorizationSecurityService, AuthorizationSecurityService>();
+			builder.Services.AddSingleton<IAuthorizationTokenValidationService, AuthorizationTokenValidationService>();
 		}
 
 		private void InstallAzureMicroServicesFactoryDependencies(IFunctionsHostBuilder builder)
 		{
 			builder.Services.AddSingleton<ITokenFactory, TokenFactory>();
-			builder.Services.AddSingleton<IAuthorizationService, AuthorizationService>();
-			builder.Services.AddSingleton<IAuthorizationSecurityService, AuthorizationSecurityService>();
 		}
 
 		private void InstallLocalData(IFunctionsHostBuilder builder) => builder.Services.AddSingleton<IMicroServicesConfiguration, MicroServicesConfiguration>();

@@ -4,5 +4,5 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory.Authorization;
 
 internal interface IAuthorizationService
 { 
-	void Authorize(HttpRequest httpRequest);
+	bool IsAuthorized(HttpRequest httpRequest);
 }

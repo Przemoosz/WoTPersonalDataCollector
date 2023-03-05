@@ -1,29 +1,28 @@
 ﻿namespace WotPersonalDataCollector.AzureMicroServicesFactory.Authorization
 {
-	using System;
-	using System.Linq;
 	using Microsoft.AspNetCore.Http;
-	using Authentication.Token;
 	using Extensions;
+	using Security;
+	using Security.Validation;
 
 	internal class AuthorizationService : IAuthorizationService
     {
-	    private readonly ITokenFactory _tokenFactory;
+	    private readonly IAuthorizationTokenValidationService _authorizationTokenValidationService;
+	    private readonly IAuthorizationSecurityService _authorizationSecurityService;
 
-	    public AuthorizationService(ITokenFactory tokenFactory)
+	    public AuthorizationService(IAuthorizationTokenValidationService authorizationTokenValidationService,
+		    IAuthorizationSecurityService authorizationSecurityService)
 	    {
-		    _tokenFactory = tokenFactory;
+		    _authorizationTokenValidationService = authorizationTokenValidationService;
+		    _authorizationSecurityService = authorizationSecurityService;
 	    }
-        public void Authorize(HttpRequest httpRequest)
+        public bool IsAuthorized(HttpRequest httpRequest)
         {
 	        var authorizationToken = httpRequest.GetAuthorizationToken();
-	        Console.WriteLine(authorizationToken.First());
-
-        }
-
-        private void ValidateTokenFormat(string token)
-        {
-			token.spli
+	        bool isAuthorized = _authorizationSecurityService.IsAuthorizationAvailable() &&
+	                            _authorizationTokenValidationService.Validate(authorizationToken);
+			_authorizationSecurityService.SaveSecurityCheck(isAuthorized);
+			return isAuthorized;
         }
     }
 }

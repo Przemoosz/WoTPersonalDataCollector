@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Http.Internal;
-using TddXt.AnyRoot.Strings;
-using WotPersonalDataCollector.AzureMicroServicesFactory.Extensions;
-using static TddXt.AnyRoot.Root;
-
-namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Extensions
+﻿namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Extensions
 {
+	using Microsoft.AspNetCore.Http;
+	using TddXt.AnyRoot.Strings;
+	using WotPersonalDataCollector.AzureMicroServicesFactory.Extensions;
+	using Utilities;
+	using static TddXt.AnyRoot.Root;
+
 	[TestFixture]
 	public class HttpRequestExtensionsTests
 	{
@@ -17,11 +14,9 @@ namespace WotPersonalDataCollector.AzureMicroServicesFactory.Tests.Extensions
 		{
 			// Arrange
 			var token = Any.String();
-			var items = new Dictionary<object, object>();
-			items.Add("Authorization", token);
-			HttpRequest httpRequest = new DefaultHttpRequest(new DefaultHttpContext());
-			typeof(HttpRequest).GetProperty("")
-			
+			DefaultHttpRequestOverride httpRequest = new DefaultHttpRequestOverride(new DefaultHttpContext());
+			httpRequest.AddAuthorizationHeader(token);
+
 			// Act
 			var result = httpRequest.GetAuthorizationToken();
 
