@@ -2,7 +2,8 @@
 {
 	using WotPersonalDataCollector.WebApp.Factories;
 	using Models;
-	using Categories;
+	using WotPersonalDataCollector.TestHelpers.Categories;
+
 
 	[TestFixture, Parallelizable, FactoryTests]
 	public class PageFactoryTests

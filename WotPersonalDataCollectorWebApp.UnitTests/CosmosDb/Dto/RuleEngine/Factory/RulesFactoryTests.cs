@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
-using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
-using WotPersonalDataCollector.WebApp.UnitTests.Categories;
-
-namespace WotPersonalDataCollector.WebApp.UnitTests.CosmosDb.Dto.RuleEngine.Factory
+﻿namespace WotPersonalDataCollector.WebApp.UnitTests.CosmosDb.Dto.RuleEngine.Factory
 {
+	using Microsoft.Extensions.Logging;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Factory;
+	using WotPersonalDataCollector.WebApp.CosmosDb.Dto.Version.RuleEngine.Rules;
+	using WotPersonalDataCollector.TestHelpers.Categories;
+
 	[TestFixture, FactoryTests, Parallelizable]
 	public class RulesFactoryTests
 	{

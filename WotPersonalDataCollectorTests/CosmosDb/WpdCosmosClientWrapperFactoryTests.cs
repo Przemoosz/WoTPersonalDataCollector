@@ -1,8 +1,8 @@
 ﻿namespace WotPersonalDataCollector.Tests.CosmosDb
 {
     using WotPersonalDataCollector.CosmosDb;
-    using WotPersonalDataCollector.Tests.TestHelpers;
-    using WotPersonalDataCollector.Utilities;
+	using TestHelpers.Extensions;
+	using WotPersonalDataCollector.Utilities;
     using static TddXt.AnyRoot.Root;
 
     [TestFixture]

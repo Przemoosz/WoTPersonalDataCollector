@@ -2,7 +2,8 @@
 {
 	using Exceptions;
 	using WotPersonalDataCollector.WebApp.Services;
-	using Categories;
+	using WotPersonalDataCollector.TestHelpers.Categories;
+
 
 	[TestFixture, ServiceTest, Parallelizable]
 	public class ValidationCancellationServiceTests

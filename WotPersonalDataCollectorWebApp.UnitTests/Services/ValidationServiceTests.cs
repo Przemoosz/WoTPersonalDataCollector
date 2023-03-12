@@ -7,8 +7,8 @@
 	using Exceptions;
 	using Models;
 	using WotPersonalDataCollector.WebApp.Services;
-	using Categories;
-	using TestHelpers;
+	using WotPersonalDataCollector.TestHelpers.Categories;
+	using WotPersonalDataCollector.TestHelpers.Generics;
 
 	[TestFixture, Parallelizable, ServiceTest]
 	public sealed class ValidationServiceTests

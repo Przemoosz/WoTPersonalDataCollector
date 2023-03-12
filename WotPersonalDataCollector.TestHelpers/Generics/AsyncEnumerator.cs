@@ -1,6 +1,6 @@
-﻿namespace WotPersonalDataCollector.WebApp.UnitTests.TestHelpers
+﻿namespace WotPersonalDataCollector.TestHelpers.Generics
 {
-	internal sealed class AsyncEnumerator<T>: IAsyncEnumerator<T> where T: class
+	public sealed class AsyncEnumerator<T>: IAsyncEnumerator<T> where T: class
 	{
 		private readonly List<T> _source;
 		private int _index;
