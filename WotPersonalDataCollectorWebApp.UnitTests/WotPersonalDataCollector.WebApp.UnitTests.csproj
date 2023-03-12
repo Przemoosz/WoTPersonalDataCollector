@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WotPersonalDataCollector.TestHelpers\WotPersonalDataCollector.TestHelpers.csproj" />
     <ProjectReference Include="..\WotPersonalDataCollectorWebApp\WotPersonalDataCollector.WebApp.csproj" />
   </ItemGroup>
 
