@@ -6,7 +6,7 @@
 	using static TddXt.AnyRoot.Root;
 	using TddXt.AnyRoot.Strings;
 	using Exceptions;
-	using Categories;
+	using WotPersonalDataCollector.TestHelpers.Categories;
 
 	[TestFixture, ConfigurationTests, Parallelizable]
 	public class ConfigurationBaseTests
